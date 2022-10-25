@@ -4,7 +4,7 @@
 #include <vector>
 #include "Event.h"
 
-class ProbabilityFunction : public Node {
+class ProbabilityFunction {
     std::vector<Event> eventsInput;
 
 public:

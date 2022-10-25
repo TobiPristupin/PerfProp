@@ -4,7 +4,7 @@
 #include <string>
 #include "Node.h"
 
-class Event : public Node {
+class Event {
     int id;
     std::string name;
 };
