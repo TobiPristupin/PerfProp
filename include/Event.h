@@ -2,8 +2,9 @@
 #define BAYESPERF_CPP_EVENT_H
 
 #include <string>
+#include "Node.h"
 
-struct Event {
+class Event : public Node {
     int id;
     std::string name;
 };

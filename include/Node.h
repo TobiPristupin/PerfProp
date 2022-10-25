@@ -2,22 +2,24 @@
 #define BAYESPERF_CPP_NODE_H
 
 
-#include "ProbabilityFunction.h"
 //TODO: Edit this to use smart pointers
+
+#include "ProbabilityFunction.h"
+#include "Node.h"
 
 class Node {
 
-    ProbabilityFunction *probabilityFunction;
-    Event *event;
+    const ProbabilityFunction *probabilityFunction;
+    const Event *event;
 public:
-    explicit Node(ProbabilityFunction *probabilityFunction1);
-    explicit Node(Event *event);
+    explicit Node(const ProbabilityFunction *probabilityFunction1);
+    explicit Node(const Event *event);
 
     bool isFactorNode() const;
     bool isEventNode() const;
 
-    Event* getEvent() const;
-    ProbabilityFunction* getProbabilityFunction() const;
+    const Event* getEvent() const;
+    const ProbabilityFunction* getProbabilityFunction() const;
 };
 
 
