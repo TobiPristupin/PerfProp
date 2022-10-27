@@ -1,7 +1,7 @@
 #include <stdexcept>
 #include "include/Node.h"
 
-Node::Node(const ProbabilityFunction *probabilityFunction) {
+Node::Node(const ProbabilityNode *probabilityFunction) {
     this->probabilityFunction = probabilityFunction;
     this->event = nullptr;
 }
@@ -25,11 +25,26 @@ const Event *Node::getEvent() const {
     return event;
 }
 
-const ProbabilityFunction *Node::getProbabilityFunction() const {
+const ProbabilityNode *Node::getProbabilityFunction() const {
     if (probabilityFunction == nullptr){
         throw std::runtime_error("Attempting to access the probability function of a non-event node");
     }
     return probabilityFunction;
 }
+bool Node::operator==(const Node &e) const {
+    if ((isEventNode() && !e.isEventNode()) || (isFactorNode() && !e.isFactorNode())){
+        return false;
+    }
+
+    if (isEventNode()){
+        return *getEvent() == *e.getEvent();
+    }
+
+    return *getProbabilityFunction() == *e.getProbabilityFunction();
+}
+
+
+
+
 
 
