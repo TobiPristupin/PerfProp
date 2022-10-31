@@ -6,8 +6,6 @@
 #include <unordered_set>
 #include "Node.h"
 
-//Could be using the unordered variants, but that would require writing a hash function for Node, which is not trivial.
-//Since our set of events is always very small, the added complexity of using the ordered variants does not matter.
 using FactorGraph = std::unordered_map<Node, std::unordered_set<Node>>;
 
 void insert_into_graph(Node &u, Node &v, FactorGraph &graph);
@@ -16,5 +14,11 @@ void insert_into_graph(Node &u, Node &v, FactorGraph &graph);
  * this function will raise a runtime_exception.
  * */
 std::unordered_set<Node> markovBlanket(std::initializer_list<Node> eventNodes, const FactorGraph &graph);
+
+/**
+ * Returns true if there is a statistical overlap between e1 and e2. e1 and e2 must be event nodes. There is overlap
+ * if the intersection of their markov blankets is non-empty.
+ */
+bool eventsOverlap(std::initializer_list<Node> e1, std::initializer_list<Node> e2, const FactorGraph &graph);
 
 #endif //BAYESPERF_CPP_FACTORGRAPH_H

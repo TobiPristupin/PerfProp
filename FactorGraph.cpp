@@ -30,3 +30,14 @@ std::unordered_set<Node> markovBlanket(std::initializer_list<Node> eventNodes, c
 
     return blanket;
 }
+
+bool eventsOverlap(std::initializer_list<Node> e1, std::initializer_list<Node> e2, const FactorGraph &graph) {
+    std::unordered_set<Node> b1 = markovBlanket(e1, graph), b2 = markovBlanket(e2, graph);
+    for (const Node &node : b1){
+        if (b2.find(node) != b2.end()){
+            return true;
+        }
+    }
+
+    return false;
+}

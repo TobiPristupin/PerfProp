@@ -7,10 +7,10 @@
 class Event {
 public:
 
-    int id;
     std::string name;
+    std::string modifiers;
 
-    Event(int id, std::string name);
+    Event(std::string name, std::string modifiers = "");
 
     bool operator==(const Event& e) const;
 };
@@ -19,7 +19,7 @@ namespace std {
     template <>
     struct hash<Event> {
         std::size_t operator()(const Event& event) const {
-            return std::hash<int>()(event.id);
+            return std::hash<string>()(event.name);
         }
     };
 }
