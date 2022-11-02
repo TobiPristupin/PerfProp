@@ -5,11 +5,12 @@
 #include <string>
 #include <sstream>
 #include "include/Node.h"
-#include "include/Event.h"
+#include "include/PmuEvent.h"
 #include "include/ProbabilityNode.h"
 #include "include/FactorGraph.h"
+#include "include/PmuEventParser.h"
 
-FactorGraph generateGraph(const std::vector<Event> &events, std::vector<ProbabilityNode> &factors){
+FactorGraph generateGraph(const std::vector<PmuEvent> &events, std::vector<ProbabilityNode> &factors){
     FactorGraph graph;
     for (const ProbabilityNode &factor : factors){
         Node factorNode(&factor);
@@ -27,10 +28,10 @@ FactorGraph generateGraph(const std::vector<Event> &events, std::vector<Probabil
 
 //Generates factor graph corresponding to fig. 1 pg. 1746 in https://ai.stanford.edu/~koller/Papers/Abbeel+al:JMLR06.pdf
 FactorGraph figure1ExampleGraph(){
-    std::vector<Event> events = {
-            {"X1"}, {"X2"}, {"X3"},
-            {"X4"}, {"X5"}, {"X6"},
-            {"X7"}, {"X8"}, {"X9"},
+    std::vector<PmuEvent> events = {
+            {"X1", PmuEvent::Type::HARDWARE}, {"X2", PmuEvent::Type::HARDWARE}, {"X3", PmuEvent::Type::HARDWARE},
+            {"X4", PmuEvent::Type::HARDWARE}, {"X5", PmuEvent::Type::HARDWARE}, {"X6", PmuEvent::Type::HARDWARE},
+            {"X7", PmuEvent::Type::HARDWARE}, {"X8", PmuEvent::Type::HARDWARE}, {"X9", PmuEvent::Type::HARDWARE},
     };
 
     ProbabilityFunction dummyFunc = [](auto p) -> double {return 0;};
@@ -64,32 +65,8 @@ FactorGraph figure1ExampleGraph(){
     return graph;
 }
 
-//TODO
 void printUsage(){
     std::cout << "Usage: bayesperf stat -e {events} program\n";
-}
-
-/**
- * Parses a list of events from the command line. The input format for the events is the same as `perf stat`.
- * Events must be in a comma separated list with no spaces. Event names can be appended with a : and a modifier, which
- * can be one or more of {u, k, h, H, G}. Refer to perf's documentation for explanations on their meanings.
- *
- * Example input: cycles,instructions:k,cache-misses:ku
- */
-std::vector<Event> parseEvents(const std::string& cmdEventString){
-    std::vector<Event> events;
-    std::stringstream ss(cmdEventString);
-    std::string item;
-    while (std::getline(ss, item, ',')){
-        std::string::size_type colonPos = item.find(':');
-        if (colonPos != std::string::npos){
-            events.emplace_back(item.substr(0, colonPos), item.substr(colonPos+1));
-        } else {
-            events.emplace_back(item);
-        }
-    }
-
-    return events;
 }
 
 int main(int argc, char **argv) {
@@ -108,16 +85,19 @@ int main(int argc, char **argv) {
                     {nullptr,      0,                 nullptr,    0}
             };
 
-    while ((opt = getopt_long(argc, argv, "e:", long_options, &optionsIndex)) != -1){
+    /*we advance argv by 1 because we want to skip the bayesperf command. That is, if we call `bayesperf stat -e ...`,
+    * we want to skip the "stat"
+    * */
+    while ((opt = getopt_long(argc - 1, &argv[1], "+e:", long_options, &optionsIndex)) != -1){
         switch(opt){
             case '?':
-                break;
+                return 1; //getopt will automatically print the error to stderr
             case 'h':
                 printUsage();
                 return 0;
             case 'e': {
-                std::vector<Event> events = parseEvents(optarg);
-                for (const Event &e: events) {
+                std::vector<PmuEvent> events = parseEvents(optarg);
+                for (const PmuEvent &e: events) {
                     std::cout << e.name << " " << e.modifiers << "\n";
                 }
                 break;
@@ -128,9 +108,12 @@ int main(int argc, char **argv) {
         }
     }
 
+    std::cout << "putp\n";
+    optind += 1; //skip command to bayesperf
     while (optind < argc){
-        std::cout << argv[optind++] << "\n";
+        std::cout << argv[optind++] << " ";
     }
+    std::cout << "\n";
 
 
     return 0;

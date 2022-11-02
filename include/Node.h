@@ -9,15 +9,15 @@
 class Node {
 
     const ProbabilityNode *probabilityFunction;
-    const Event *event;
+    const PmuEvent *event;
 public:
     explicit Node(const ProbabilityNode *probabilityFunction1);
-    explicit Node(const Event *event);
+    explicit Node(const PmuEvent *event);
 
     bool isFactorNode() const;
     bool isEventNode() const;
 
-    const Event* getEvent() const;
+    const PmuEvent* getEvent() const;
     const ProbabilityNode* getProbabilityFunction() const;
 
     bool operator==(const Node& e) const;
@@ -28,7 +28,7 @@ namespace std {
     struct hash<Node> {
         std::size_t operator()(const Node& node) const {
             if (node.isEventNode()){
-                return std::hash<Event>()(*node.getEvent());
+                return std::hash<PmuEvent>()(*node.getEvent());
             } else {
                 return std::hash<ProbabilityNode>()(*node.getProbabilityFunction());
             }

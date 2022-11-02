@@ -5,7 +5,7 @@ Node::Node(const ProbabilityNode *probabilityFunction) {
     this->probabilityFunction = probabilityFunction;
     this->event = nullptr;
 }
-Node::Node(const Event *event) {
+Node::Node(const PmuEvent *event) {
     this->event = event;
     this->probabilityFunction = nullptr;
 }
@@ -18,7 +18,7 @@ bool Node::isEventNode() const {
     return event != nullptr;
 }
 
-const Event *Node::getEvent() const {
+const PmuEvent *Node::getEvent() const {
     if (event == nullptr){
         throw std::runtime_error("Attempting to access the event of a non-event node");
     }

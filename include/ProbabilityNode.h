@@ -3,18 +3,18 @@
 
 #include <vector>
 #include <functional>
-#include "Event.h"
+#include "PmuEvent.h"
 
-using ProbabilityFunction = double(*)(std::vector<Event> events);
+using ProbabilityFunction = double(*)(std::vector<PmuEvent> events);
 
 class ProbabilityNode {
-    std::vector<Event> eventsInput;
+    std::vector<PmuEvent> eventsInput;
     ProbabilityFunction function;
 
 public:
-    ProbabilityNode(std::initializer_list<Event> events, ProbabilityFunction function);
-    bool eventInInput(const Event& event) const;
-    std::vector<Event> getEvents() const;
+    ProbabilityNode(std::initializer_list<PmuEvent> events, ProbabilityFunction function);
+    bool eventInInput(const PmuEvent& event) const;
+    std::vector<PmuEvent> getEvents() const;
     ProbabilityFunction getFunction() const;
     double call();
 
