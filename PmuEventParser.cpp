@@ -36,10 +36,13 @@ std::vector<PmuEvent> parseEvents(const std::string& cmdEventString) {
  * We obtain software events by calling `perf list sw --no-desc` and parsing the stdout. This is not ideal,
  * since it depends on how perf formats their output. Other alternatives are discussed here:
  * https://stackoverflow.com/questions/63653406/using-the-perf-events-from-perf-list-programatically
+ * Another idea is to have the user pass in a special flag denoting that an event is software/hardware. That way
+ * we pass on the responsibility to the user. This would cause a deviation from `perf` and would add extra work
+ * to the user.
  *
  * If this begins to cause issues, we can investigate a more robust approach.
  *
- * Output of `perf list sw --no-desc` looks as follows:
+ * Example abbreviated output of `perf list sw --no-desc`:
  *
  * List of pre-defined events (to be used in -e):
  *
@@ -51,7 +54,6 @@ std::vector<PmuEvent> parseEvents(const std::string& cmdEventString) {
  * duration_time                                      [Tool event]
  * user_time                                          [Tool event]
  * system_time                                        [Tool event]
-
  */
 static std::unordered_set<std::string> obtainSoftwareEvents(){
     std::unordered_set<std::string> softwareEvents;
@@ -69,6 +71,13 @@ static std::unordered_set<std::string> obtainSoftwareEvents(){
         } else {
             softwareEvents.insert(splitLine[0]);
         }
+    }
+
+    if (softwareEvents.empty()){
+        //There should always be some software events. If none are found, lets fail fast before this propagates
+        //further. If this happens, there is probably something wrong with the parsing and this method should be
+        //reworked.
+        throw std::runtime_error("Error: No software events");
     }
 
     return softwareEvents;
