@@ -8,4 +8,22 @@ if(NOT PERF)
     message(FATAL_ERROR "Linux perf tools not installed")
 endif()
 
-add_executable(bayesperf_cpp main.cpp include/PmuEvent.h include/ProbabilityNode.h ProbabilityNode.cpp include/ProbabilityNode.h include/Node.h include/FactorGraph.h EventNode.cpp Node.cpp FactorGraph.cpp PmuEvent.cpp include/PmuEventParser.h PmuEventParser.cpp include/Utils.h Utils.cpp)
+set( SOURCE_FILES
+        main.cpp
+        ProbabilityNode.cpp
+        EventNode.cpp
+        Node.cpp
+        FactorGraph.cpp
+        PmuEvent.cpp
+        PmuEventParser.cpp
+        Utils.cpp
+        )
+
+include_directories(
+        include/
+)
+
+add_executable( ${PROJECT_NAME} ${SOURCE_FILES} )
+
+add_subdirectory(test)
+

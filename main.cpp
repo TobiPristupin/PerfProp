@@ -3,7 +3,6 @@
 #include <getopt.h>
 #include <cstring>
 #include <string>
-#include <sstream>
 #include "include/Node.h"
 #include "include/PmuEvent.h"
 #include "include/ProbabilityNode.h"
@@ -108,7 +107,6 @@ int main(int argc, char **argv) {
         }
     }
 
-    std::cout << "putp\n";
     optind += 1; //skip command to bayesperf
     while (optind < argc){
         std::cout << argv[optind++] << " ";
