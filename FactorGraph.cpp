@@ -1,4 +1,5 @@
 #include <stdexcept>
+#include <iostream>
 #include "include/FactorGraph.h"
 
 void insert_into_graph(Node &u, Node &v, FactorGraph &graph){
@@ -40,4 +41,20 @@ bool eventsOverlap(std::initializer_list<Node> e1, std::initializer_list<Node> e
     }
 
     return false;
+}
+
+FactorGraph generateGraph(const std::vector<PmuEvent> &events, std::vector<ProbabilityNode> &factors){
+    FactorGraph graph;
+    for (const ProbabilityNode &factor : factors){
+        Node factorNode(&factor);
+        for (auto const &event : events){
+            if (factor.eventInInput(event)){
+                Node eventNode(&event);
+                insert_into_graph(factorNode, eventNode, graph);
+                insert_into_graph(eventNode, factorNode, graph);
+            }
+        }
+    }
+
+    return graph;
 }

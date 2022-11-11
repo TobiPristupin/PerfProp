@@ -8,6 +8,11 @@
 
 using FactorGraph = std::unordered_map<Node, std::unordered_set<Node>>;
 
+/*
+ * Generates a graph given a list of events and a list of factors that map to events
+ */
+FactorGraph generateGraph(const std::vector<PmuEvent> &events, std::vector<ProbabilityNode> &factors);
+
 void insert_into_graph(Node &u, Node &v, FactorGraph &graph);
 
 /* Computes the markov blanket for a set of event nodes. If one of the nodes passed in is not an event node,

@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.21)
 set( TEST_SOURCE_FILES
         testMain.cpp
         PmuEventParserTest.cpp
-        )
+        FactorGraphTest.cpp)
 
 # There has to be a better way than listing every file individually. Maybe bundling the main source files into a
 # library that the test executable includes? But we would have to exclude main.cpp. Anyways, this works for now...
@@ -22,7 +22,7 @@ include_directories(
         ../include/
 )
 
-add_executable( bayesperf_cpp_tests ${MAIN_SOURCE_FILES} ${TEST_SOURCE_FILES} )
+add_executable( bayesperf_cpp_tests ${MAIN_SOURCE_FILES} ${TEST_SOURCE_FILES} FactorGraphTest.cpp)
 
 include(FetchContent)
 FetchContent_Declare(
