@@ -41,3 +41,5 @@ target_link_libraries(
 
 include(GoogleTest)
 gtest_discover_tests(bayesperf_cpp_tests)
+
+add_executable( standalone_cpp standalone.cpp)
