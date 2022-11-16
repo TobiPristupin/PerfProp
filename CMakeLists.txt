@@ -11,8 +11,6 @@ endif()
 set( SOURCE_FILES
         main.cpp
         ProbabilityNode.cpp
-        EventNode.cpp
-        Node.cpp
         FactorGraph.cpp
         PmuEvent.cpp
         PmuEventParser.cpp

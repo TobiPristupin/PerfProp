@@ -10,8 +10,6 @@ set( TEST_SOURCE_FILES
 
 set ( MAIN_SOURCE_FILES
         ../ProbabilityNode.cpp
-        ../EventNode.cpp
-        ../Node.cpp
         ../FactorGraph.cpp
         ../PmuEvent.cpp
         ../PmuEventParser.cpp

@@ -4,26 +4,30 @@
 
 #include <unordered_map>
 #include <unordered_set>
-#include "Node.h"
+#include <variant>
+#include "PmuEvent.h"
+#include "ProbabilityNode.h"
 
-using FactorGraph = std::unordered_map<Node, std::unordered_set<Node>>;
+using FactorGraphNode = std::variant<PmuEvent, ProbabilityNode>;
+
+using FactorGraph = std::unordered_map<FactorGraphNode, std::unordered_set<FactorGraphNode>>;
 
 /*
  * Generates a graph given a list of events and a list of factors that map to events
  */
-FactorGraph generateGraph(const std::vector<PmuEvent> &events, std::vector<ProbabilityNode> &factors);
+FactorGraph generateGraph(const std::vector<PmuEvent> &events, const std::vector<ProbabilityNode> &factors);
 
-void insert_into_graph(Node &u, Node &v, FactorGraph &graph);
+void insert_into_graph(FactorGraphNode &u, FactorGraphNode &v, FactorGraph &graph);
 
 /* Computes the markov blanket for a set of event nodes. If one of the nodes passed in is not an event node,
  * this function will raise a runtime_exception.
  * */
-std::unordered_set<Node> markovBlanket(std::initializer_list<Node> eventNodes, const FactorGraph &graph);
+std::unordered_set<PmuEvent> markovBlanket(std::initializer_list<PmuEvent> eventNodes, const FactorGraph &graph);
 
 /**
- * Returns true if there is a statistical overlap between e1 and e2. e1 and e2 must be event nodes. There is overlap
+ * Returns true if there is a statistical dependence between c1 and c2. There is overlap
  * if the intersection of their markov blankets is non-empty.
  */
-bool eventsOverlap(std::initializer_list<Node> e1, std::initializer_list<Node> e2, const FactorGraph &graph);
+bool eventGroupsRelated(std::initializer_list<PmuEvent> c1, std::initializer_list<PmuEvent> c2, const FactorGraph &graph);
 
 #endif //BAYESPERF_CPP_FACTORGRAPH_H

@@ -43,10 +43,10 @@ protected:
         };
 
         FactorGraph  f = generateGraph(figure1Events, factors);
-        PmuEvent e = {"X1", PmuEvent::Type::HARDWARE};
-        Node n(&figure1Events[0]);
-        std::initializer_list<Node> s = {n};
-        markovBlanket(s, figure1Graph);
+        std::unordered_set<PmuEvent> blanket = markovBlanket({figure1Events[4]}, f);
+        for (const PmuEvent &e : blanket){
+            std::cout << e.name << "\n";
+        }
         return  f;
     }
 
