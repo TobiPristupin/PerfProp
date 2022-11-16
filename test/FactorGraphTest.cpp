@@ -6,58 +6,61 @@ class FactorGraphTest : public ::testing::Test {
 protected:
 
     //factor graph corresponding to fig. 1 pg. 1746 in https://ai.stanford.edu/~koller/Papers/Abbeel+al:JMLR06.pdf
-    FactorGraph  figure1Graph;
-    std::vector<PmuEvent> figure1Events;
+    FactorGraph  fig1Graph;
+    PmuEvent x1 = {"X1", PmuEvent::Type::HARDWARE};
+    PmuEvent x2 = {"X2", PmuEvent::Type::HARDWARE};
+    PmuEvent x3 = {"X3", PmuEvent::Type::HARDWARE};
+    PmuEvent x4 = {"X4", PmuEvent::Type::HARDWARE};
+    PmuEvent x5 = {"X5", PmuEvent::Type::HARDWARE};
+    PmuEvent x6 = {"X6", PmuEvent::Type::HARDWARE};
+    PmuEvent x7 = {"X7", PmuEvent::Type::HARDWARE};
+    PmuEvent x8 = {"X8", PmuEvent::Type::HARDWARE};
+    PmuEvent x9 = {"X9", PmuEvent::Type::HARDWARE};
+    std::vector<PmuEvent> fig1Events = {x1, x2, x3, x4, x5, x6, x7, x8, x9};
 
     void SetUp() override {
-        figure1Graph = figure1ExampleGraph();
+        fig1Graph = generateFig1ExampleGraph();
     }
 
-    FactorGraph figure1ExampleGraph(){
-        figure1Events = {
-                {"X1", PmuEvent::Type::HARDWARE}, {"X2", PmuEvent::Type::HARDWARE}, {"X3", PmuEvent::Type::HARDWARE},
-                {"X4", PmuEvent::Type::HARDWARE}, {"X5", PmuEvent::Type::HARDWARE}, {"X6", PmuEvent::Type::HARDWARE},
-                {"X7", PmuEvent::Type::HARDWARE}, {"X8", PmuEvent::Type::HARDWARE}, {"X9", PmuEvent::Type::HARDWARE},
-        };
-
+    FactorGraph generateFig1ExampleGraph(){
         ProbabilityFunction dummyFunc = [](auto p) -> double {return 0;};
         std::vector<ProbabilityNode> factors = {
-                {{figure1Events[0], figure1Events[1], figure1Events[2]}, dummyFunc},
+                {{x1, x2, x3}, dummyFunc},
 
-                {{figure1Events[0], figure1Events[1]},                   dummyFunc},
-                {{figure1Events[1], figure1Events[2]},                   dummyFunc},
+                {{x1, x2},                   dummyFunc},
+                {{x2, x3},                   dummyFunc},
 
-                {{figure1Events[0], figure1Events[3]},                   dummyFunc},
-                {{figure1Events[1], figure1Events[4]},                   dummyFunc},
-                {{figure1Events[2], figure1Events[5]},                   dummyFunc},
+                {{x1, x4},                   dummyFunc},
+                {{x2, x5},                   dummyFunc},
+                {{x3, x6},                   dummyFunc},
 
-                {{figure1Events[3], figure1Events[4]},                   dummyFunc},
-                {{figure1Events[4], figure1Events[5]},                   dummyFunc},
+                {{x4, x5},                   dummyFunc},
+                {{x5, x6},                   dummyFunc},
 
-                {{figure1Events[3], figure1Events[6]},                   dummyFunc},
-                {{figure1Events[4], figure1Events[7]},                   dummyFunc},
-                {{figure1Events[5], figure1Events[8]},                   dummyFunc},
+                {{x4, x7},                   dummyFunc},
+                {{x5, x8},                   dummyFunc},
+                {{x6, x9},                   dummyFunc},
 
-                {{figure1Events[6], figure1Events[7]},                   dummyFunc},
-                {{figure1Events[7], figure1Events[8]},                   dummyFunc},
+                {{x7, x8},                   dummyFunc},
+                {{x8, x9},                   dummyFunc},
         };
 
-        FactorGraph  f = generateGraph(figure1Events, factors);
-        std::unordered_set<PmuEvent> blanket = markovBlanket({figure1Events[4]}, f);
-        for (const PmuEvent &e : blanket){
-            std::cout << e.name << "\n";
-        }
-        return  f;
+        return generateGraph(fig1Events, factors);
     }
 
 };
 
-TEST_F(FactorGraphTest, testMarkovBlanket){
-   std::unordered_set<std::string> obtained;
-
-//   for (const Node &n : markovBlanket({Node(&figure1Events[0])}, figure1Graph)){
-//       obtained.insert(n.getEvent()->name);
-//   }
-//   std::unordered_set<std::string> expected = {"X2", "X3", "X4"};
-//   EXPECT_EQ(obtained, expected);
+bool testMarkovBlanket(std::initializer_list<PmuEvent> eventsForBlanket, const std::unordered_set<std::string>& expectedBlanket, const FactorGraph &graph){
+    std::unordered_set<std::string> obtained;
+    for (const PmuEvent &n : markovBlanket(eventsForBlanket, graph)){
+        obtained.insert(n.name);
+    }
+    return obtained == expectedBlanket;
 }
+
+TEST_F(FactorGraphTest, testMarkovBlanket){
+    EXPECT_EQ(markovBlanket({x1}, fig1Graph), std::unordered_set<PmuEvent>({x2, x3, x4}));
+    EXPECT_EQ(markovBlanket({x1, x2}, fig1Graph), std::unordered_set<PmuEvent>({x3, x4, x5}));
+    EXPECT_EQ(markovBlanket({x5}, fig1Graph), std::unordered_set<PmuEvent>({x2, x4, x6, x8}));
+}
+
