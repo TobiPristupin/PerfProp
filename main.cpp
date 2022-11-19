@@ -6,11 +6,13 @@
 #include "include/PmuEvent.h"
 #include "include/ProbabilityNode.h"
 #include "include/PmuEventParser.h"
+#include "FactorGraph.h"
 
 
 void printUsage(){
     std::cout << "Usage: bayesperf stat -e {events} program\n";
 }
+
 
 int main(int argc, char **argv) {
     int opt;
@@ -57,8 +59,11 @@ int main(int argc, char **argv) {
     }
     std::cout << "\n";
 
+    PmuEvent e;
 
     return 0;
 }
+
+
 
 
