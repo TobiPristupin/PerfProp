@@ -5,17 +5,28 @@
 #include <variant>
 #include <map>
 
-class Unhash {
+class NoCopy {
 
 };
 
-int main(int argc, char **argv){
-    std::map<std::variant<int, std::string>, std::unordered_set<std::variant<int, std::string>>> m;
-    m.insert({1, {2, "hey"}});
-    for (const std::variant<int, std::string>& v : m[1]){
-        std::cout << std::holds_alternative<int>(v) << "\n";
+class Obj {
+public:
+    Obj(const int& x) : s(x) {
+        s += 1;
+    };
+
+    int getS(){
+        return s;
     }
 
-    return 0;
+private:
+    int s;
+};
+
+int main(int argc, char **argv){
+    int x = 10;
+    Obj obj(x);
+    std::cout << x << "\n";
+    std::cout << obj.getS() << "\n";
 
 }

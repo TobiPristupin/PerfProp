@@ -13,7 +13,6 @@ void printUsage(){
     std::cout << "Usage: bayesperf stat -e {events} program\n";
 }
 
-
 int main(int argc, char **argv) {
     int opt;
 
@@ -58,8 +57,6 @@ int main(int argc, char **argv) {
         std::cout << argv[optind++] << " ";
     }
     std::cout << "\n";
-
-    PmuEvent e;
 
     return 0;
 }
