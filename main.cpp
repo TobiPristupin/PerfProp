@@ -6,7 +6,6 @@
 #include "include/PmuEvent.h"
 #include "include/PmuEventParser.h"
 #include "include/EventGraph.h"
-#include "Edge.h"
 
 #define TOBI_DEBUG
 
