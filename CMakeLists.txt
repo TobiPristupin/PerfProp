@@ -9,8 +9,6 @@ endif()
 
 set( SOURCE_FILES
         main.cpp
-        ProbabilityNode.cpp
-        FactorGraph.cpp
         PmuEvent.cpp
         PmuEventParser.cpp
         Utils.cpp

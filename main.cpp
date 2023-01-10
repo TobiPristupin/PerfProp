@@ -4,7 +4,6 @@
 #include <cstring>
 #include <string>
 #include "include/PmuEvent.h"
-#include "include/ProbabilityNode.h"
 #include "include/PmuEventParser.h"
 #include "include/EventGraph.h"
 #include "Edge.h"

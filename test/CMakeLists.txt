@@ -3,11 +3,9 @@ cmake_minimum_required(VERSION 3.21)
 set( TEST_SOURCE_FILES
         testMain.cpp
         PmuEventParserTest.cpp
-        FactorGraphTest.cpp)
+        )
 
 set ( MAIN_SOURCE_FILES
-        ../ProbabilityNode.cpp
-        ../FactorGraph.cpp
         ../PmuEvent.cpp
         ../PmuEventParser.cpp
         ../Utils.cpp
