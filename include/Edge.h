@@ -23,6 +23,10 @@ public:
         return updaterFunc;
     }
 
+    bool operator==(const Edge& e) const {
+        return this->eventTo == e.eventTo && this->updaterFunc == e.updaterFunc;
+    }
+
 private:
     PmuEvent eventTo;
     StatUpdaterFunc updaterFunc;
