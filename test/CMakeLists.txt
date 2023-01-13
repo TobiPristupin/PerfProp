@@ -9,7 +9,7 @@ set ( MAIN_SOURCE_FILES
         ../PmuEvent.cpp
         ../PmuEventParser.cpp
         ../Utils.cpp
-        ../EventGraph.cpp)
+        ../EventGraph.cpp ../Updaters.cpp)
 
 include_directories(
         ../include/

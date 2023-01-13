@@ -6,6 +6,7 @@
 #include "include/PmuEvent.h"
 #include "include/PmuEventParser.h"
 #include "include/EventGraph.h"
+#include "include/Updaters.h"
 
 #define TOBI_DEBUG
 
@@ -49,7 +50,7 @@ void handleCmdArgs(int argc, char* argv[]){
             case 'e': {
                 events = parseEvents(optarg);
                 for (const PmuEvent &e: events) {
-                    std::cout << e.name << " " << e.modifiers << "\n";
+                    std::cout << e.getName() << " " << e.getModifiers() << "\n";
                 }
                 break;
             }
@@ -90,20 +91,30 @@ EventGraph generateDebugGraph(){
         graph.addNode(event);
     }
 
+    graph.addEdge(pmuEvents[0], pmuEvents[1], [] (const PmuEvent& eventFrom, PmuEvent& eventTo){
+        if (eventFrom.getMean().has_value()){
+            double expectedMean = 2 * eventFrom.getMean().value();
+            double currMean = eventTo.getMean().value_or(0);
+            double diff = currMean - expectedMean;
+            double correctionWeight = 0.2;
+            eventTo.setMean(currMean + diff * correctionWeight);
+        }
+    });
 
-//    graph.addEdge(pmuEvents[0], pmuEvents[1], [] (double to_update, double related) {
-//        return 0.1;
-//    });
+    graph.addEdge(pmuEvents[0], pmuEvents[1])
 
+    return graph;
 }
 
 int main(int argc, char *argv[]) {
     handleCmdArgs(argc, argv);
 #ifdef TOBI_DEBUG
-    EventGraph graph = populateEventGraph(events);
+    EventGraph graph = generateDebugGraph();
 #else
     EventGraph graph = populateEventGraph(events);
 #endif
+
+
 
     return 0;
 }

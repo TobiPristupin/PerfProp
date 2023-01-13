@@ -9,7 +9,7 @@ void EventGraph::addNode(const PmuEvent &event) {
     }
 }
 
-void EventGraph::addEdge(const PmuEvent &eventFrom, const PmuEvent &eventTo, StatUpdaterFunc func) {
+void EventGraph::addEdge(const PmuEvent &eventFrom, const PmuEvent &eventTo, const StatUpdaterFunc& func) {
     if (graph.find(eventFrom) == graph.end()){
         graph[eventFrom] = std::unordered_set<Edge, HashEdge, EqualsEdge>();
     }
@@ -18,7 +18,7 @@ void EventGraph::addEdge(const PmuEvent &eventFrom, const PmuEvent &eventTo, Sta
         graph[eventFrom] = std::unordered_set<Edge, HashEdge, EqualsEdge>();
     }
 
-    graph[eventFrom].insert(Edge(eventTo, func));
+    graph[eventFrom].insert(Edge(eventFrom, eventTo, func));
 }
 
 
