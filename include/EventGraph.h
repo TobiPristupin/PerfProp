@@ -27,6 +27,7 @@ public:
      */
     void addEdge(const PmuEvent &eventFrom, const PmuEvent &eventTo, const StatUpdaterFunc& func);
 
+
 private:
 
     class Edge {

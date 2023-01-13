@@ -24,9 +24,9 @@ private:
 };
 
 int main(int argc, char **argv){
-    int x = 10;
-    Obj obj(x);
-    std::cout << x << "\n";
-    std::cout << obj.getS() << "\n";
+    int i = 2;
+    for (i; i < i + 5; i++){
+        std::cout << i << "\n";
+    }
 
 }

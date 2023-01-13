@@ -7,6 +7,8 @@
 #include "include/PmuEventParser.h"
 #include "include/EventGraph.h"
 #include "include/Updaters.h"
+#include "include/PmuGrouper.h"
+#include "PmuArch.h"
 
 #define TOBI_DEBUG
 
@@ -86,22 +88,17 @@ EventGraph generateDebugGraph(){
             {"E5", PmuEvent::Type::SOFTWARE},
     };
 
+    events = pmuEvents;
+
     EventGraph graph;
     for (const PmuEvent& event : pmuEvents){
         graph.addNode(event);
     }
 
-    graph.addEdge(pmuEvents[0], pmuEvents[1], [] (const PmuEvent& eventFrom, PmuEvent& eventTo){
-        if (eventFrom.getMean().has_value()){
-            double expectedMean = 2 * eventFrom.getMean().value();
-            double currMean = eventTo.getMean().value_or(0);
-            double diff = currMean - expectedMean;
-            double correctionWeight = 0.2;
-            eventTo.setMean(currMean + diff * correctionWeight);
-        }
-    });
 
-    graph.addEdge(pmuEvents[0], pmuEvents[1])
+//    TODO? UNSURE graph.addEdge(pmuEvents[0], pmuEvents[1],
+//                  linearCorrectionUpdater(0.1, 0.11, 0.1)
+//                  );
 
     return graph;
 }
@@ -113,6 +110,10 @@ int main(int argc, char *argv[]) {
 #else
     EventGraph graph = populateEventGraph(events);
 #endif
+
+    size_t groupSize = PmuArch::numProgrammableHPCs();
+    std::vector<std::vector<PmuEvent>> groups = PmuGrouper::group(events, groupSize);
+
 
 
 
