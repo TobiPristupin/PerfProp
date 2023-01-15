@@ -1,8 +1,19 @@
+//TODO: Figure out updaters
+//TODO: Grouping algorithm
+//TODO: Number of programmable HPCs
+//TODO: Refactor PmuEventParser to use a namespace
+//TODO: Refactor handleCmdArgs to return a struct instead of modifying global vars.
+//TODO: Refactor includes using include-what-you-use
+
+
 #include <vector>
 #include <iostream>
 #include <getopt.h>
 #include <cstring>
 #include <string>
+#include <csignal>
+#include <memory>
+#include <sys/wait.h>
 #include "include/PmuEvent.h"
 #include "include/PmuEventParser.h"
 #include "include/EventGraph.h"
@@ -10,10 +21,18 @@
 #include "include/PmuGrouper.h"
 #include "PmuArch.h"
 
-#define TOBI_DEBUG
+#define BAYESPERF_DEBUG
 
-static const std::string usageString = "Usage: bayesperf stat -e {events} program\n";
+static const std::string usageString = "Usage: bayesperf stat -e {events} {program}\n";
 static std::vector<PmuEvent> events;
+/*
+ * cmd args for the program to run. This is stored as a char*[] instead of std::string because it will be
+ * later fed into exec, which requires C-strings. argv already comes as C-strings, so it is easier to keep it
+ * that way instead of converting between C-strings to std::string and back to C-string.
+ *
+ * This array's last element will be NULL, because it is required by exec.
+ */
+static std::unique_ptr<char*[]> programToRun;
 
 void printUsage(){
     std::cout << usageString;
@@ -51,21 +70,32 @@ void handleCmdArgs(int argc, char* argv[]){
                 exit(0);
             case 'e': {
                 events = parseEvents(optarg);
-                for (const PmuEvent &e: events) {
-                    std::cout << e.getName() << " " << e.getModifiers() << "\n";
-                }
                 break;
             }
             default:
                 printUsage();
-                return exit(0);
+                exit(0);
         }
     }
 
     optind += 1; //skip command to bayesperf
-    while (optind < argc){
-        std::cout << argv[optind++] << " ";
+
+    int numCommandArgs = argc - optind;
+    if (numCommandArgs == 0){
+        std::cout << "Please input a program to execute\n";
+        printUsage();
     }
+
+    /*
+     * NOTE: These args will be fed into exec. exec requires the last item of the array to be NULL. So we
+     * need a +1 in size to add this final element.
+     */
+    programToRun = std::make_unique<char*[]>(numCommandArgs + 1);
+    int i = 0;
+    while (optind < argc){
+        programToRun[i++] = argv[optind++];
+    }
+    programToRun[i] = nullptr;
 }
 
 EventGraph populateEventGraph(const std::vector<PmuEvent>& pmuEvents){
@@ -103,9 +133,15 @@ EventGraph generateDebugGraph(){
     return graph;
 }
 
+int reportError(const std::string& msg){
+    int error = errno; //perror may modify errno, so we save it beforehand
+    perror(msg.c_str());
+    return error;
+}
+
 int main(int argc, char *argv[]) {
     handleCmdArgs(argc, argv);
-#ifdef TOBI_DEBUG
+#ifdef BAYESPERF_DEBUG
     EventGraph graph = generateDebugGraph();
 #else
     EventGraph graph = populateEventGraph(events);
@@ -114,12 +150,32 @@ int main(int argc, char *argv[]) {
     size_t groupSize = PmuArch::numProgrammableHPCs();
     std::vector<std::vector<PmuEvent>> groups = PmuGrouper::group(events, groupSize);
 
+    pid_t pid = fork();
+    if (pid < 0){
+        return reportError("fork()");
+    } else if (pid == 0){ //Child process
+        if (execvp(programToRun[0], programToRun.get()) < 0){
+            return reportError("execvpe()");
+        }
+    } else { //Parent process
+        std::cout << "pid of child " << pid << "\n";
+        if (waitpid(pid, nullptr, 0) < 0){
+            return reportError("waitpid()");
+        }
 
+        std::cout << "Child finalized\n";
+    }
 
 
     return 0;
 }
 
+/*
+ * Hide idea of event graoh, instead just have an event manager
+ * you can add events to the manager, and register connections between events, with a callback
+ * when a new sample is obtained, push the sample to the manager
+ * manager should update mean/variances, and then propagate changes
+ */
 
 
 

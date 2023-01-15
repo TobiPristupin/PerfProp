@@ -10,7 +10,7 @@ std::vector<PmuEvent> parseEvents(const std::string& cmdEventString) {
     std::unordered_set<std::string> softwareEvents = obtainSoftwareEvents();
 
     std::vector<PmuEvent> events;
-    std::vector<std::string> eventStrings = splitString(cmdEventString, ',');
+    std::vector<std::string> eventStrings = Utils::splitString(cmdEventString, ',');
     for (const std::string &e : eventStrings){
         std::string eventName;
         PmuEvent::Type type;
@@ -64,7 +64,7 @@ static std::unordered_set<std::string> obtainSoftwareEvents(){
             continue;
         }
 
-        std::vector<std::string> splitLine = splitString(line, ' ');
+        std::vector<std::string> splitLine = Utils::splitString(line, ' ');
         if (splitLine[1] == "OR"){
             softwareEvents.insert(splitLine[0]);
             softwareEvents.insert(splitLine[2]);

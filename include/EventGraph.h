@@ -48,7 +48,7 @@ private:
      */
     struct HashEdge { std::size_t operator()(const Edge& edge) const {
         std::size_t h = 0;
-        hash_combine(h,edge.eventTo, edge.eventFrom);
+        Utils::hash_combine(h,edge.eventTo, edge.eventFrom);
         return h;
     }};
 
