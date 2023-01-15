@@ -11,7 +11,6 @@
 #include <getopt.h>
 #include <cstring>
 #include <string>
-#include <csignal>
 #include <memory>
 #include <sys/wait.h>
 #include "include/PmuEvent.h"
@@ -20,8 +19,7 @@
 #include "include/Updaters.h"
 #include "include/PmuGrouper.h"
 #include "PmuArch.h"
-
-#define BAYESPERF_DEBUG
+#include "Logger.h"
 
 static const std::string usageString = "Usage: bayesperf stat -e {events} {program}\n";
 static std::vector<PmuEvent> events;
@@ -153,19 +151,20 @@ int main(int argc, char *argv[]) {
     pid_t pid = fork();
     if (pid < 0){
         return reportError("fork()");
-    } else if (pid == 0){ //Child process
+    }
+
+    if (pid == 0){ //Child process
         if (execvp(programToRun[0], programToRun.get()) < 0){
             return reportError("execvpe()");
         }
     } else { //Parent process
-        std::cout << "pid of child " << pid << "\n";
+        Logger::debug("Child process created with pid " + std::to_string(pid));
         if (waitpid(pid, nullptr, 0) < 0){
             return reportError("waitpid()");
         }
 
-        std::cout << "Child finalized\n";
+        Logger::debug("Child process finalized executing");
     }
-
 
     return 0;
 }
