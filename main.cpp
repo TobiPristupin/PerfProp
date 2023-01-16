@@ -149,7 +149,9 @@ int main(int argc, char *argv[]) {
 #endif
 
     size_t groupSize = PmuArch::numProgrammableHPCs();
-    std::vector<std::vector<PmuEvent>> groups = PmuGrouper::group(events, groupSize);
+
+    auto [hardwareEvents, softwareEvents] = PmuGrouper::splitHardwareSoftware(events);
+    std::vector<std::vector<PmuEvent>> groups = PmuGrouper::group(hardwareEvents, groupSize);
 
     pid_t pid = fork();
     if (pid < 0) {
