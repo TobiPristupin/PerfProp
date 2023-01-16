@@ -36,3 +36,5 @@ include(GoogleTest)
 gtest_discover_tests(bayesperf_cpp_tests)
 
 add_executable( standalone_cpp standalone.cpp)
+find_library(PFM_LIB pfm REQUIRED)
+target_link_libraries(standalone_cpp "${PFM_LIB}")

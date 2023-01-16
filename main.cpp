@@ -5,7 +5,6 @@
 //TODO: Refactor handleCmdArgs to return a struct instead of modifying global vars.
 //TODO: Refactor includes using include-what-you-use
 
-
 #include <vector>
 #include <iostream>
 #include <getopt.h>
@@ -20,6 +19,8 @@
 #include "include/PmuGrouper.h"
 #include "PmuArch.h"
 #include "Logger.h"
+#include <perfmon/pfmlib.h>
+
 
 static const std::string usageString = "Usage: bayesperf stat -e {events} {program}\n";
 static std::vector<PmuEvent> events;
@@ -138,6 +139,8 @@ int reportError(const std::string& msg){
 }
 
 int main(int argc, char *argv[]) {
+    pfm_initialize();
+
     handleCmdArgs(argc, argv);
 #ifdef BAYESPERF_DEBUG
     EventGraph graph = generateDebugGraph();
@@ -149,17 +152,17 @@ int main(int argc, char *argv[]) {
     std::vector<std::vector<PmuEvent>> groups = PmuGrouper::group(events, groupSize);
 
     pid_t pid = fork();
-    if (pid < 0){
+    if (pid < 0) {
         return reportError("fork()");
     }
 
-    if (pid == 0){ //Child process
-        if (execvp(programToRun[0], programToRun.get()) < 0){
+    if (pid == 0) { //Child process
+        if (execvp(programToRun[0], programToRun.get()) < 0) {
             return reportError("execvpe()");
         }
     } else { //Parent process
         Logger::debug("Child process created with pid " + std::to_string(pid));
-        if (waitpid(pid, nullptr, 0) < 0){
+        if (waitpid(pid, nullptr, 0) < 0) {
             return reportError("waitpid()");
         }
 
