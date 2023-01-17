@@ -19,7 +19,7 @@ protected:
  *
  * getPerfEventAttr will generate error logs when an event's encoding cannot be found. Those should be ignored.
  */
-TEST_F(PmuArchTest, getEventEncoding){
+TEST_F(PmuArchTest, getEventEncodingTest){
     PmuEvent valid = PmuEvent("RETIRED_INSTRUCTIONS", PmuEvent::HARDWARE);
     ASSERT_TRUE(PmuArch::getPerfEventAttr(valid).has_value());
 
@@ -28,4 +28,25 @@ TEST_F(PmuArchTest, getEventEncoding){
 
     PmuEvent invalid = PmuEvent("caca", PmuEvent::HARDWARE);
     ASSERT_FALSE(PmuArch::getPerfEventAttr(invalid).has_value());
+}
+
+/*
+ * Will generate error logs when an event's encoding cannot be found. Those should be ignored.
+ */
+TEST_F(PmuArchTest, perfOpenEventsTest){
+    std::vector<PmuEvent> validEvents = {
+            {"branches", PmuEvent::Type::HARDWARE},
+            {"branch-misses:u", PmuEvent::Type::HARDWARE},
+            {"RETIRED_INSTRUCTIONS", PmuEvent::Type::HARDWARE},
+            {"bpf-output", PmuEvent::Type::SOFTWARE},
+    };
+    PmuEvent invalid = {"caca", PmuEvent::HARDWARE};
+
+    std::vector<std::vector<PmuEvent>> groups = {
+            {validEvents[0], validEvents[1], validEvents[2]},
+            {validEvents[0], validEvents[1], invalid}
+            };
+
+    std::unordered_map<int, PmuEvent> fds = PmuArch::perfOpenEvents(groups, 0);
+    ASSERT_EQ(fds.size(), 5); //should have a fd for every event but the invalid one
 }

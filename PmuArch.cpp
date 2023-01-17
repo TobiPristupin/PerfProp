@@ -12,12 +12,6 @@
  */
 namespace PmuArch {
 
-    namespace {
-        long perf_event_open(struct perf_event_attr *hw_event, pid_t pid, int cpu, int group_fd, unsigned long flags) {
-            return syscall(__NR_perf_event_open, hw_event, pid, cpu, group_fd, flags);
-        }
-    }
-
     size_t numProgrammableHPCs() {
         //TODO: Fill this in by using pfm_get_pmu_info and num_cntrs field, see man pages for details
         return 3;
@@ -43,6 +37,31 @@ namespace PmuArch {
         }
 
         return attr;
+    }
+    std::unordered_map<int, PmuEvent> perfOpenEvents(const std::vector<std::vector<PmuEvent>>& eventGroups, pid_t pid) {
+        std::unordered_map<int, PmuEvent> fds;
+
+        for (auto& eventGroup : eventGroups){
+            int groupLeaderFd = -1;
+            for (const PmuEvent& event : eventGroup){
+                std::optional<perf_event_attr> attr = getPerfEventAttr(event);
+                if (!attr){
+                    Logger::error("Skipped scheduling of " + event.getName() + ", could not get event encoding.");
+                    continue;
+                }
+
+                attr->disabled = 1;
+                attr->read_format = PERF_FORMAT_GROUP;
+                int fd = perf_event_open(&attr.value(), pid, -1, groupLeaderFd, 0);
+                fds.insert({fd, event});
+
+                if (groupLeaderFd == -1){
+                    groupLeaderFd = fd;
+                }
+            }
+        }
+
+        return fds;
     }
 
 
