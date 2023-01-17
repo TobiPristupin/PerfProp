@@ -18,15 +18,22 @@ namespace Logger {
     constexpr Level level = static_cast<Level>(BAYESPERF_LOG_LEVEL);
 
     inline void debug(const std::string& message) {
-        if (level == DEBUG || level == INFO){
+        if (level == DEBUG){
             std::cout << "[DEBUG]\t"<< message << "\n";
         }
     }
 
     inline void info(const std::string& message) {
-        if (level == INFO){
+        if (level == DEBUG || level == INFO){
             std::cout << "[INFO]\t" << message << "\n";
         }
+    }
+
+    /*
+     * Error messages will always be shown regardless of debug level
+     */
+    inline void error(const std::string& message) {
+        std::cerr << "[ERROR]\t" << message << "\n";
     }
 }
 

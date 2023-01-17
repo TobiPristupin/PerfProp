@@ -3,6 +3,7 @@
 //TODO: Number of programmable HPCs
 //TODO: Refactor PmuEventParser to use a namespace
 //TODO: Refactor handleCmdArgs to return a struct instead of modifying global vars.
+//TODO: Take code out of main.cpp
 //TODO: Refactor includes using include-what-you-use
 
 #include <vector>
@@ -12,6 +13,7 @@
 #include <string>
 #include <memory>
 #include <sys/wait.h>
+#include <cstring>
 #include "include/PmuEvent.h"
 #include "include/PmuEventParser.h"
 #include "include/EventGraph.h"
@@ -19,11 +21,12 @@
 #include "include/PmuGrouper.h"
 #include "PmuArch.h"
 #include "Logger.h"
-#include <perfmon/pfmlib.h>
+#include "PfmLib.h"
 
 
 static const std::string usageString = "Usage: bayesperf stat -e {events} {program}\n";
 static std::vector<PmuEvent> events;
+
 /*
  * cmd args for the program to run. This is stored as a char*[] instead of std::string because it will be
  * later fed into exec, which requires C-strings. argv already comes as C-strings, so it is easier to keep it
@@ -133,13 +136,13 @@ EventGraph generateDebugGraph(){
 }
 
 int reportError(const std::string& msg){
-    int error = errno; //perror may modify errno, so we save it beforehand
-    perror(msg.c_str());
+    int error = errno; //logging may modify errno, so we save it beforehand
+    Logger::error(msg + ": " + strerror(errno));
     return error;
 }
 
 int main(int argc, char *argv[]) {
-    pfm_initialize();
+    PfmLib pfmlib; //instantiates pflmlib
 
     handleCmdArgs(argc, argv);
 #ifdef BAYESPERF_DEBUG
@@ -164,18 +167,33 @@ int main(int argc, char *argv[]) {
         }
     } else { //Parent process
         Logger::debug("Child process created with pid " + std::to_string(pid));
-        if (waitpid(pid, nullptr, 0) < 0) {
-            return reportError("waitpid()");
+
+        // Do something while child is alive. Simpler than setting up a whole signal handler for SIGCHLD
+        int ret = waitpid(pid, nullptr, WNOHANG);
+        while (ret <= 0){
+            if (ret < 0){
+                return reportError("waitpid()");
+            }
+
+
+
+            ret = waitpid(pid, nullptr, WNOHANG);
         }
 
         Logger::debug("Child process finalized executing");
+
+
+
+
     }
 
     return 0;
 }
 
+
 /*
  * Hide idea of event graoh, instead just have an event manager
+ * remove mean/std dev from event, have event manager store it
  * you can add events to the manager, and register connections between events, with a callback
  * when a new sample is obtained, push the sample to the manager
  * manager should update mean/variances, and then propagate changes
