@@ -12,21 +12,9 @@ std::vector<PmuEvent> parseEvents(const std::string& cmdEventString) {
     std::vector<PmuEvent> events;
     std::vector<std::string> eventStrings = Utils::splitString(cmdEventString, ',');
     for (const std::string &e : eventStrings){
-        std::string eventName;
-        PmuEvent::Type type;
-        std::string modifiers;
-
-        std::string::size_type colonPos = e.find(':');
-        if (colonPos != std::string::npos){
-            eventName = e.substr(0, colonPos);
-            modifiers = e.substr(colonPos + 1);
-        } else {
-            eventName = e;
-            modifiers = "";
-        }
-
-        type = softwareEvents.find(eventName) != softwareEvents.end() ? PmuEvent::SOFTWARE : PmuEvent::HARDWARE;
-        events.emplace_back(eventName, type, modifiers);
+        std::string eventName = e;
+        PmuEvent::Type type = softwareEvents.find(eventName) != softwareEvents.end() ? PmuEvent::SOFTWARE : PmuEvent::HARDWARE;
+        events.emplace_back(eventName, type);
     }
 
     return events;
