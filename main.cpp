@@ -156,6 +156,12 @@ int main(int argc, char *argv[]) {
     auto [hardwareEvents, softwareEvents] = PmuGrouper::splitHardwareSoftware(events);
     std::vector<std::vector<PmuEvent>> groups = PmuGrouper::group(hardwareEvents, groupSize);
 
+    for (const PmuEvent& e : hardwareEvents){
+        std::optional<perf_event_attr> attr = PmuArch::getPerfEventAttr(e);
+        std::cout << 1 << "\n";
+    }
+
+
     pid_t pid = fork();
     if (pid < 0) {
         return reportError("fork()");
@@ -174,8 +180,6 @@ int main(int argc, char *argv[]) {
             if (ret < 0){
                 return reportError("waitpid()");
             }
-
-
 
             ret = waitpid(pid, nullptr, WNOHANG);
         }

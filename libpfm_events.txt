@@ -1,0 +1,2070 @@
+Supported PMU models:
+	[7, netburst, "Pentium4"]
+	[8, netburst_p, "Pentium4 (Prescott)"]
+	[11, core, "Intel Core"]
+	[14, atom, "Intel Atom"]
+	[15, nhm, "Intel Nehalem"]
+	[16, nhm_ex, "Intel Nehalem EX"]
+	[17, nhm_unc, "Intel Nehalem uncore"]
+	[18, ix86arch, "Intel X86 architectural PMU"]
+	[51, perf, "perf_events generic PMU"]
+	[52, wsm, "Intel Westmere (single-socket)"]
+	[53, wsm_dp, "Intel Westmere DP"]
+	[54, wsm_unc, "Intel Westmere uncore"]
+	[55, amd64_k7, "AMD64 K7"]
+	[56, amd64_k8_revb, "AMD64 K8 RevB"]
+	[57, amd64_k8_revc, "AMD64 K8 RevC"]
+	[58, amd64_k8_revd, "AMD64 K8 RevD"]
+	[59, amd64_k8_reve, "AMD64 K8 RevE"]
+	[60, amd64_k8_revf, "AMD64 K8 RevF"]
+	[61, amd64_k8_revg, "AMD64 K8 RevG"]
+	[62, amd64_fam10h_barcelona, "AMD64 Fam10h Barcelona"]
+	[63, amd64_fam10h_shanghai, "AMD64 Fam10h Shanghai"]
+	[64, amd64_fam10h_istanbul, "AMD64 Fam10h Istanbul"]
+	[68, snb, "Intel Sandy Bridge"]
+	[69, amd64_fam14h_bobcat, "AMD64 Fam14h Bobcat"]
+	[70, amd64_fam15h_interlagos, "AMD64 Fam15h Interlagos"]
+	[71, snb_ep, "Intel Sandy Bridge EP"]
+	[72, amd64_fam12h_llano, "AMD64 Fam12h Llano"]
+	[73, amd64_fam11h_turion, "AMD64 Fam11h Turion"]
+	[74, ivb, "Intel Ivy Bridge"]
+	[76, snb_unc_cbo0, "Intel Sandy Bridge C-box0 uncore"]
+	[77, snb_unc_cbo1, "Intel Sandy Bridge C-box1 uncore"]
+	[78, snb_unc_cbo2, "Intel Sandy Bridge C-box2 uncore"]
+	[79, snb_unc_cbo3, "Intel Sandy Bridge C-box3 uncore"]
+	[80, snbep_unc_cbo0, "Intel Sandy Bridge-EP C-Box 0 uncore"]
+	[81, snbep_unc_cbo1, "Intel Sandy Bridge-EP C-Box 1 uncore"]
+	[82, snbep_unc_cbo2, "Intel Sandy Bridge-EP C-Box 2 uncore"]
+	[83, snbep_unc_cbo3, "Intel Sandy Bridge-EP C-Box 3 uncore"]
+	[84, snbep_unc_cbo4, "Intel Sandy Bridge-EP C-Box 4 uncore"]
+	[85, snbep_unc_cbo5, "Intel Sandy Bridge-EP C-Box 5 uncore"]
+	[86, snbep_unc_cbo6, "Intel Sandy Bridge-EP C-Box 6 uncore"]
+	[87, snbep_unc_cbo7, "Intel Sandy Bridge-EP C-Box 7 uncore"]
+	[88, snbep_unc_ha, "Intel Sandy Bridge-EP HA uncore"]
+	[89, snbep_unc_imc0, "Intel Sandy Bridge-EP IMC0 uncore"]
+	[90, snbep_unc_imc1, "Intel Sandy Bridge-EP IMC1 uncore"]
+	[91, snbep_unc_imc2, "Intel Sandy Bridge-EP IMC2 uncore"]
+	[92, snbep_unc_imc3, "Intel Sandy Bridge-EP IMC3 uncore"]
+	[93, snbep_unc_pcu, "Intel Sandy Bridge-EP PCU uncore"]
+	[94, snbep_unc_qpi0, "Intel Sandy Bridge-EP QPI0 uncore"]
+	[95, snbep_unc_qpi1, "Intel Sandy Bridge-EP QPI1 uncore"]
+	[96, snbep_unc_ubo, "Intel Sandy Bridge-EP U-Box uncore"]
+	[97, snbep_unc_r2pcie, "Intel Sandy Bridge-EP R2PCIe uncore"]
+	[98, snbep_unc_r3qpi0, "Intel Sandy Bridge-EP R3QPI0 uncore"]
+	[99, snbep_unc_r3qpi1, "Intel Sandy Bridge-EP R3QPI1 uncore"]
+	[100, knc, "Intel Knights Corner"]
+	[103, ivb_ep, "Intel Ivy Bridge EP"]
+	[104, hsw, "Intel Haswell"]
+	[105, ivb_unc_cbo0, "Intel Ivy Bridge C-box0 uncore"]
+	[106, ivb_unc_cbo1, "Intel Ivy Bridge C-box1 uncore"]
+	[107, ivb_unc_cbo2, "Intel Ivy Bridge C-box2 uncore"]
+	[108, ivb_unc_cbo3, "Intel Ivy Bridge C-box3 uncore"]
+	[110, rapl, "Intel RAPL"]
+	[111, slm, "Intel Silvermont"]
+	[112, amd64_fam15h_nb, "AMD64 Fam15h NorthBridge"]
+	[114, perf_raw, "perf_events raw PMU"]
+	[115, ivbep_unc_cbo0, "Intel Ivy Bridge-EP C-Box 0 uncore"]
+	[116, ivbep_unc_cbo1, "Intel Ivy Bridge-EP C-Box 1 uncore"]
+	[117, ivbep_unc_cbo2, "Intel Ivy Bridge-EP C-Box 2 uncore"]
+	[118, ivbep_unc_cbo3, "Intel Ivy Bridge-EP C-Box 3 uncore"]
+	[119, ivbep_unc_cbo4, "Intel Ivy Bridge-EP C-Box 4 uncore"]
+	[120, ivbep_unc_cbo5, "Intel Ivy Bridge-EP C-Box 5 uncore"]
+	[121, ivbep_unc_cbo6, "Intel Ivy Bridge-EP C-Box 6 uncore"]
+	[122, ivbep_unc_cbo7, "Intel Ivy Bridge-EP C-Box 7 uncore"]
+	[123, ivbep_unc_cbo8, "Intel Ivy Bridge-EP C-Box 8 uncore"]
+	[124, ivbep_unc_cbo9, "Intel Ivy Bridge-EP C-Box 9 uncore"]
+	[125, ivbep_unc_cbo10, "Intel Ivy Bridge-EP C-Box 10 uncore"]
+	[126, ivbep_unc_cbo11, "Intel Ivy Bridge-EP C-Box 11 uncore"]
+	[127, ivbep_unc_cbo12, "Intel Ivy Bridge-EP C-Box 12 uncore"]
+	[128, ivbep_unc_cbo13, "Intel Ivy Bridge-EP C-Box 13 uncore"]
+	[129, ivbep_unc_cbo14, "Intel Ivy Bridge-EP C-Box 14 uncore"]
+	[130, ivbep_unc_ha0, "Intel Ivy Bridge-EP HA 0 uncore"]
+	[131, ivbep_unc_ha1, "Intel Ivy Bridge-EP HA 1 uncore"]
+	[132, ivbep_unc_imc0, "Intel Iyy Bridge-EP IMC0 uncore"]
+	[133, ivbep_unc_imc1, "Intel Iyy Bridge-EP IMC1 uncore"]
+	[134, ivbep_unc_imc2, "Intel Iyy Bridge-EP IMC2 uncore"]
+	[135, ivbep_unc_imc3, "Intel Iyy Bridge-EP IMC3 uncore"]
+	[136, ivbep_unc_imc4, "Intel Iyy Bridge-EP IMC4 uncore"]
+	[137, ivbep_unc_imc5, "Intel Iyy Bridge-EP IMC5 uncore"]
+	[138, ivbep_unc_imc6, "Intel Iyy Bridge-EP IMC6 uncore"]
+	[139, ivbep_unc_imc7, "Intel Iyy Bridge-EP IMC7 uncore"]
+	[140, ivbep_unc_pcu, "Intel Ivy Bridge-EP PCU uncore"]
+	[141, ivbep_unc_qpi0, "Intel Ivy Bridge-EP QPI0 uncore"]
+	[142, ivbep_unc_qpi1, "Intel Ivy Bridge-EP QPI1 uncore"]
+	[143, ivbep_unc_qpi2, "Intel Ivy Bridge-EP QPI2 uncore"]
+	[144, ivbep_unc_ubo, "Intel Ivy Bridge-EP U-Box uncore"]
+	[145, ivbep_unc_r2pcie, "Intel Ivy Bridge-EP R2PCIe uncore"]
+	[146, ivbep_unc_r3qpi0, "Intel Ivy Bridge-EP R3QPI0 uncore"]
+	[147, ivbep_unc_r3qpi1, "Intel Ivy Bridge-EP R3QPI1 uncore"]
+	[148, ivbep_unc_r3qpi2, "Intel Ivy Bridge-EP R3QPI2 uncore"]
+	[149, ivbep_unc_irp, "Intel Ivy Bridge-EP IRP uncore"]
+	[154, hsw_ep, "Intel Haswell EP"]
+	[155, bdw, "Intel Broadwell"]
+	[157, hswep_unc_cbo0, "Intel Haswell-EP C-Box 0 uncore"]
+	[158, hswep_unc_cbo1, "Intel Haswell-EP C-Box 1 uncore"]
+	[159, hswep_unc_cbo2, "Intel Haswell-EP C-Box 2 uncore"]
+	[160, hswep_unc_cbo3, "Intel Haswell-EP C-Box 3 uncore"]
+	[161, hswep_unc_cbo4, "Intel Haswell-EP C-Box 4 uncore"]
+	[162, hswep_unc_cbo5, "Intel Haswell-EP C-Box 5 uncore"]
+	[163, hswep_unc_cbo6, "Intel Haswell-EP C-Box 6 uncore"]
+	[164, hswep_unc_cbo7, "Intel Haswell-EP C-Box 7 uncore"]
+	[165, hswep_unc_cbo8, "Intel Haswell-EP C-Box 8 uncore"]
+	[166, hswep_unc_cbo9, "Intel Haswell-EP C-Box 9 uncore"]
+	[167, hswep_unc_cbo10, "Intel Haswell-EP C-Box 10 uncore"]
+	[168, hswep_unc_cbo11, "Intel Haswell-EP C-Box 11 uncore"]
+	[169, hswep_unc_cbo12, "Intel Haswell-EP C-Box 12 uncore"]
+	[170, hswep_unc_cbo13, "Intel Haswell-EP C-Box 13 uncore"]
+	[171, hswep_unc_cbo14, "Intel Haswell-EP C-Box 14 uncore"]
+	[172, hswep_unc_cbo15, "Intel Haswell-EP C-Box 15 uncore"]
+	[173, hswep_unc_cbo16, "Intel Haswell-EP C-Box 16 uncore"]
+	[174, hswep_unc_cbo17, "Intel Haswell-EP C-Box 17 uncore"]
+	[175, hswep_unc_ha0, "Intel Haswell-EP HA 0 uncore"]
+	[176, hswep_unc_ha1, "Intel Haswell-EP HA 1 uncore"]
+	[177, hswep_unc_imc0, "Intel Haswell-EP IMC0 uncore"]
+	[178, hswep_unc_imc1, "Intel Haswell-EP IMC1 uncore"]
+	[179, hswep_unc_imc2, "Intel Haswell-EP IMC2 uncore"]
+	[180, hswep_unc_imc3, "Intel Haswell-EP IMC3 uncore"]
+	[181, hswep_unc_imc4, "Intel Haswell-EP IMC4 uncore"]
+	[182, hswep_unc_imc5, "Intel Haswell-EP IMC5 uncore"]
+	[183, hswep_unc_imc6, "Intel Haswell-EP IMC6 uncore"]
+	[184, hswep_unc_imc7, "Intel Haswell-EP IMC7 uncore"]
+	[185, hswep_unc_pcu, "Intel Haswell-EP PCU uncore"]
+	[186, hswep_unc_qpi0, "Intel Haswell-EP QPI0 uncore"]
+	[187, hswep_unc_qpi1, "Intel Haswell-EP QPI1 uncore"]
+	[188, hswep_unc_ubo, "Intel Haswell-EP U-Box uncore"]
+	[189, hswep_unc_r2pcie, "Intel Haswell-EP R2PCIe uncore"]
+	[190, hswep_unc_r3qpi0, "Intel Haswell-EP R3QPI0 uncore"]
+	[191, hswep_unc_r3qpi1, "Intel Haswell-EP R3QPI1 uncore"]
+	[192, hswep_unc_r3qpi2, "Intel Haswell-EP R3QPI2 uncore"]
+	[193, hswep_unc_irp, "Intel Haswell-EP IRP uncore"]
+	[194, hswep_unc_sbo0, "Intel Haswell-EP S-BOX0 uncore"]
+	[195, hswep_unc_sbo1, "Intel Haswell-EP S-BOX1 uncore"]
+	[196, hswep_unc_sbo2, "Intel Haswell-EP S-BOX2 uncore"]
+	[197, hswep_unc_sbo3, "Intel Haswell-EP S-BOX3 uncore"]
+	[200, skl, "Intel Skylake"]
+	[201, bdw_ep, "Intel Broadwell EP"]
+	[202, glm, "Intel Goldmont"]
+	[203, knl, "Intel Knights Landing"]
+	[204, knl_unc_imc0, "Intel KnightLanding IMC 0 uncore"]
+	[205, knl_unc_imc1, "Intel KnightLanding IMC 1 uncore"]
+	[206, knl_unc_imc2, "Intel KnightLanding IMC 2 uncore"]
+	[207, knl_unc_imc3, "Intel KnightLanding IMC 3 uncore"]
+	[208, knl_unc_imc4, "Intel KnightLanding IMC 4 uncore"]
+	[209, knl_unc_imc5, "Intel KnightLanding IMC 5 uncore"]
+	[210, knl_unc_imc_uclk0, "Intel KnightLanding IMC UCLK 0 uncore"]
+	[211, knl_unc_imc_uclk1, "Intel KnightLanding IMC UCLK 1 uncore"]
+	[212, knl_unc_edc_eclk0, "Intel KnightLanding EDC_ECLK_0 uncore"]
+	[213, knl_unc_edc_eclk1, "Intel KnightLanding EDC_ECLK_1 uncore"]
+	[214, knl_unc_edc_eclk2, "Intel KnightLanding EDC_ECLK_2 uncore"]
+	[215, knl_unc_edc_eclk3, "Intel KnightLanding EDC_ECLK_3 uncore"]
+	[216, knl_unc_edc_eclk4, "Intel KnightLanding EDC_ECLK_4 uncore"]
+	[217, knl_unc_edc_eclk5, "Intel KnightLanding EDC_ECLK_5 uncore"]
+	[218, knl_unc_edc_eclk6, "Intel KnightLanding EDC_ECLK_6 uncore"]
+	[219, knl_unc_edc_eclk7, "Intel KnightLanding EDC_ECLK_7 uncore"]
+	[220, knl_unc_edc_uclk0, "Intel KnightLanding EDC_UCLK_0 uncore"]
+	[221, knl_unc_edc_uclk1, "Intel KnightLanding EDC_UCLK_1 uncore"]
+	[222, knl_unc_edc_uclk2, "Intel KnightLanding EDC_UCLK_2 uncore"]
+	[223, knl_unc_edc_uclk3, "Intel KnightLanding EDC_UCLK_3 uncore"]
+	[224, knl_unc_edc_uclk4, "Intel KnightLanding EDC_UCLK_4 uncore"]
+	[225, knl_unc_edc_uclk5, "Intel KnightLanding EDC_UCLK_5 uncore"]
+	[226, knl_unc_edc_uclk6, "Intel KnightLanding EDC_UCLK_6 uncore"]
+	[227, knl_unc_edc_uclk7, "Intel KnightLanding EDC_UCLK_7 uncore"]
+	[228, knl_unc_cha0, "Intel KnightLanding CHA 0 uncore"]
+	[229, knl_unc_cha1, "Intel KnightLanding CHA 1 uncore"]
+	[230, knl_unc_cha2, "Intel KnightLanding CHA 2 uncore"]
+	[231, knl_unc_cha3, "Intel KnightLanding CHA 3 uncore"]
+	[232, knl_unc_cha4, "Intel KnightLanding CHA 4 uncore"]
+	[233, knl_unc_cha5, "Intel KnightLanding CHA 5 uncore"]
+	[234, knl_unc_cha6, "Intel KnightLanding CHA 6 uncore"]
+	[235, knl_unc_cha7, "Intel KnightLanding CHA 7 uncore"]
+	[236, knl_unc_cha8, "Intel KnightLanding CHA 8 uncore"]
+	[237, knl_unc_cha9, "Intel KnightLanding CHA 9 uncore"]
+	[238, knl_unc_cha10, "Intel KnightLanding CHA 10 uncore"]
+	[239, knl_unc_cha11, "Intel KnightLanding CHA 11 uncore"]
+	[240, knl_unc_cha12, "Intel KnightLanding CHA 12 uncore"]
+	[241, knl_unc_cha13, "Intel KnightLanding CHA 13 uncore"]
+	[242, knl_unc_cha14, "Intel KnightLanding CHA 14 uncore"]
+	[243, knl_unc_cha15, "Intel KnightLanding CHA 15 uncore"]
+	[244, knl_unc_cha16, "Intel KnightLanding CHA 16 uncore"]
+	[245, knl_unc_cha17, "Intel KnightLanding CHA 17 uncore"]
+	[246, knl_unc_cha18, "Intel KnightLanding CHA 18 uncore"]
+	[247, knl_unc_cha19, "Intel KnightLanding CHA 19 uncore"]
+	[248, knl_unc_cha20, "Intel KnightLanding CHA 20 uncore"]
+	[249, knl_unc_cha21, "Intel KnightLanding CHA 21 uncore"]
+	[250, knl_unc_cha22, "Intel KnightLanding CHA 22 uncore"]
+	[251, knl_unc_cha23, "Intel KnightLanding CHA 23 uncore"]
+	[252, knl_unc_cha24, "Intel KnightLanding CHA 24 uncore"]
+	[253, knl_unc_cha25, "Intel KnightLanding CHA 25 uncore"]
+	[254, knl_unc_cha26, "Intel KnightLanding CHA 26 uncore"]
+	[255, knl_unc_cha27, "Intel KnightLanding CHA 27 uncore"]
+	[256, knl_unc_cha28, "Intel KnightLanding CHA 28 uncore"]
+	[257, knl_unc_cha29, "Intel KnightLanding CHA 29 uncore"]
+	[258, knl_unc_cha30, "Intel KnightLanding CHA 30 uncore"]
+	[259, knl_unc_cha31, "Intel KnightLanding CHA 31 uncore"]
+	[260, knl_unc_cha32, "Intel KnightLanding CHA 32 uncore"]
+	[261, knl_unc_cha33, "Intel KnightLanding CHA 33 uncore"]
+	[262, knl_unc_cha34, "Intel KnightLanding CHA 34 uncore"]
+	[263, knl_unc_cha35, "Intel KnightLanding CHA 35 uncore"]
+	[264, knl_unc_cha36, "Intel KnightLanding CHA 36 uncore"]
+	[265, knl_unc_cha37, "Intel KnightLanding CHA 37 uncore"]
+	[267, knl_unc_m2pcie, "Intel Knights Landing M2PCIe uncore"]
+	[269, bdx_unc_cbo0, "Intel BroadwellX C-Box 0 uncore"]
+	[270, bdx_unc_cbo1, "Intel BroadwellX C-Box 1 uncore"]
+	[271, bdx_unc_cbo2, "Intel BroadwellX C-Box 2 uncore"]
+	[272, bdx_unc_cbo3, "Intel BroadwellX C-Box 3 uncore"]
+	[273, bdx_unc_cbo4, "Intel BroadwellX C-Box 4 uncore"]
+	[274, bdx_unc_cbo5, "Intel BroadwellX C-Box 5 uncore"]
+	[275, bdx_unc_cbo6, "Intel BroadwellX C-Box 6 uncore"]
+	[276, bdx_unc_cbo7, "Intel BroadwellX C-Box 7 uncore"]
+	[277, bdx_unc_cbo8, "Intel BroadwellX C-Box 8 uncore"]
+	[278, bdx_unc_cbo9, "Intel BroadwellX C-Box 9 uncore"]
+	[279, bdx_unc_cbo10, "Intel BroadwellX C-Box 10 uncore"]
+	[280, bdx_unc_cbo11, "Intel BroadwellX C-Box 11 uncore"]
+	[281, bdx_unc_cbo12, "Intel BroadwellX C-Box 12 uncore"]
+	[282, bdx_unc_cbo13, "Intel BroadwellX C-Box 13 uncore"]
+	[283, bdx_unc_cbo14, "Intel BroadwellX C-Box 14 uncore"]
+	[284, bdx_unc_cbo15, "Intel BroadwellX C-Box 15 uncore"]
+	[285, bdx_unc_cbo16, "Intel BroadwellX C-Box 16 uncore"]
+	[286, bdx_unc_cbo17, "Intel BroadwellX C-Box 17 uncore"]
+	[287, bdx_unc_cbo18, "Intel BroadwellX C-Box 18 uncore"]
+	[288, bdx_unc_cbo19, "Intel BroadwellX C-Box 19 uncore"]
+	[289, bdx_unc_cbo20, "Intel BroadwellX C-Box 20 uncore"]
+	[290, bdx_unc_cbo21, "Intel BroadwellX C-Box 21 uncore"]
+	[291, bdx_unc_cbo22, "Intel BroadwellX C-Box 22 uncore"]
+	[292, bdx_unc_cbo23, "Intel BroadwellX C-Box 23 uncore"]
+	[293, bdx_unc_ha0, "Intel BroadwellX HA 0 uncore"]
+	[294, bdx_unc_ha1, "Intel BroadwellX HA 1 uncore"]
+	[295, bdx_unc_imc0, "Intel BroadwellX IMC0 uncore"]
+	[296, bdx_unc_imc1, "Intel BroadwellX IMC1 uncore"]
+	[297, bdx_unc_imc2, "Intel BroadwellX IMC2 uncore"]
+	[298, bdx_unc_imc3, "Intel BroadwellX IMC3 uncore"]
+	[299, bdx_unc_imc4, "Intel BroadwellX IMC4 uncore"]
+	[300, bdx_unc_imc5, "Intel BroadwellX IMC5 uncore"]
+	[301, bdx_unc_imc6, "Intel BroadwellX IMC6 uncore"]
+	[302, bdx_unc_imc7, "Intel BroadwellX IMC7 uncore"]
+	[303, bdx_unc_pcu, "Intel BroadwellX PCU uncore"]
+	[304, bdx_unc_qpi0, "Intel BroadwellX QPI0 uncore"]
+	[305, bdx_unc_qpi1, "Intel BroadwellX QPI1 uncore"]
+	[306, bdx_unc_qpi2, "Intel BroadwellX QPI2 uncore"]
+	[307, bdx_unc_ubo, "Intel BroadwellX U-Box uncore"]
+	[308, bdx_unc_r2pcie, "Intel BroadwellX R2PCIe uncore"]
+	[309, bdx_unc_r3qpi0, "Intel BroadwellX R3QPI0 uncore"]
+	[310, bdx_unc_r3qpi1, "Intel BroadwellX R3QPI1 uncore"]
+	[311, bdx_unc_r3qpi2, "Intel BroadwellX R3QPI2 uncore"]
+	[312, bdx_unc_irp, "Intel BroadwellX IRP uncore"]
+	[313, bdx_unc_sbo0, "Intel BroadwellX S-BOX0 uncore"]
+	[314, bdx_unc_sbo1, "Intel BroadwellX S-BOX1 uncore"]
+	[315, bdx_unc_sbo2, "Intel BroadwellX S-BOX2 uncore"]
+	[316, bdx_unc_sbo3, "Intel BroadwellX S-BOX3 uncore"]
+	[317, amd64_fam17h, "AMD64 Fam17h Zen1 (deprecated - use amd_fam17h_zen1 instead)"]
+	[318, amd64_fam16h, "AMD64 Fam16h Jaguar"]
+	[319, skx, "Intel Skylake X"]
+	[320, skx_unc_cha0, "Intel SkylakeX CHA0 uncore"]
+	[321, skx_unc_cha1, "Intel SkylakeX CHA1 uncore"]
+	[322, skx_unc_cha2, "Intel SkylakeX CHA2 uncore"]
+	[323, skx_unc_cha3, "Intel SkylakeX CHA3 uncore"]
+	[324, skx_unc_cha4, "Intel SkylakeX CHA4 uncore"]
+	[325, skx_unc_cha5, "Intel SkylakeX CHA5 uncore"]
+	[326, skx_unc_cha6, "Intel SkylakeX CHA6 uncore"]
+	[327, skx_unc_cha7, "Intel SkylakeX CHA7 uncore"]
+	[328, skx_unc_cha8, "Intel SkylakeX CHA8 uncore"]
+	[329, skx_unc_cha9, "Intel SkylakeX CHA9 uncore"]
+	[330, skx_unc_cha10, "Intel SkylakeX CHA10 uncore"]
+	[331, skx_unc_cha11, "Intel SkylakeX CHA11 uncore"]
+	[332, skx_unc_cha12, "Intel SkylakeX CHA12 uncore"]
+	[333, skx_unc_cha13, "Intel SkylakeX CHA13 uncore"]
+	[334, skx_unc_cha14, "Intel SkylakeX CHA14 uncore"]
+	[335, skx_unc_cha15, "Intel SkylakeX CHA15 uncore"]
+	[336, skx_unc_cha16, "Intel SkylakeX CHA16 uncore"]
+	[337, skx_unc_cha17, "Intel SkylakeX CHA17 uncore"]
+	[338, skx_unc_cha18, "Intel SkylakeX CHA18 uncore"]
+	[339, skx_unc_cha19, "Intel SkylakeX CHA19 uncore"]
+	[340, skx_unc_cha20, "Intel SkylakeX CHA20 uncore"]
+	[341, skx_unc_cha21, "Intel SkylakeX CHA21 uncore"]
+	[342, skx_unc_cha22, "Intel SkylakeX CHA22 uncore"]
+	[343, skx_unc_cha23, "Intel SkylakeX CHA23 uncore"]
+	[344, skx_unc_cha24, "Intel SkylakeX CHA24 uncore"]
+	[345, skx_unc_cha25, "Intel SkylakeX CHA25 uncore"]
+	[346, skx_unc_cha26, "Intel SkylakeX CHA26 uncore"]
+	[347, skx_unc_cha27, "Intel SkylakeX CHA27 uncore"]
+	[348, skx_unc_iio0, "Intel SkylakeX IIO0 uncore"]
+	[349, skx_unc_iio1, "Intel SkylakeX IIO1 uncore"]
+	[350, skx_unc_iio2, "Intel SkylakeX IIO2 uncore"]
+	[351, skx_unc_iio3, "Intel SkylakeX IIO3 uncore"]
+	[352, skx_unc_iio4, "Intel SkylakeX IIO4 uncore"]
+	[353, skx_unc_iio5, "Intel SkylakeX IIO5 uncore"]
+	[354, skx_unc_imc0, "Intel SkylakeX IMC0 uncore"]
+	[355, skx_unc_imc1, "Intel SkylakeX IMC1 uncore"]
+	[356, skx_unc_imc2, "Intel SkylakeX IMC2 uncore"]
+	[357, skx_unc_imc3, "Intel SkylakeX IMC3 uncore"]
+	[358, skx_unc_imc4, "Intel SkylakeX IMC4 uncore"]
+	[359, skx_unc_imc5, "Intel SkylakeX IMC5 uncore"]
+	[360, skx_unc_irp, "Intel SkylakeX IRP uncore"]
+	[361, skx_unc_m2m0, "Intel SkylakeX M2M0 uncore"]
+	[362, skx_unc_m2m1, "Intel SkylakeX M2M1 uncore"]
+	[363, skx_unc_m3upi0, "Intel SkylakeX M3UPI0 uncore"]
+	[364, skx_unc_m3upi1, "Intel SkylakeX M3UPI1 uncore"]
+	[365, skx_unc_m3upi2, "Intel SkylakeX M3UPI2 uncore"]
+	[366, skx_unc_pcu, "Intel SkylakeX PCU uncore"]
+	[367, skx_unc_ubo, "Intel SkylakeX U-Box uncore"]
+	[368, skx_unc_upi0, "Intel SkylakeX UPI0 uncore"]
+	[369, skx_unc_upi1, "Intel SkylakeX UPI1 uncore"]
+	[370, skx_unc_upi2, "Intel SkylakeX UPI2 uncore"]
+	[371, knm, "Intel Knights Mill"]
+	[372, knm_unc_imc0, "Intel Knights Mill IMC 0 uncore"]
+	[373, knm_unc_imc1, "Intel Knights Mill IMC 1 uncore"]
+	[374, knm_unc_imc2, "Intel Knights Mill IMC 2 uncore"]
+	[375, knm_unc_imc3, "Intel Knights Mill IMC 3 uncore"]
+	[376, knm_unc_imc4, "Intel Knights Mill IMC 4 uncore"]
+	[377, knm_unc_imc5, "Intel Knights Mill IMC 5 uncore"]
+	[378, knm_unc_imc_uclk0, "Intel Knights Mill IMC UCLK 0 uncore"]
+	[379, knm_unc_imc_uclk1, "Intel Knights Mill IMC UCLK 1 uncore"]
+	[380, knm_unc_edc_eclk0, "Intel Knights Mill EDC_ECLK_0 uncore"]
+	[381, knm_unc_edc_eclk1, "Intel Knights Mill EDC_ECLK_1 uncore"]
+	[382, knm_unc_edc_eclk2, "Intel Knights Mill EDC_ECLK_2 uncore"]
+	[383, knm_unc_edc_eclk3, "Intel Knights Mill EDC_ECLK_3 uncore"]
+	[384, knm_unc_edc_eclk4, "Intel Knights Mill EDC_ECLK_4 uncore"]
+	[385, knm_unc_edc_eclk5, "Intel Knights Mill EDC_ECLK_5 uncore"]
+	[386, knm_unc_edc_eclk6, "Intel Knights Mill EDC_ECLK_6 uncore"]
+	[387, knm_unc_edc_eclk7, "Intel Knights Mill EDC_ECLK_7 uncore"]
+	[388, knm_unc_edc_uclk0, "Intel Knights Mill EDC_UCLK_0 uncore"]
+	[389, knm_unc_edc_uclk1, "Intel Knights Mill EDC_UCLK_1 uncore"]
+	[390, knm_unc_edc_uclk2, "Intel Knights Mill EDC_UCLK_2 uncore"]
+	[391, knm_unc_edc_uclk3, "Intel Knights Mill EDC_UCLK_3 uncore"]
+	[392, knm_unc_edc_uclk4, "Intel Knights Mill EDC_UCLK_4 uncore"]
+	[393, knm_unc_edc_uclk5, "Intel Knights Mill EDC_UCLK_5 uncore"]
+	[394, knm_unc_edc_uclk6, "Intel Knights Mill EDC_UCLK_6 uncore"]
+	[395, knm_unc_edc_uclk7, "Intel Knights Mill EDC_UCLK_7 uncore"]
+	[396, knm_unc_cha0, "Intel Knights Mill CHA 0 uncore"]
+	[397, knm_unc_cha1, "Intel Knights Mill CHA 1 uncore"]
+	[398, knm_unc_cha2, "Intel Knights Mill CHA 2 uncore"]
+	[399, knm_unc_cha3, "Intel Knights Mill CHA 3 uncore"]
+	[400, knm_unc_cha4, "Intel Knights Mill CHA 4 uncore"]
+	[401, knm_unc_cha5, "Intel Knights Mill CHA 5 uncore"]
+	[402, knm_unc_cha6, "Intel Knights Mill CHA 6 uncore"]
+	[403, knm_unc_cha7, "Intel Knights Mill CHA 7 uncore"]
+	[404, knm_unc_cha8, "Intel Knights Mill CHA 8 uncore"]
+	[405, knm_unc_cha9, "Intel Knights Mill CHA 9 uncore"]
+	[406, knm_unc_cha10, "Intel Knights Mill CHA 10 uncore"]
+	[407, knm_unc_cha11, "Intel Knights Mill CHA 11 uncore"]
+	[408, knm_unc_cha12, "Intel Knights Mill CHA 12 uncore"]
+	[409, knm_unc_cha13, "Intel Knights Mill CHA 13 uncore"]
+	[410, knm_unc_cha14, "Intel Knights Mill CHA 14 uncore"]
+	[411, knm_unc_cha15, "Intel Knights Mill CHA 15 uncore"]
+	[412, knm_unc_cha16, "Intel Knights Mill CHA 16 uncore"]
+	[413, knm_unc_cha17, "Intel Knights Mill CHA 17 uncore"]
+	[414, knm_unc_cha18, "Intel Knights Mill CHA 18 uncore"]
+	[415, knm_unc_cha19, "Intel Knights Mill CHA 19 uncore"]
+	[416, knm_unc_cha20, "Intel Knights Mill CHA 20 uncore"]
+	[417, knm_unc_cha21, "Intel Knights Mill CHA 21 uncore"]
+	[418, knm_unc_cha22, "Intel Knights Mill CHA 22 uncore"]
+	[419, knm_unc_cha23, "Intel Knights Mill CHA 23 uncore"]
+	[420, knm_unc_cha24, "Intel Knights Mill CHA 24 uncore"]
+	[421, knm_unc_cha25, "Intel Knights Mill CHA 25 uncore"]
+	[422, knm_unc_cha26, "Intel Knights Mill CHA 26 uncore"]
+	[423, knm_unc_cha27, "Intel Knights Mill CHA 27 uncore"]
+	[424, knm_unc_cha28, "Intel Knights Mill CHA 28 uncore"]
+	[425, knm_unc_cha29, "Intel Knights Mill CHA 29 uncore"]
+	[426, knm_unc_cha30, "Intel Knights Mill CHA 30 uncore"]
+	[427, knm_unc_cha31, "Intel Knights Mill CHA 31 uncore"]
+	[428, knm_unc_cha32, "Intel Knights Mill CHA 32 uncore"]
+	[429, knm_unc_cha33, "Intel Knights Mill CHA 33 uncore"]
+	[430, knm_unc_cha34, "Intel Knights Mill CHA 34 uncore"]
+	[431, knm_unc_cha35, "Intel Knights Mill CHA 35 uncore"]
+	[432, knm_unc_cha36, "Intel Knights Mill CHA 36 uncore"]
+	[433, knm_unc_cha37, "Intel Knights Mill CHA 37 uncore"]
+	[435, knm_unc_m2pcie, "Intel Knights Mill M2PCIe uncore"]
+	[437, clx, "Intel CascadeLake X"]
+	[444, amd64_fam17h_zen1, "AMD64 Fam17h Zen1"]
+	[445, amd64_fam17h_zen2, "AMD64 Fam17h Zen2"]
+	[446, tmt, "Intel Tremont"]
+	[447, icl, "Intel Icelake"]
+	[450, amd64_fam19h_zen3, "AMD64 Fam19h Zen3"]
+	[451, amd64_rapl, "AMD64 RAPL"]
+	[452, amd64_fam19h_zen3_l3, "AMD64 Fam19h Zen3 L3"]
+	[453, icx, "Intel IcelakeX"]
+	[512, spr, "Intel SapphireRapid"]
+Detected PMU models:
+	[51, perf, "perf_events generic PMU", 82 events, 1 max encoding, 0 counters, OS generic PMU]
+	[114, perf_raw, "perf_events raw PMU", 1 events, 1 max encoding, 0 counters, OS generic PMU]
+	[445, amd64_fam17h_zen2, "AMD64 Fam17h Zen2", 58 events, 1 max encoding, 6 counters, core PMU]
+	[451, amd64_rapl, "AMD64 RAPL", 1 events, 1 max encoding, 3 counters, uncore PMU]
+Total events: 18312 available, 142 supported
+#-----------------------------
+IDX	 : 106954752
+PMU name : perf (perf_events generic PMU)
+Name     : PERF_COUNT_HW_CPU_CYCLES
+Equiv	 : None
+Flags    : [precise] [hw_smpl] 
+Desc     : PERF_COUNT_HW_CPU_CYCLES
+Code     : 0x0
+#-----------------------------
+IDX	 : 106954753
+PMU name : perf (perf_events generic PMU)
+Name     : CYCLES
+Equiv	 : PERF_COUNT_HW_CPU_CYCLES
+Flags    : None
+Desc     : PERF_COUNT_HW_CPU_CYCLES
+Code     : 0x0
+#-----------------------------
+IDX	 : 106954754
+PMU name : perf (perf_events generic PMU)
+Name     : CPU-CYCLES
+Equiv	 : PERF_COUNT_HW_CPU_CYCLES
+Flags    : None
+Desc     : PERF_COUNT_HW_CPU_CYCLES
+Code     : 0x0
+#-----------------------------
+IDX	 : 106954755
+PMU name : perf (perf_events generic PMU)
+Name     : PERF_COUNT_HW_INSTRUCTIONS
+Equiv	 : None
+Flags    : None
+Desc     : PERF_COUNT_HW_INSTRUCTIONS
+Code     : 0x1
+#-----------------------------
+IDX	 : 106954756
+PMU name : perf (perf_events generic PMU)
+Name     : INSTRUCTIONS
+Equiv	 : PERF_COUNT_HW_INSTRUCTIONS
+Flags    : None
+Desc     : PERF_COUNT_HW_INSTRUCTIONS
+Code     : 0x1
+#-----------------------------
+IDX	 : 106954757
+PMU name : perf (perf_events generic PMU)
+Name     : PERF_COUNT_HW_CACHE_REFERENCES
+Equiv	 : None
+Flags    : None
+Desc     : PERF_COUNT_HW_CACHE_REFERENCES
+Code     : 0x2
+#-----------------------------
+IDX	 : 106954758
+PMU name : perf (perf_events generic PMU)
+Name     : CACHE-REFERENCES
+Equiv	 : PERF_COUNT_HW_CACHE_REFERENCES
+Flags    : None
+Desc     : PERF_COUNT_HW_CACHE_REFERENCES
+Code     : 0x2
+#-----------------------------
+IDX	 : 106954759
+PMU name : perf (perf_events generic PMU)
+Name     : PERF_COUNT_HW_CACHE_MISSES
+Equiv	 : None
+Flags    : None
+Desc     : PERF_COUNT_HW_CACHE_MISSES
+Code     : 0x3
+#-----------------------------
+IDX	 : 106954760
+PMU name : perf (perf_events generic PMU)
+Name     : CACHE-MISSES
+Equiv	 : PERF_COUNT_HW_CACHE_MISSES
+Flags    : None
+Desc     : PERF_COUNT_HW_CACHE_MISSES
+Code     : 0x3
+#-----------------------------
+IDX	 : 106954761
+PMU name : perf (perf_events generic PMU)
+Name     : PERF_COUNT_HW_BRANCH_INSTRUCTIONS
+Equiv	 : None
+Flags    : None
+Desc     : PERF_COUNT_HW_BRANCH_INSTRUCTIONS
+Code     : 0x4
+#-----------------------------
+IDX	 : 106954762
+PMU name : perf (perf_events generic PMU)
+Name     : BRANCH-INSTRUCTIONS
+Equiv	 : PERF_COUNT_HW_BRANCH_INSTRUCTIONS
+Flags    : None
+Desc     : PERF_COUNT_HW_BRANCH_INSTRUCTIONS
+Code     : 0x4
+#-----------------------------
+IDX	 : 106954763
+PMU name : perf (perf_events generic PMU)
+Name     : BRANCHES
+Equiv	 : PERF_COUNT_HW_BRANCH_INSTRUCTIONS
+Flags    : None
+Desc     : PERF_COUNT_HW_BRANCH_INSTRUCTIONS
+Code     : 0x4
+#-----------------------------
+IDX	 : 106954764
+PMU name : perf (perf_events generic PMU)
+Name     : PERF_COUNT_HW_BRANCH_MISSES
+Equiv	 : None
+Flags    : None
+Desc     : PERF_COUNT_HW_BRANCH_MISSES
+Code     : 0x5
+#-----------------------------
+IDX	 : 106954765
+PMU name : perf (perf_events generic PMU)
+Name     : BRANCH-MISSES
+Equiv	 : PERF_COUNT_HW_BRANCH_MISSES
+Flags    : None
+Desc     : PERF_COUNT_HW_BRANCH_MISSES
+Code     : 0x5
+#-----------------------------
+IDX	 : 106954766
+PMU name : perf (perf_events generic PMU)
+Name     : PERF_COUNT_HW_BUS_CYCLES
+Equiv	 : None
+Flags    : None
+Desc     : PERF_COUNT_HW_BUS_CYCLES
+Code     : 0x6
+#-----------------------------
+IDX	 : 106954767
+PMU name : perf (perf_events generic PMU)
+Name     : BUS-CYCLES
+Equiv	 : PERF_COUNT_HW_BUS_CYCLES
+Flags    : None
+Desc     : PERF_COUNT_HW_BUS_CYCLES
+Code     : 0x6
+#-----------------------------
+IDX	 : 106954768
+PMU name : perf (perf_events generic PMU)
+Name     : PERF_COUNT_HW_STALLED_CYCLES_FRONTEND
+Equiv	 : None
+Flags    : None
+Desc     : PERF_COUNT_HW_STALLED_CYCLES_FRONTEND
+Code     : 0x7
+#-----------------------------
+IDX	 : 106954769
+PMU name : perf (perf_events generic PMU)
+Name     : STALLED-CYCLES-FRONTEND
+Equiv	 : PERF_COUNT_HW_STALLED_CYCLES_FRONTEND
+Flags    : None
+Desc     : PERF_COUNT_HW_STALLED_CYCLES_FRONTEND
+Code     : 0x7
+#-----------------------------
+IDX	 : 106954770
+PMU name : perf (perf_events generic PMU)
+Name     : IDLE-CYCLES-FRONTEND
+Equiv	 : PERF_COUNT_HW_STALLED_CYCLES_FRONTEND
+Flags    : None
+Desc     : PERF_COUNT_HW_STALLED_CYCLES_FRONTEND
+Code     : 0x7
+#-----------------------------
+IDX	 : 106954771
+PMU name : perf (perf_events generic PMU)
+Name     : PERF_COUNT_HW_STALLED_CYCLES_BACKEND
+Equiv	 : None
+Flags    : None
+Desc     : PERF_COUNT_HW_STALLED_CYCLES_BACKEND
+Code     : 0x8
+#-----------------------------
+IDX	 : 106954772
+PMU name : perf (perf_events generic PMU)
+Name     : STALLED-CYCLES-BACKEND
+Equiv	 : PERF_COUNT_HW_STALLED_CYCLES_BACKEND
+Flags    : None
+Desc     : PERF_COUNT_HW_STALLED_CYCLES_BACKEND
+Code     : 0x8
+#-----------------------------
+IDX	 : 106954773
+PMU name : perf (perf_events generic PMU)
+Name     : IDLE-CYCLES-BACKEND
+Equiv	 : PERF_COUNT_HW_STALLED_CYCLES_BACKEND
+Flags    : None
+Desc     : PERF_COUNT_HW_STALLED_CYCLES_BACKEND
+Code     : 0x8
+#-----------------------------
+IDX	 : 106954774
+PMU name : perf (perf_events generic PMU)
+Name     : PERF_COUNT_HW_REF_CPU_CYCLES
+Equiv	 : None
+Flags    : None
+Desc     : PERF_COUNT_HW_REF_CPU_CYCLES
+Code     : 0x9
+#-----------------------------
+IDX	 : 106954775
+PMU name : perf (perf_events generic PMU)
+Name     : REF-CYCLES
+Equiv	 : PERF_COUNT_HW_REF_CPU_CYCLES
+Flags    : None
+Desc     : PERF_COUNT_HW_REF_CPU_CYCLES
+Code     : 0x9
+#-----------------------------
+IDX	 : 106954776
+PMU name : perf (perf_events generic PMU)
+Name     : PERF_COUNT_SW_CPU_CLOCK
+Equiv	 : None
+Flags    : None
+Desc     : PERF_COUNT_SW_CPU_CLOCK
+Code     : 0x0
+#-----------------------------
+IDX	 : 106954777
+PMU name : perf (perf_events generic PMU)
+Name     : CPU-CLOCK
+Equiv	 : PERF_COUNT_SW_CPU_CLOCK
+Flags    : None
+Desc     : PERF_COUNT_SW_CPU_CLOCK
+Code     : 0x0
+#-----------------------------
+IDX	 : 106954778
+PMU name : perf (perf_events generic PMU)
+Name     : PERF_COUNT_SW_TASK_CLOCK
+Equiv	 : None
+Flags    : None
+Desc     : PERF_COUNT_SW_TASK_CLOCK
+Code     : 0x1
+#-----------------------------
+IDX	 : 106954779
+PMU name : perf (perf_events generic PMU)
+Name     : TASK-CLOCK
+Equiv	 : PERF_COUNT_SW_TASK_CLOCK
+Flags    : None
+Desc     : PERF_COUNT_SW_TASK_CLOCK
+Code     : 0x1
+#-----------------------------
+IDX	 : 106954780
+PMU name : perf (perf_events generic PMU)
+Name     : PERF_COUNT_SW_PAGE_FAULTS
+Equiv	 : None
+Flags    : None
+Desc     : PERF_COUNT_SW_PAGE_FAULTS
+Code     : 0x2
+#-----------------------------
+IDX	 : 106954781
+PMU name : perf (perf_events generic PMU)
+Name     : PAGE-FAULTS
+Equiv	 : PERF_COUNT_SW_PAGE_FAULTS
+Flags    : None
+Desc     : PERF_COUNT_SW_PAGE_FAULTS
+Code     : 0x2
+#-----------------------------
+IDX	 : 106954782
+PMU name : perf (perf_events generic PMU)
+Name     : FAULTS
+Equiv	 : PERF_COUNT_SW_PAGE_FAULTS
+Flags    : None
+Desc     : PERF_COUNT_SW_PAGE_FAULTS
+Code     : 0x2
+#-----------------------------
+IDX	 : 106954783
+PMU name : perf (perf_events generic PMU)
+Name     : PERF_COUNT_SW_CONTEXT_SWITCHES
+Equiv	 : None
+Flags    : None
+Desc     : PERF_COUNT_SW_CONTEXT_SWITCHES
+Code     : 0x3
+#-----------------------------
+IDX	 : 106954784
+PMU name : perf (perf_events generic PMU)
+Name     : CONTEXT-SWITCHES
+Equiv	 : PERF_COUNT_SW_CONTEXT_SWITCHES
+Flags    : None
+Desc     : PERF_COUNT_SW_CONTEXT_SWITCHES
+Code     : 0x3
+#-----------------------------
+IDX	 : 106954785
+PMU name : perf (perf_events generic PMU)
+Name     : CS
+Equiv	 : PERF_COUNT_SW_CONTEXT_SWITCHES
+Flags    : None
+Desc     : PERF_COUNT_SW_CONTEXT_SWITCHES
+Code     : 0x3
+#-----------------------------
+IDX	 : 106954786
+PMU name : perf (perf_events generic PMU)
+Name     : PERF_COUNT_SW_CPU_MIGRATIONS
+Equiv	 : None
+Flags    : None
+Desc     : PERF_COUNT_SW_CPU_MIGRATIONS
+Code     : 0x4
+#-----------------------------
+IDX	 : 106954787
+PMU name : perf (perf_events generic PMU)
+Name     : CPU-MIGRATIONS
+Equiv	 : PERF_COUNT_SW_CPU_MIGRATIONS
+Flags    : None
+Desc     : PERF_COUNT_SW_CPU_MIGRATIONS
+Code     : 0x4
+#-----------------------------
+IDX	 : 106954788
+PMU name : perf (perf_events generic PMU)
+Name     : MIGRATIONS
+Equiv	 : PERF_COUNT_SW_CPU_MIGRATIONS
+Flags    : None
+Desc     : PERF_COUNT_SW_CPU_MIGRATIONS
+Code     : 0x4
+#-----------------------------
+IDX	 : 106954789
+PMU name : perf (perf_events generic PMU)
+Name     : PERF_COUNT_SW_PAGE_FAULTS_MIN
+Equiv	 : None
+Flags    : None
+Desc     : PERF_COUNT_SW_PAGE_FAULTS_MIN
+Code     : 0x5
+#-----------------------------
+IDX	 : 106954790
+PMU name : perf (perf_events generic PMU)
+Name     : MINOR-FAULTS
+Equiv	 : PERF_COUNT_SW_PAGE_FAULTS_MIN
+Flags    : None
+Desc     : PERF_COUNT_SW_PAGE_FAULTS_MIN
+Code     : 0x5
+#-----------------------------
+IDX	 : 106954791
+PMU name : perf (perf_events generic PMU)
+Name     : PERF_COUNT_SW_PAGE_FAULTS_MAJ
+Equiv	 : None
+Flags    : None
+Desc     : PERF_COUNT_SW_PAGE_FAULTS_MAJ
+Code     : 0x6
+#-----------------------------
+IDX	 : 106954792
+PMU name : perf (perf_events generic PMU)
+Name     : MAJOR-FAULTS
+Equiv	 : PERF_COUNT_SW_PAGE_FAULTS_MAJ
+Flags    : None
+Desc     : PERF_COUNT_SW_PAGE_FAULTS_MAJ
+Code     : 0x6
+#-----------------------------
+IDX	 : 106954793
+PMU name : perf (perf_events generic PMU)
+Name     : PERF_COUNT_SW_CGROUP_SWITCHES
+Equiv	 : None
+Flags    : None
+Desc     : PERF_COUNT_SW_CGROUP_SWITCHES
+Code     : 0xb
+#-----------------------------
+IDX	 : 106954794
+PMU name : perf (perf_events generic PMU)
+Name     : CGROUP-SWITCHES
+Equiv	 : PERF_COUNT_SW_CGROUP_SWITCHES
+Flags    : None
+Desc     : PERF_COUNT_SW_CGROUP_SWITCHES
+Code     : 0xb
+#-----------------------------
+IDX	 : 106954795
+PMU name : perf (perf_events generic PMU)
+Name     : PERF_COUNT_HW_CACHE_L1D
+Equiv	 : None
+Flags    : None
+Desc     : L1 data cache
+Code     : 0x0
+Umask-00 : 0x00 : PMU : [READ] : None : read access
+Umask-01 : 0x100 : PMU : [WRITE] : None : write access
+Umask-02 : 0x200 : PMU : [PREFETCH] : None : prefetch access
+Umask-03 : 0x00 : PMU : [ACCESS] : None : hit access
+Umask-04 : 0x10000 : PMU : [MISS] : None : miss access
+#-----------------------------
+IDX	 : 106954796
+PMU name : perf (perf_events generic PMU)
+Name     : L1-DCACHE-LOADS
+Equiv	 : PERF_COUNT_HW_CACHE_L1D:READ:ACCESS
+Flags    : None
+Desc     : L1 cache load accesses
+Code     : 0x0
+#-----------------------------
+IDX	 : 106954797
+PMU name : perf (perf_events generic PMU)
+Name     : L1-DCACHE-LOAD-MISSES
+Equiv	 : PERF_COUNT_HW_CACHE_L1D:READ:MISS
+Flags    : None
+Desc     : L1 cache load misses
+Code     : 0x0
+#-----------------------------
+IDX	 : 106954798
+PMU name : perf (perf_events generic PMU)
+Name     : L1-DCACHE-STORES
+Equiv	 : PERF_COUNT_HW_CACHE_L1D:WRITE:ACCESS
+Flags    : None
+Desc     : L1 cache store accesses
+Code     : 0x0
+#-----------------------------
+IDX	 : 106954799
+PMU name : perf (perf_events generic PMU)
+Name     : L1-DCACHE-STORE-MISSES
+Equiv	 : PERF_COUNT_HW_CACHE_L1D:WRITE:MISS
+Flags    : None
+Desc     : L1 cache store misses
+Code     : 0x0
+#-----------------------------
+IDX	 : 106954800
+PMU name : perf (perf_events generic PMU)
+Name     : L1-DCACHE-PREFETCHES
+Equiv	 : PERF_COUNT_HW_CACHE_L1D:PREFETCH:ACCESS
+Flags    : None
+Desc     : L1 cache prefetch accesses
+Code     : 0x0
+#-----------------------------
+IDX	 : 106954801
+PMU name : perf (perf_events generic PMU)
+Name     : L1-DCACHE-PREFETCH-MISSES
+Equiv	 : PERF_COUNT_HW_CACHE_L1D:PREFETCH:MISS
+Flags    : None
+Desc     : L1 cache prefetch misses
+Code     : 0x0
+#-----------------------------
+IDX	 : 106954802
+PMU name : perf (perf_events generic PMU)
+Name     : PERF_COUNT_HW_CACHE_L1I
+Equiv	 : None
+Flags    : None
+Desc     : L1 instruction cache
+Code     : 0x1
+Umask-00 : 0x00 : PMU : [READ] : None : read access
+Umask-01 : 0x200 : PMU : [PREFETCH] : None : prefetch access
+Umask-02 : 0x00 : PMU : [ACCESS] : None : hit access
+Umask-03 : 0x10000 : PMU : [MISS] : None : miss access
+#-----------------------------
+IDX	 : 106954803
+PMU name : perf (perf_events generic PMU)
+Name     : L1-ICACHE-LOADS
+Equiv	 : PERF_COUNT_HW_CACHE_L1I:READ:ACCESS
+Flags    : None
+Desc     : L1I cache load accesses
+Code     : 0x1
+#-----------------------------
+IDX	 : 106954804
+PMU name : perf (perf_events generic PMU)
+Name     : L1-ICACHE-LOAD-MISSES
+Equiv	 : PERF_COUNT_HW_CACHE_L1I:READ:MISS
+Flags    : None
+Desc     : L1I cache load misses
+Code     : 0x1
+#-----------------------------
+IDX	 : 106954805
+PMU name : perf (perf_events generic PMU)
+Name     : L1-ICACHE-PREFETCHES
+Equiv	 : PERF_COUNT_HW_CACHE_L1I:PREFETCH:ACCESS
+Flags    : None
+Desc     : L1I cache prefetch accesses
+Code     : 0x1
+#-----------------------------
+IDX	 : 106954806
+PMU name : perf (perf_events generic PMU)
+Name     : L1-ICACHE-PREFETCH-MISSES
+Equiv	 : PERF_COUNT_HW_CACHE_L1I:PREFETCH:MISS
+Flags    : None
+Desc     : L1I cache prefetch misses
+Code     : 0x1
+#-----------------------------
+IDX	 : 106954807
+PMU name : perf (perf_events generic PMU)
+Name     : PERF_COUNT_HW_CACHE_LL
+Equiv	 : None
+Flags    : None
+Desc     : Last level cache
+Code     : 0x2
+Umask-00 : 0x00 : PMU : [READ] : None : read access
+Umask-01 : 0x100 : PMU : [WRITE] : None : write access
+Umask-02 : 0x200 : PMU : [PREFETCH] : None : prefetch access
+Umask-03 : 0x00 : PMU : [ACCESS] : None : hit access
+Umask-04 : 0x10000 : PMU : [MISS] : None : miss access
+#-----------------------------
+IDX	 : 106954808
+PMU name : perf (perf_events generic PMU)
+Name     : LLC-LOADS
+Equiv	 : PERF_COUNT_HW_CACHE_LL:READ:ACCESS
+Flags    : None
+Desc     : Last level cache load accesses
+Code     : 0x2
+#-----------------------------
+IDX	 : 106954809
+PMU name : perf (perf_events generic PMU)
+Name     : LLC-LOAD-MISSES
+Equiv	 : PERF_COUNT_HW_CACHE_LL:READ:MISS
+Flags    : None
+Desc     : Last level cache load misses
+Code     : 0x2
+#-----------------------------
+IDX	 : 106954810
+PMU name : perf (perf_events generic PMU)
+Name     : LLC-STORES
+Equiv	 : PERF_COUNT_HW_CACHE_LL:WRITE:ACCESS
+Flags    : None
+Desc     : Last level cache store accesses
+Code     : 0x2
+#-----------------------------
+IDX	 : 106954811
+PMU name : perf (perf_events generic PMU)
+Name     : LLC-STORE-MISSES
+Equiv	 : PERF_COUNT_HW_CACHE_LL:WRITE:MISS
+Flags    : None
+Desc     : Last level cache store misses
+Code     : 0x2
+#-----------------------------
+IDX	 : 106954812
+PMU name : perf (perf_events generic PMU)
+Name     : LLC-PREFETCHES
+Equiv	 : PERF_COUNT_HW_CACHE_LL:PREFETCH:ACCESS
+Flags    : None
+Desc     : Last level cache prefetch accesses
+Code     : 0x2
+#-----------------------------
+IDX	 : 106954813
+PMU name : perf (perf_events generic PMU)
+Name     : LLC-PREFETCH-MISSES
+Equiv	 : PERF_COUNT_HW_CACHE_LL:PREFETCH:MISS
+Flags    : None
+Desc     : Last level cache prefetch misses
+Code     : 0x2
+#-----------------------------
+IDX	 : 106954814
+PMU name : perf (perf_events generic PMU)
+Name     : PERF_COUNT_HW_CACHE_DTLB
+Equiv	 : None
+Flags    : None
+Desc     : Data Translation Lookaside Buffer
+Code     : 0x3
+Umask-00 : 0x00 : PMU : [READ] : None : read access
+Umask-01 : 0x100 : PMU : [WRITE] : None : write access
+Umask-02 : 0x200 : PMU : [PREFETCH] : None : prefetch access
+Umask-03 : 0x00 : PMU : [ACCESS] : None : hit access
+Umask-04 : 0x10000 : PMU : [MISS] : None : miss access
+#-----------------------------
+IDX	 : 106954815
+PMU name : perf (perf_events generic PMU)
+Name     : DTLB-LOADS
+Equiv	 : PERF_COUNT_HW_CACHE_DTLB:READ:ACCESS
+Flags    : None
+Desc     : Data TLB load accesses
+Code     : 0x3
+#-----------------------------
+IDX	 : 106954816
+PMU name : perf (perf_events generic PMU)
+Name     : DTLB-LOAD-MISSES
+Equiv	 : PERF_COUNT_HW_CACHE_DTLB:READ:MISS
+Flags    : None
+Desc     : Data TLB load misses
+Code     : 0x3
+#-----------------------------
+IDX	 : 106954817
+PMU name : perf (perf_events generic PMU)
+Name     : DTLB-STORES
+Equiv	 : PERF_COUNT_HW_CACHE_DTLB:WRITE:ACCESS
+Flags    : None
+Desc     : Data TLB store accesses
+Code     : 0x3
+#-----------------------------
+IDX	 : 106954818
+PMU name : perf (perf_events generic PMU)
+Name     : DTLB-STORE-MISSES
+Equiv	 : PERF_COUNT_HW_CACHE_DTLB:WRITE:MISS
+Flags    : None
+Desc     : Data TLB store misses
+Code     : 0x3
+#-----------------------------
+IDX	 : 106954819
+PMU name : perf (perf_events generic PMU)
+Name     : DTLB-PREFETCHES
+Equiv	 : PERF_COUNT_HW_CACHE_DTLB:PREFETCH:ACCESS
+Flags    : None
+Desc     : Data TLB prefetch accesses
+Code     : 0x3
+#-----------------------------
+IDX	 : 106954820
+PMU name : perf (perf_events generic PMU)
+Name     : DTLB-PREFETCH-MISSES
+Equiv	 : PERF_COUNT_HW_CACHE_DTLB:PREFETCH:MISS
+Flags    : None
+Desc     : Data TLB prefetch misses
+Code     : 0x3
+#-----------------------------
+IDX	 : 106954821
+PMU name : perf (perf_events generic PMU)
+Name     : PERF_COUNT_HW_CACHE_ITLB
+Equiv	 : None
+Flags    : None
+Desc     : Instruction Translation Lookaside Buffer
+Code     : 0x4
+Umask-00 : 0x00 : PMU : [READ] : None : read access
+Umask-01 : 0x00 : PMU : [ACCESS] : None : hit access
+Umask-02 : 0x10000 : PMU : [MISS] : None : miss access
+#-----------------------------
+IDX	 : 106954822
+PMU name : perf (perf_events generic PMU)
+Name     : ITLB-LOADS
+Equiv	 : PERF_COUNT_HW_CACHE_ITLB:READ:ACCESS
+Flags    : None
+Desc     : Instruction TLB load accesses
+Code     : 0x4
+#-----------------------------
+IDX	 : 106954823
+PMU name : perf (perf_events generic PMU)
+Name     : ITLB-LOAD-MISSES
+Equiv	 : PERF_COUNT_HW_CACHE_ITLB:READ:MISS
+Flags    : None
+Desc     : Instruction TLB load misses
+Code     : 0x4
+#-----------------------------
+IDX	 : 106954824
+PMU name : perf (perf_events generic PMU)
+Name     : PERF_COUNT_HW_CACHE_BPU
+Equiv	 : None
+Flags    : None
+Desc     : Branch Prediction Unit
+Code     : 0x5
+Umask-00 : 0x00 : PMU : [READ] : None : read access
+Umask-01 : 0x00 : PMU : [ACCESS] : None : hit access
+Umask-02 : 0x10000 : PMU : [MISS] : None : miss access
+#-----------------------------
+IDX	 : 106954825
+PMU name : perf (perf_events generic PMU)
+Name     : BRANCH-LOADS
+Equiv	 : PERF_COUNT_HW_CACHE_BPU:READ:ACCESS
+Flags    : None
+Desc     : Branch  load accesses
+Code     : 0x5
+#-----------------------------
+IDX	 : 106954826
+PMU name : perf (perf_events generic PMU)
+Name     : BRANCH-LOAD-MISSES
+Equiv	 : PERF_COUNT_HW_CACHE_BPU:READ:MISS
+Flags    : None
+Desc     : Branch  load misses
+Code     : 0x5
+#-----------------------------
+IDX	 : 106954827
+PMU name : perf (perf_events generic PMU)
+Name     : PERF_COUNT_HW_CACHE_NODE
+Equiv	 : None
+Flags    : None
+Desc     : Node memory access
+Code     : 0x6
+Umask-00 : 0x00 : PMU : [READ] : None : read access
+Umask-01 : 0x100 : PMU : [WRITE] : None : write access
+Umask-02 : 0x200 : PMU : [PREFETCH] : None : prefetch access
+Umask-03 : 0x00 : PMU : [ACCESS] : None : hit access
+Umask-04 : 0x10000 : PMU : [MISS] : None : miss access
+#-----------------------------
+IDX	 : 106954828
+PMU name : perf (perf_events generic PMU)
+Name     : NODE-LOADS
+Equiv	 : PERF_COUNT_HW_CACHE_NODE:READ:ACCESS
+Flags    : None
+Desc     : Node  load accesses
+Code     : 0x6
+#-----------------------------
+IDX	 : 106954829
+PMU name : perf (perf_events generic PMU)
+Name     : NODE-LOAD-MISSES
+Equiv	 : PERF_COUNT_HW_CACHE_NODE:READ:MISS
+Flags    : None
+Desc     : Node  load misses
+Code     : 0x6
+#-----------------------------
+IDX	 : 106954830
+PMU name : perf (perf_events generic PMU)
+Name     : NODE-STORES
+Equiv	 : PERF_COUNT_HW_CACHE_NODE:WRITE:ACCESS
+Flags    : None
+Desc     : Node  store accesses
+Code     : 0x6
+#-----------------------------
+IDX	 : 106954831
+PMU name : perf (perf_events generic PMU)
+Name     : NODE-STORE-MISSES
+Equiv	 : PERF_COUNT_HW_CACHE_NODE:WRITE:MISS
+Flags    : None
+Desc     : Node  store misses
+Code     : 0x6
+#-----------------------------
+IDX	 : 106954832
+PMU name : perf (perf_events generic PMU)
+Name     : NODE-PREFETCHES
+Equiv	 : PERF_COUNT_HW_CACHE_NODE:PREFETCH:ACCESS
+Flags    : None
+Desc     : Node  prefetch accesses
+Code     : 0x6
+#-----------------------------
+IDX	 : 106954833
+PMU name : perf (perf_events generic PMU)
+Name     : NODE-PREFETCH-MISSES
+Equiv	 : PERF_COUNT_HW_CACHE_NODE:PREFETCH:MISS
+Flags    : None
+Desc     : Node  prefetch misses
+Code     : 0x6
+#-----------------------------
+IDX	 : 239075328
+PMU name : perf_raw (perf_events raw PMU)
+Name     : r0000
+Equiv	 : None
+Flags    : None
+Desc     : perf_events raw event syntax: r[0-9a-fA-F]+
+Code     : 0x0
+#-----------------------------
+IDX	 : 933232640
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : L1_ITLB_MISS_L2_ITLB_HIT
+Equiv	 : None
+Flags    : None
+Desc     : Number of instruction fetches that miss in the L1 ITLB but hit in the L2 ITLB.
+Code     : 0x84
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232641
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : L1_ITLB_MISS_L2_ITLB_MISS
+Equiv	 : None
+Flags    : None
+Desc     : Number of instruction fetches that miss in both the L1 and L2 TLBs.
+Code     : 0x85
+Umask-00 : 0x04 : PMU : [IF1G] : None : Number of instruction fetches to a 1GB page
+Umask-01 : 0x02 : PMU : [IF2M] : None : Number of instruction fetches to a 2MB page
+Umask-02 : 0x01 : PMU : [IF4K] : None : Number of instruction fetches to a 4KB page
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232642
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : RETIRED_SSE_AVX_FLOPS
+Equiv	 : None
+Flags    : None
+Desc     : This is a retire-based event. The number of retired SSE/AVX FLOPS. The number of events logged per cycle can vary from 0 to 64. This event can count above 15 and therefore requires the MergeEvent. On Linux, the kernel handles this case without the need to pass the merge event.
+Code     : 0x3
+Umask-00 : 0x01 : PMU : [ADD_SUB_FLOPS] : None : Addition/subtraction FLOPS
+Umask-01 : 0x02 : PMU : [MULT_FLOPS] : None : Multiplication FLOPS
+Umask-02 : 0x04 : PMU : [DIV_FLOPS] : None : Division FLOPS.
+Umask-03 : 0x08 : PMU : [MAC_FLOPS] : None : Double precision add/subtract flops.
+Umask-04 : 0x0f : PMU : [ANY] : [default] : Double precision add/subtract flops.
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232643
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : DIV_CYCLES_BUSY_COUNT
+Equiv	 : None
+Flags    : None
+Desc     : Number of cycles when the divider is busy.
+Code     : 0xd3
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232644
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : DIV_OP_COUNT
+Equiv	 : None
+Flags    : None
+Desc     : Number of divide uops.
+Code     : 0xd4
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232645
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : RETIRED_BRANCH_INSTRUCTIONS
+Equiv	 : None
+Flags    : None
+Desc     : Number of branch instructions retired. This includes all types of architectural control flow changes, including exceptions and interrupts.
+Code     : 0xc2
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232646
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : RETIRED_FAR_CONTROL_TRANSFERS
+Equiv	 : None
+Flags    : None
+Desc     : Number of far control transfers retired including far call/jump/return, IRET, SYSCALL and SYSRET, plus exceptions and interrupts. Far control transfers are not subject to branch prediction.
+Code     : 0xc6
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232647
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : RETIRED_INDIRECT_BRANCH_INSTRUCTIONS_MISPREDICTED
+Equiv	 : None
+Flags    : None
+Desc     : Number of indirect branches retired there were not correctly predicted. Each such mispredict incurs the same penalty as a mispredicted condition branch instruction. Only EX mispredicts are counted.
+Code     : 0xca
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232648
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : RETIRED_BRANCH_INSTRUCTIONS_MISPREDICTED
+Equiv	 : None
+Flags    : None
+Desc     : Number of branch instructions retired, of any type, that were not correctly predicted. This includes those for which prediction is not attempted (far control transfers, exceptions and interrupts).
+Code     : 0xc3
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232649
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : RETIRED_TAKEN_BRANCH_INSTRUCTIONS
+Equiv	 : None
+Flags    : None
+Desc     : Number of taken branches that were retired. This includes all types of architectural control flow changes, including exceptions and interrupts.
+Code     : 0xc4
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232650
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : RETIRED_TAKEN_BRANCH_INSTRUCTIONS_MISPREDICTED
+Equiv	 : None
+Flags    : None
+Desc     : Number of retired taken branch instructions that were mispredicted.
+Code     : 0xc5
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232651
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : RETIRED_CONDITIONAL_BRANCH_INSTRUCTIONS
+Equiv	 : None
+Flags    : None
+Desc     : Number of retired conditional branch instructions.
+Code     : 0xd1
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232652
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : RETIRED_UOPS
+Equiv	 : None
+Flags    : None
+Desc     : Number of uops retired. This includes all processor activity (instructions, exceptions, interrupts, microcode assists, etc.). The number of events logged per cycle can vary from 0 to 8.
+Code     : 0xc1
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232653
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : RETIRED_FUSED_INSTRUCTIONS
+Equiv	 : None
+Flags    : None
+Desc     : Number of fused retired branch instructions retired per cycle. The number of events logged per cycle can vary from 0 to 3.
+Code     : 0x1d0
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232654
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : RETIRED_INSTRUCTIONS
+Equiv	 : None
+Flags    : None
+Desc     : Instructions Retired.
+Code     : 0xc0
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232655
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : RETIRED_MMX_FP_INSTRUCTIONS
+Equiv	 : None
+Flags    : None
+Desc     : Number of MMX, SSE or x87 instructions retired. The UnitMask allows the selection of the individual classes of instructions as given in the table. Each increment represents one complete instruction. Since this event includes non-numeric instructions, it is not suitable for measuring MFLOPS.
+Code     : 0xcb
+Umask-00 : 0x04 : PMU : [SSE_INSTR] : None : Number of SSE instructions (SSE, SSE2, SSE3, SSE$, SSE4A, SSE41, SSE42, AVX).
+Umask-01 : 0x02 : PMU : [MMX_INSTR] : None : Number of MMX instructions.
+Umask-02 : 0x01 : PMU : [X87_INSTR] : None : Number of X87 instructions.
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232656
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : RETIRED_NEAR_RETURNS
+Equiv	 : None
+Flags    : None
+Desc     : Number of near return instructions (RET or RETI) retired.
+Code     : 0xc8
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232657
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : RETIRED_NEAR_RETURNS_MISPREDICTED
+Equiv	 : None
+Flags    : None
+Desc     : Number of near returns retired that were not correctly predicted by the return address predictor. Each such mispredict incurs the same penalty as a mispredicted conditional branch instruction.
+Code     : 0xc9
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232658
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : TAGGED_IBS_OPS
+Equiv	 : None
+Flags    : None
+Desc     : TBD
+Code     : 0x1cf
+Umask-00 : 0x04 : PMU : [IBS_COUNT_ROLLOVER] : None : Number of times a uop could not be tagged by IBS because of a previous tagged uop that has not retired.
+Umask-01 : 0x02 : PMU : [IBS_TAGGED_OPS_RET] : None : Number of uops tagged by IBS that retired.
+Umask-02 : 0x01 : PMU : [IBS_TAGGED_OPS] : None : Number of uops tagged by IBS.
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232659
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : RETIRED_BRANCH_MISPREDICTED_DIRECTION_MISMATCH
+Equiv	 : None
+Flags    : None
+Desc     : Number of retired conditional branch instructions that were not correctly predicted because of branch direction mismatch
+Code     : 0x1c7
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232660
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : INSTRUCTION_CACHE_REFILLS_FROM_L2
+Equiv	 : None
+Flags    : None
+Desc     : Number of 64-byte instruction cachelines that was fulfilled by the L2 cache.
+Code     : 0x82
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232661
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : INSTRUCTION_CACHE_REFILLS_FROM_SYSTEM
+Equiv	 : None
+Flags    : None
+Desc     : Number of 64-byte instruction cachelines fulfilled from system memory or another cache.
+Code     : 0x83
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232662
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : CORE_TO_L2_CACHEABLE_REQUEST_ACCESS_STATUS
+Equiv	 : None
+Flags    : None
+Desc     : L2 cache request outcomes. This event does not count accesses to the L2 cache by the L2 prefetcher.
+Code     : 0x64
+Umask-00 : 0x80 : PMU : [LS_RD_BLK_C_S] : None : Number of data cache shared read hitting in the L2.
+Umask-01 : 0x40 : PMU : [LS_RD_BLK_L_HIT_X] : None : Number of data cache reads hitting in the L2.
+Umask-02 : 0x20 : PMU : [LS_RD_BLK_L_HIT_S] : None : Number of data cache reads hitting a shared in line in the L2.
+Umask-03 : 0x10 : PMU : [LS_RD_BLK_X] : None : Number of data cache store or state change (to exclusive) requests hitting in the L2.
+Umask-04 : 0x08 : PMU : [LS_RD_BLK_C] : None : Number of data cache fill requests missing in the L2 (all types).
+Umask-05 : 0x04 : PMU : [IC_FILL_HIT_X] : None : Number of I-cache fill requests hitting a modifiable (exclusive) line in the L2.
+Umask-06 : 0x02 : PMU : [IC_FILL_HIT_S] : None : Number of I-cache fill requests hitting a clean line in the L2.
+Umask-07 : 0x01 : PMU : [IC_FILL_MISS] : None : Number of I-cache fill requests missing the L2.
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232663
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : L2_PREFETCH_HIT_L2
+Equiv	 : None
+Flags    : None
+Desc     : Number of L2 prefetcher hits in the L2
+Code     : 0x70
+Umask-00 : 0x1f : PMU : [ANY] : [default] : Any L2 prefetch requests
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232664
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : L2_PREFETCH_HIT_L3
+Equiv	 : None
+Flags    : None
+Desc     : Number of L2 prefetcher hits in the L3
+Code     : 0x71
+Umask-00 : 0x1f : PMU : [ANY] : [default] : Any L2 prefetch requests
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232665
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : L2_PREFETCH_MISS_L3
+Equiv	 : None
+Flags    : None
+Desc     : Number of L2 prefetcher misses in the L3
+Code     : 0x72
+Umask-00 : 0x1f : PMU : [ANY] : [default] : Any L2 prefetch requests
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232666
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : REQUESTS_TO_L2_GROUP1
+Equiv	 : None
+Flags    : None
+Desc     : TBD
+Code     : 0x60
+Umask-00 : 0x80 : PMU : [RD_BLK_L] : None : Number of data cache reads (including software and hardware prefetches).
+Umask-01 : 0x40 : PMU : [RD_BLK_X] : None : Number of data cache stores
+Umask-02 : 0x20 : PMU : [LS_RD_BLK_C_S] : None : Number of data cache shared reads.
+Umask-03 : 0x10 : PMU : [CACHEABLE_IC_READ] : None : Number of instruction cache reads.
+Umask-04 : 0x08 : PMU : [CHANGE_TO_X] : None : Number of requests change to writable. Check L2 for current state.
+Umask-05 : 0x04 : PMU : [PREFETCH_L2] : None : TBD
+Umask-06 : 0x02 : PMU : [L2_HW_PF] : None : Number of prefetches accepted by L2 pipeline, hit or miss.
+Umask-07 : 0x01 : PMU : [GROUP2] : None : Number of miscellaneous requests covered in more details by REQUESTS_TO_L2_GROUP1
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232667
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : REQUESTS_TO_L2_GROUP2
+Equiv	 : None
+Flags    : None
+Desc     : Multi-events in that LS and IF requests can be received simultaneous.
+Code     : 0x61
+Umask-00 : 0x80 : PMU : [GROUP1] : None : Number of miscellaneous requests covered in more details by REQUESTS_TO_L2_GROUP2
+Umask-01 : 0x40 : PMU : [LS_RD_SIZED] : None : Number of data cache reads sized.
+Umask-02 : 0x20 : PMU : [LS_RD_SIZED_N_C] : None : Number of data cache reads sized non-cacheable.
+Umask-03 : 0x10 : PMU : [IC_RD_SIZED] : None : Number of instruction cache reads sized.
+Umask-04 : 0x08 : PMU : [IC_RD_SIZED_N_C] : None : Number of instruction cache reads sized non-cacheable.
+Umask-05 : 0x04 : PMU : [SMC_INVAL] : None : Number of self-modifying code invalidates.
+Umask-06 : 0x02 : PMU : [BUS_LOCKS_ORIGINATOR] : None : Number of bus locks.
+Umask-07 : 0x01 : PMU : [BUS_LOCKS_RESPONSES] : None : Number of bus lock responses.
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232668
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : BAD_STATUS_2
+Equiv	 : None
+Flags    : None
+Desc     : TBD
+Code     : 0x24
+Umask-00 : 0x02 : PMU : [STLI_OTHER] : [default] : Store-to-load conflicts. A load was unable to complete due to a non-forwardable conflict with an older store.
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232669
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : LS_DISPATCH
+Equiv	 : None
+Flags    : None
+Desc     : Counts the number of operations dispatched to the LS unit. Unit Masks ADDed.
+Code     : 0x29
+Umask-00 : 0x04 : PMU : [LD_ST_DISPATCH] : None : Load/Store single uops dispatched (compare-and-exchange).
+Umask-01 : 0x02 : PMU : [STORE_DISPATCH] : None : Store uops dispatched.
+Umask-02 : 0x01 : PMU : [LD_DISPATCH] : None : Load uops dispatched.
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232670
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : INEFFECTIVE_SOFTWARE_PREFETCH
+Equiv	 : None
+Flags    : None
+Desc     : Number of software prefetches that did not fetch data outside of the processor core.
+Code     : 0x52
+Umask-00 : 0x02 : PMU : [MAB_MCH_CNT] : None : Software prefetch instructions saw a match on an already allocated miss request buffer.
+Umask-01 : 0x01 : PMU : [DATA_PIPE_SW_PF_DC_HIT] : None : Software Prefetch instruction saw a DC hit
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232671
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : SOFTWARE_PREFETCH_DATA_CACHE_FILLS
+Equiv	 : None
+Flags    : None
+Desc     : Number of software prefetches fills by data source
+Code     : 0x59
+Umask-00 : 0x01 : PMU : [MABRESP_LCL_L2] : None : Fill from local L2.
+Umask-01 : 0x02 : PMU : [LS_MABRESP_LCL_CACHE] : None : Fill from another cache (home node local).
+Umask-02 : 0x08 : PMU : [LS_MABRESP_LCL_DRAM] : None : Fill from DRAM (home node local).
+Umask-03 : 0x10 : PMU : [LS_MABRESP_RMT_CACHE] : None : Fill from another cache (home node remote).
+Umask-04 : 0x40 : PMU : [LS_MABRESP_RMT_DRAM] : None : Fill from DRAM (home node remote).
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232672
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : HARDWARE_PREFETCH_DATA_CACHE_FILLS
+Equiv	 : None
+Flags    : None
+Desc     : Number of hardware prefetches fills by data source
+Code     : 0x5a
+Umask-00 : 0x01 : PMU : [MABRESP_LCL_L2] : None : Fill from local L2.
+Umask-01 : 0x02 : PMU : [LS_MABRESP_LCL_CACHE] : None : Fill from another cache (home node local).
+Umask-02 : 0x08 : PMU : [LS_MABRESP_LCL_DRAM] : None : Fill from DRAM (home node local).
+Umask-03 : 0x10 : PMU : [LS_MABRESP_RMT_CACHE] : None : Fill from another cache (home node remote).
+Umask-04 : 0x40 : PMU : [LS_MABRESP_RMT_DRAM] : None : Fill from DRAM (home node remote).
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232673
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : L1_DTLB_MISS
+Equiv	 : None
+Flags    : None
+Desc     : L1 Data TLB misses.
+Code     : 0x45
+Umask-00 : 0x80 : PMU : [TLB_RELOAD_1G_L2_MISS] : None : Data TLB reload to a 1GB page that missed in the L2 TLB
+Umask-01 : 0x40 : PMU : [TLB_RELOAD_2M_L2_MISS] : None : Data TLB reload to a 2MB page that missed in the L2 TLB
+Umask-02 : 0x20 : PMU : [TLB_RELOAD_COALESCED_PAGE_MISS] : None : Data TLB reload to coalesced pages that missed
+Umask-03 : 0x10 : PMU : [TLB_RELOAD_4K_L2_MISS] : None : Data TLB reload to a 4KB page that missed in the L2 TLB
+Umask-04 : 0x08 : PMU : [TLB_RELOAD_1G_L2_HIT] : None : Data TLB reload to a 1GB page that hit in the L2 TLB
+Umask-05 : 0x04 : PMU : [TLB_RELOAD_2M_L2_HIT] : None : Data TLB reload to a 2MB page that hit in the L2 TLB
+Umask-06 : 0x02 : PMU : [TLB_RELOAD_COALESCED_PAGE_HIT] : None : Data TLB reload to coalesced pages that hit
+Umask-07 : 0x01 : PMU : [TLB_RELOAD_4K_L2_HIT] : None : Data TLB reload to a 4KB page thta hit in the L2 TLB
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232674
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : RETIRED_LOCK_INSTRUCTIONS
+Equiv	 : None
+Flags    : None
+Desc     : Counts the number of retired locked instructions
+Code     : 0x25
+Umask-00 : 0x0e : PMU : [CACHEABLE_LOCKS] : None : Lock in cacheable memory region.
+Umask-01 : 0x01 : PMU : [BUS_LOCK] : None : Number of bus locks
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232675
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : RETIRED_CLFLUSH_INSTRUCTIONS
+Equiv	 : None
+Flags    : None
+Desc     : Counts the number of retired non-speculative clflush instructions
+Code     : 0x26
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232676
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : RETIRED_CPUID_INSTRUCTIONS
+Equiv	 : None
+Flags    : None
+Desc     : Counts the number of retired cpuid instructions
+Code     : 0x27
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232677
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : SMI_RECEIVED
+Equiv	 : None
+Flags    : None
+Desc     : Counts the number system management interrupts (SMI) received
+Code     : 0x2b
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232678
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : INTERRUPT_TAKEN
+Equiv	 : None
+Flags    : None
+Desc     : Counts the number of interrupts taken
+Code     : 0x2c
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232679
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : MAB_ALLOCATION_BY_PIPE
+Equiv	 : None
+Flags    : None
+Desc     : TBD
+Code     : 0x41
+Umask-00 : 0x10 : PMU : [TLB_PIPE_EARLY] : None : TBD
+Umask-01 : 0x08 : PMU : [HW_PF] : None : hw_pf
+Umask-02 : 0x04 : PMU : [TLB_PIPE_LATE] : None : TBD
+Umask-03 : 0x02 : PMU : [ST_PIPE] : None : TBD
+Umask-04 : 0x01 : PMU : [DATA_PIPE] : None : TBD
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232680
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : MISALIGNED_LOADS
+Equiv	 : None
+Flags    : None
+Desc     : Misaligned loads retired
+Code     : 0x47
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232681
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : CYCLES_NOT_IN_HALT
+Equiv	 : None
+Flags    : None
+Desc     : Number of core cycles not in halted state
+Code     : 0x76
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232682
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : TLB_FLUSHES
+Equiv	 : None
+Flags    : None
+Desc     : Number of TLB flushes
+Code     : 0x78
+Umask-00 : 0xff : PMU : [ALL] : [default] : ANY TLB flush.
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232683
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : PREFETCH_INSTRUCTIONS_DISPATCHED
+Equiv	 : None
+Flags    : None
+Desc     : Software Prefetch Instructions Dispatched. This is a speculative event
+Code     : 0x4b
+Umask-00 : 0x01 : PMU : [PREFETCH_T0_T1_T2] : None : Number of prefetcht0, perfetcht1, prefetcht2 instructions dispatched
+Umask-01 : 0x02 : PMU : [PREFETCHW] : None : Number of prefetchtw instructions dispatched
+Umask-02 : 0x04 : PMU : [PREFETCHNTA] : None : Number of prefetchtnta instructions dispatched
+Umask-03 : 0x07 : PMU : [ANY] : [default] : Any prefetch
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232684
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : STORE_TO_LOAD_FORWARD
+Equiv	 : None
+Flags    : None
+Desc     : Number of STore Lad Forward hits.
+Code     : 0x35
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232685
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : STORE_COMMIT_CANCELS_2
+Equiv	 : None
+Flags    : None
+Desc     : Number of store commit cancellations
+Code     : 0x37
+Umask-00 : 0x01 : PMU : [WCB_FULL] : [default] : Non cacheable store and the non-cacheable commit buffer is full.
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232686
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : L1_BTB_CORRECTION
+Equiv	 : None
+Flags    : None
+Desc     : Number of L1 branch prediction overrides of existing prediction. This is a speculative event.
+Code     : 0x8a
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232687
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : L2_BTB_CORRECTION
+Equiv	 : None
+Flags    : None
+Desc     : Number of L2 branch prediction overrides of existing prediction. This is a speculative event.
+Code     : 0x8b
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232688
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : DYNAMIC_INDIRECT_PREDICTIONS
+Equiv	 : None
+Flags    : None
+Desc     : Number of indirect branch prediction for potential multi-target branch. This is a speculative event.
+Code     : 0x8e
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232689
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : DECODER_OVERRIDE_BRANCH_PRED
+Equiv	 : None
+Flags    : None
+Desc     : Number of decoder overrides of existing branch prediction. This is a speculative event.
+Code     : 0x91
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232690
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : ITLB_FETCH_HIT
+Equiv	 : None
+Flags    : None
+Desc     : Instruction fetches that hit in the L1 ITLB
+Code     : 0x94
+Umask-00 : 0x04 : PMU : [IF1G] : None : L1 instruction fetch that hit a 1GB page.
+Umask-01 : 0x02 : PMU : [IF2M] : None : L1 instruction fetch that hit a 2MB page.
+Umask-02 : 0x01 : PMU : [IF4K] : None : L1 instruction fetch that hit a 4KB page.
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232691
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : UOPS_QUEUE_EMPTY
+Equiv	 : None
+Flags    : None
+Desc     : Cycles where the uops queue is empty
+Code     : 0xa9
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232692
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : UOPS_DISPATCHED_FROM_DECODER
+Equiv	 : None
+Flags    : None
+Desc     : Number of uops dispatched from either the Decoder, OpCache or both
+Code     : 0xaa
+Umask-00 : 0x01 : PMU : [DECODER_DISPATCHED] : None : Number of uops dispatched from the Decoder
+Umask-01 : 0x02 : PMU : [OPCACHE_DISPATCHED] : None : Number of uops dispatched from the OpCache
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232693
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : DISPATCH_RESOURCE_STALL_CYCLES_1
+Equiv	 : None
+Flags    : None
+Desc     : Number of cycles where a dispatch group is valid but does not get dispatched due to a Token Stall
+Code     : 0xae
+Umask-00 : 0x01 : PMU : [INT_PHY_REG_FILE_RSRC_STALL] : None : Number of cycles stalled due to integer physical register file resource stalls. Applies to all uops that have integer destination register.
+Umask-01 : 0x02 : PMU : [LOAD_QUEUE_RSRC_STALL] : None : Number of cycles stalled due to load queue resource stalls. Applies to all uops with load semantics.
+Umask-02 : 0x04 : PMU : [STORE_QUEUE_RSRC_STALL] : None : Number of cycles stalled due to store queue resource stalls. Applies to all uops with store semantics.
+Umask-03 : 0x08 : PMU : [INT_SCHEDULER_MISC_RSRC_STALL] : None : Number of cycles stalled due to integer scheduler miscellaneous resource stalls.
+Umask-04 : 0x10 : PMU : [TAKEN_BRANCH_BUFFER_RSRC_STALL] : None : Number of cycles stalled due to taken branch buffer resource stalls.
+Umask-05 : 0x20 : PMU : [FP_REG_FILE_RSRC_STALL] : None : Number of cycles stalled due to floating-point register file resource stalls.
+Umask-06 : 0x40 : PMU : [FP_SCHEDULER_FILE_RSRC_STALL] : None : Number of cycles stalled due to floating-point scheduler resource stalls.
+Umask-07 : 0x80 : PMU : [FP_MISC_FILE_RSRC_STALL] : None : Number of cycles stalled due to floating-point miscellaneous resource unavailable.
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232694
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : DISPATCH_RESOURCE_STALL_CYCLES_0
+Equiv	 : None
+Flags    : None
+Desc     : Number of cycles where a dispatch group is valid but does not get dispatched due to a Token Stall
+Code     : 0xaf
+Umask-00 : 0x08 : PMU : [ALU_TOKEN_STALL] : [default] : Number of cycles ALU tokens total unavailable.
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232695
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : RETIRED_SERIALIZING_OPS
+Equiv	 : None
+Flags    : None
+Desc     : The number of serializing Ops retired.
+Code     : 0x5
+Umask-00 : 0x01 : PMU : [X87_CTRL_RET] : None : X87 control word mispredict traps due to mispredction in RC or PC, or changes in mask bits.
+Umask-01 : 0x02 : PMU : [X87_BOT_RET] : None : X87 bottom-executing uops retired.
+Umask-02 : 0x04 : PMU : [SSE_CTRL_RET] : None : SSE control word mispreduct traps due to mispredctions in RC, FTZ or DAZ or changes in mask bits.
+Umask-03 : 0x08 : PMU : [SSE_BOT_RET] : None : SSE bottom-executing uops retired.
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232696
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : FP_DISPATCH_FAULTS
+Equiv	 : None
+Flags    : None
+Desc     : Floating-point dispatch faults
+Code     : 0xe
+Umask-00 : 0x01 : PMU : [X87_FILL_FAULT] : None : x87 fill faults
+Umask-01 : 0x02 : PMU : [XMM_FILL_FAULT] : None : XMM fill faults
+Umask-02 : 0x04 : PMU : [YMM_FILL_FAULT] : None : YMM fill faults
+Umask-03 : 0x08 : PMU : [YMM_SPILL_FAULT] : None : YMM spill faults
+Umask-04 : 0x0f : PMU : [ANY] : [default] : Any FP dispatch faults
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 933232697
+PMU name : amd64_fam17h_zen2 (AMD64 Fam17h Zen2)
+Name     : DATA_CACHE_REFILLS_FROM_SYSTEM
+Equiv	 : None
+Flags    : None
+Desc     : Demand Data Cache fills by data source
+Code     : 0x43
+Umask-00 : 0x01 : PMU : [MABRESP_LCL_L2] : None : Fill from local L2.
+Umask-01 : 0x02 : PMU : [LS_MABRESP_LCL_CACHE] : None : Fill from another cache (home node local).
+Umask-02 : 0x08 : PMU : [LS_MABRESP_LCL_DRAM] : None : Fill from DRAM (home node local).
+Umask-03 : 0x10 : PMU : [LS_MABRESP_RMT_CACHE] : None : Fill from another cache (home node remote).
+Umask-04 : 0x40 : PMU : [LS_MABRESP_RMT_DRAM] : None : Fill from DRAM (home node remote).
+Modif-00 : 0x00 : PMU : [k] : monitor at priv level 0 (boolean)
+Modif-01 : 0x01 : PMU : [u] : monitor at priv level 1, 2, 3 (boolean)
+Modif-02 : 0x02 : PMU : [e] : edge level (boolean)
+Modif-03 : 0x03 : PMU : [i] : invert (boolean)
+Modif-04 : 0x04 : PMU : [c] : counter-mask in range [0-255] (integer)
+Modif-05 : 0x05 : PMU : [h] : monitor in hypervisor (boolean)
+Modif-06 : 0x06 : PMU : [g] : measure in guest (boolean)
+#-----------------------------
+IDX	 : 945815552
+PMU name : amd64_rapl (AMD64 RAPL)
+Name     : RAPL_ENERGY_PKG
+Equiv	 : None
+Flags    : None
+Desc     : Number of Joules consumed by all cores and Last level cache on the package. Unit is 2^-32 Joules
+Code     : 0x2

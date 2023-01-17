@@ -1,11 +1,12 @@
 #include <iostream>
 #include "EventGraph.h"
+#include "Logger.h"
 
 void EventGraph::addNode(const PmuEvent &event) {
     if (graph.find(event) == graph.end()){
         graph[event] = std::unordered_set<Edge, HashEdge, EqualsEdge>();
     } else {
-        std::cerr << "Warning: Attempting to add an already existing event. This has no effect\n";
+        Logger::debug("Warning: Attempting to add an already existing event. This has no effect\n");
     }
 }
 
