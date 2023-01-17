@@ -1,10 +1,15 @@
 #include "include/PmuEvent.h"
 
-PmuEvent::PmuEvent(std::string name, PmuEvent::Type type, std::string modifiers)
-: name(std::move(name)), type(type), modifiers(std::move(modifiers)) {}
+PmuEvent::PmuEvent(std::string name, PmuEvent::Type type)
+: name(std::move(name)), type(type) {
+    std::string::size_type colonPos = this->name.find(':');
+    if (colonPos != std::string::npos){
+        this->modifiers = this->name.substr(colonPos + 1);
+    }
+}
 
 bool PmuEvent::operator==(const PmuEvent &e) const {
-    return (this->name == e.name) && (this->modifiers == e.modifiers) && (this->type == e.type);
+    return (this->name == e.name) && (this->type == e.type);
 }
 
 const std::string &PmuEvent::getName() const {
@@ -34,5 +39,6 @@ void PmuEvent::setMean(double m) {
 void PmuEvent::setVariance(double var) {
     variance = var;
 }
+
 
 

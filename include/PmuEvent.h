@@ -4,6 +4,7 @@
 #include <string>
 #include <utility>
 #include <optional>
+#include <linux/perf_event.h>
 
 class PmuEvent {
 public:
@@ -13,22 +14,20 @@ public:
         HARDWARE
     };
 
+    /*
+     * name may include modifiers. Accepted format would be eventName[:modifiers]
+     */
+    PmuEvent(std::string name, PmuEvent::Type type);
+
     const std::string &getName() const;
-
     const std::string &getModifiers() const;
-
     Type getType() const;
-
     std::optional<double> getMean() const;
-
     std::optional<double> getVariance() const;
-
-    PmuEvent(std::string name, PmuEvent::Type type, std::string modifiers = "");
 
     bool operator==(const PmuEvent& e) const;
 
     void setMean(double mean);
-
     void setVariance(double variance);
 
 private:

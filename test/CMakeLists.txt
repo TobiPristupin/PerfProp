@@ -3,13 +3,16 @@ cmake_minimum_required(VERSION 3.21)
 set( TEST_SOURCE_FILES
         testMain.cpp
         PmuEventParserTest.cpp
-        )
+        PmuGrouperTest.cpp PmuArchTest.cpp)
 
 set ( MAIN_SOURCE_FILES
         ../PmuEvent.cpp
         ../PmuEventParser.cpp
         ../Utils.cpp
-        ../EventGraph.cpp ../Updaters.cpp ../PmuGrouper.cpp ../PmuArch.cpp)
+        ../EventGraph.cpp
+        ../Updaters.cpp
+        ../PmuGrouper.cpp
+        ../PmuArch.cpp)
 
 include_directories(
         ../include/
@@ -37,4 +40,5 @@ gtest_discover_tests(bayesperf_cpp_tests)
 
 add_executable( standalone_cpp standalone.cpp)
 find_library(PFM_LIB pfm REQUIRED)
+target_link_libraries(bayesperf_cpp_tests "${PFM_LIB}")
 target_link_libraries(standalone_cpp "${PFM_LIB}")
