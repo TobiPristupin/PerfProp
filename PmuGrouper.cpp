@@ -22,18 +22,27 @@ namespace PmuGrouper {
      */
     std::vector<std::vector<PmuEvent>> group(const std::vector<PmuEvent> &events, size_t maxGroupSize) {
         std::vector<std::vector<PmuEvent>> groups;
+        std::vector<PmuEvent> softwareGroup;
         size_t i = 0;
         while (i < events.size()) {
             std::vector<PmuEvent> currGroup;
-            size_t nextGroupEnd = std::min(events.size(), i + maxGroupSize);
-            for (; i < nextGroupEnd; i++){
+            while (currGroup.size() < maxGroupSize && i < events.size()){
                 if (events[i].getType() == PmuEvent::SOFTWARE){
-                    throw std::runtime_error("Attempting to group a software event. See header function comment.");
+                    softwareGroup.push_back(events[i]);
+                } else {
+                    currGroup.push_back(events[i]);
                 }
-                currGroup.push_back(events[i]);
+
+                i++;
             }
 
-            groups.push_back(currGroup);
+            if (!currGroup.empty()){
+                groups.push_back(currGroup);
+            }
+        }
+
+        if (!softwareGroup.empty()){
+            groups.push_back(softwareGroup);
         }
 
         return groups;

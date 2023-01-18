@@ -18,8 +18,11 @@ namespace PmuGrouper {
      * grouped to maximize effective statistical dependencies across groups. This means that an event may be repeated
      * across groups.
      *
-     * NOTE: Only call with PmuEvent::Type::HARDWARE events. There is no reason to group software events, as those
-     * have no constraints and can be scheduled all at once.
+     * PmuEvent::Type::SOFTWARE events will be grouped all together in one group, which may be larger than maxGroupSize.
+     * This will be the last group in the returned vector.
+     * This is because there is no need to split software events into groups. Software events can be scheduled all at
+     * once since they are measured in software and don't physically use any PMU counter.
+     *
      */
     std::vector<EventVector> group(const EventVector& events, size_t maxGroupSize);
 }

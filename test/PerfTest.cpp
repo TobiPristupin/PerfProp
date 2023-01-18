@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 #include <perfmon/pfmlib.h>
-#include "PmuArch.h"
+#include "Perf.h"
 
-class PmuArchTest : public ::testing::Test {
+class PerfTest : public ::testing::Test {
 protected:
     void SetUp() override {
       pfm_initialize();
@@ -19,21 +19,21 @@ protected:
  *
  * getPerfEventAttr will generate error logs when an event's encoding cannot be found. Those should be ignored.
  */
-TEST_F(PmuArchTest, getEventEncodingTest){
+TEST_F(PerfTest, getEventEncodingTest){
     PmuEvent valid = PmuEvent("RETIRED_INSTRUCTIONS", PmuEvent::HARDWARE);
-    ASSERT_TRUE(PmuArch::getPerfEventAttr(valid).has_value());
+    ASSERT_TRUE(Perf::getPerfEventAttr(valid).has_value());
 
     PmuEvent validPerfStandardEvent = PmuEvent("cycles", PmuEvent::SOFTWARE);
-    ASSERT_TRUE(PmuArch::getPerfEventAttr(validPerfStandardEvent).has_value());
+    ASSERT_TRUE(Perf::getPerfEventAttr(validPerfStandardEvent).has_value());
 
     PmuEvent invalid = PmuEvent("caca", PmuEvent::HARDWARE);
-    ASSERT_FALSE(PmuArch::getPerfEventAttr(invalid).has_value());
+    ASSERT_FALSE(Perf::getPerfEventAttr(invalid).has_value());
 }
 
 /*
  * Will generate error logs when an event's encoding cannot be found. Those should be ignored.
  */
-TEST_F(PmuArchTest, perfOpenEventsTest){
+TEST_F(PerfTest, perfOpenEventsTest){
     std::vector<PmuEvent> validEvents = {
             {"branches", PmuEvent::Type::HARDWARE},
             {"branch-misses:u", PmuEvent::Type::HARDWARE},
@@ -47,6 +47,7 @@ TEST_F(PmuArchTest, perfOpenEventsTest){
             {validEvents[0], validEvents[1], invalid}
             };
 
-    std::unordered_map<int, PmuEvent> fds = PmuArch::perfOpenEvents(groups, 0);
+    auto [fds, groupLeaderFds] = Perf::perfOpenEvents(groups, 0);
     ASSERT_EQ(fds.size(), 5); //should have a fd for every event but the invalid one
+//    ASSERT_EQ(groupLeaderFds.size(), 2);
 }

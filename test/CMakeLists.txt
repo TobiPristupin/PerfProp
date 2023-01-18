@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.21)
 set( TEST_SOURCE_FILES
         testMain.cpp
         PmuEventParserTest.cpp
-        PmuGrouperTest.cpp PmuArchTest.cpp)
+        PmuGrouperTest.cpp PerfTest.cpp)
 
 set ( MAIN_SOURCE_FILES
         ../PmuEvent.cpp
@@ -12,7 +12,7 @@ set ( MAIN_SOURCE_FILES
         ../EventGraph.cpp
         ../Updaters.cpp
         ../PmuGrouper.cpp
-        ../PmuArch.cpp)
+        ../Perf.cpp)
 
 include_directories(
         ../include/

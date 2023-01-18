@@ -1,10 +1,19 @@
-//TODO: Figure out updaters
-//TODO: Grouping algorithm
-//TODO: Number of programmable HPCs
-//TODO: Refactor PmuEventParser to use a namespace
-//TODO: Refactor handleCmdArgs to return a struct instead of modifying global vars.
-//TODO: Take code out of main.cpp
-//TODO: Refactor includes using include-what-you-use
+/*
+ * TODO:
+ *  Figure out updaters
+ *  Number of programmable HPCs
+ *  Grouping algorithm, and handle if a group can't be scheduled? + unit tests
+ *  There is a window of time where the child program may begin running, but the parent program
+ *      has not yet enabled the perf events, meaning that this window of time will not be measured. Also,
+ *      this window of time will be different for every iteration, affecting data. We need a synchronization technique
+ *      to prevent the child program from starting until the parent has scheduled all events. This can be done
+ *      by setting up a pipe between parent/child, and the child not calling execve until the parent gives it the OK.
+ *  Refactor PmuEventParser to use a namespace
+ *  Refactor handleCmdArgs to return a struct instead of modifying global vars.
+ *  Take code out of main.cpp
+ *  Refactor includes using include-what-you-use
+ *  Fix problem where certain tests produce error logs when testing failures.
+ */
 
 #include <vector>
 #include <iostream>
@@ -19,7 +28,7 @@
 #include "include/EventGraph.h"
 #include "include/Updaters.h"
 #include "include/PmuGrouper.h"
-#include "PmuArch.h"
+#include "Perf.h"
 #include "Logger.h"
 #include "PfmLib.h"
 
@@ -151,11 +160,8 @@ int main(int argc, char *argv[]) {
     EventGraph graph = populateEventGraph(events);
 #endif
 
-    size_t groupSize = PmuArch::numProgrammableHPCs();
-
-    auto [hardwareEvents, softwareEvents] = PmuGrouper::splitHardwareSoftware(events);
-    std::vector<std::vector<PmuEvent>> groups = PmuGrouper::group(hardwareEvents, groupSize);
-
+    size_t groupSize = Perf::numProgrammableHPCs();
+    std::vector<std::vector<PmuEvent>> groups = PmuGrouper::group(events, groupSize);
 
     pid_t pid = fork();
     if (pid < 0) {
@@ -166,25 +172,30 @@ int main(int argc, char *argv[]) {
         if (execvp(programToRun[0], programToRun.get()) < 0) {
             return reportError("execvpe()");
         }
-    } else { //Parent process
-        Logger::debug("Child process created with pid " + std::to_string(pid));
+    }
 
-        // Do something while child is alive. Simpler than setting up a whole signal handler for SIGCHLD
-        int ret = waitpid(pid, nullptr, WNOHANG);
-        while (ret <= 0){
-            if (ret < 0){
-                return reportError("waitpid()");
-            }
+    //Parent process
+    Logger::debug("Child process created with pid " + std::to_string(pid));
+    auto [fds, groupLeaderFds] = Perf::perfOpenEvents(groups, pid);
+    Perf::enableEvents(groupLeaderFds); //Enabling only group leaders causes all events to be enabled
 
-            ret = waitpid(pid, nullptr, WNOHANG);
+    int ret = waitpid(pid, nullptr, WNOHANG);
+    while (ret <= 0){
+        if (ret < 0){
+            return reportError("waitpid()");
         }
 
-        Logger::debug("Child process finalized executing");
+        usleep(200000);
+        for (int groupLeaderFd : groupLeaderFds){
+            Perf::readSamplesForGroup(groupLeaderFd);
+        }
 
-
-
-
+        ret = waitpid(pid, nullptr, WNOHANG);
     }
+
+    Perf::disableEvents(groupLeaderFds); //Disabling only group leaders causes all events to be disabled
+    Perf::closeFds(fds);
+    Logger::debug("Child process finalized executing");
 
     return 0;
 }
