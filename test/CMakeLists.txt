@@ -2,12 +2,12 @@ cmake_minimum_required(VERSION 3.21)
 
 set( TEST_SOURCE_FILES
         testMain.cpp
-        PmuEventParserTest.cpp
+        PmuParserTest.cpp
         PmuGrouperTest.cpp PerfTest.cpp)
 
 set ( MAIN_SOURCE_FILES
         ../PmuEvent.cpp
-        ../PmuEventParser.cpp
+        ../PmuParser.cpp
         ../Utils.cpp
         ../EventGraph.cpp
         ../Updaters.cpp

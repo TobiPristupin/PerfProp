@@ -3,11 +3,6 @@
  *  Figure out updaters
  *  Number of programmable HPCs
  *  Grouping algorithm, and handle if a group can't be scheduled? + unit tests
- *  There is a window of time where the child program may begin running, but the parent program
- *      has not yet enabled the perf events, meaning that this window of time will not be measured. Also,
- *      this window of time will be different for every iteration, affecting data. We need a synchronization technique
- *      to prevent the child program from starting until the parent has scheduled all events. This can be done
- *      by setting up a pipe between parent/child, and the child not calling execve until the parent gives it the OK.
  *  Refactor PmuEventParser to use a namespace
  *  Refactor handleCmdArgs to return a struct instead of modifying global vars.
  *  Take code out of main.cpp
@@ -24,7 +19,7 @@
 #include <sys/wait.h>
 #include <cstring>
 #include "PmuEvent.h"
-#include "PmuEventParser.h"
+#include "PmuParser.h"
 #include "EventGraph.h"
 #include "include/Updaters.h"
 #include "PmuGrouper.h"
@@ -34,30 +29,24 @@
 #include "TraceableProcess.h"
 #include "expected.h"
 
-
 static const std::string usageString = "Usage: bayesperf stat -e {events} {program}\n";
-static std::vector<PmuEvent> events;
-
-/*
- * cmd args for the program to trace. For example, if we want to trace "ls -lah", this will store {"ls", "-lah"}
- */
-static std::vector<std::string> programToTrace;
 
 void printUsage(){
     std::cout << usageString;
 }
 
 /*
- * Parses cmd args. This function will either call exit() and never return, or initialize the global variable
- * events.
+ * Parses cmd args and returns a string of events, and a vector with the shell commands for bayesperf to trace.
+ * Throws std::invalid_argument
+ * Will call exit(0) if the user calls -h
  */
-void handleCmdArgs(int argc, char* argv[]){
-    int opt;
-
+std::pair<std::string, std::vector<std::string>> handleCmdArgs(int argc, char* argv[]){
     if (strcmp(argv[1], "stat") != 0){
-        printUsage();
-        exit(0);
+        throw std::invalid_argument("Invalid command '" + std::string(argv[1]) + "' to bayesperf");
     }
+
+    std::string events;
+    std::vector<std::string> programToTrace;
 
     int optionsIndex = 0;
     static struct option long_options[] = {
@@ -67,18 +56,20 @@ void handleCmdArgs(int argc, char* argv[]){
             {nullptr,      0,                 nullptr,    0}
     };
 
-    /*we advance argv by 1 because we want to skip the bayesperf command. That is, if we call `bayesperf stat -e ...`,
+    /*we start at argv[1] because we want to skip the bayesperf command. That is, if we call `bayesperf stat -e ...`,
     * we want to skip the "stat"
     * */
+    int opt;
     while ((opt = getopt_long(argc - 1, &argv[1], "+e:", long_options, &optionsIndex)) != -1){
         switch(opt){
             case '?':
-                exit(1); //getopt will automatically print the error to stderr
+                //getopt will automatically print the error to stderr
+                throw std::invalid_argument("Unrecognized argument");
             case 'h':
                 printUsage();
                 exit(0);
             case 'e': {
-                events = parseEvents(optarg);
+                events = optarg;
                 break;
             }
             default:
@@ -91,14 +82,14 @@ void handleCmdArgs(int argc, char* argv[]){
 
     int numCommandArgs = argc - optind;
     if (numCommandArgs == 0){
-        std::cout << "Please input a program to trace\n";
-        printUsage();
+        throw std::invalid_argument("Please input a program to trace");
     }
 
-    int i = 0;
     while (optind < argc){
         programToTrace.emplace_back(argv[optind++]);
     }
+
+    return std::make_pair(events, programToTrace);
 }
 
 EventGraph populateEventGraph(const std::vector<PmuEvent>& pmuEvents){
@@ -112,29 +103,6 @@ EventGraph populateEventGraph(const std::vector<PmuEvent>& pmuEvents){
     return graph;
 }
 
-EventGraph generateDebugGraph(){
-    std::vector<PmuEvent> pmuEvents = {
-            {"E1", PmuEvent::Type::SOFTWARE},
-            {"E2", PmuEvent::Type::HARDWARE},
-            {"E3", PmuEvent::Type::SOFTWARE},
-            {"E4", PmuEvent::Type::HARDWARE},
-            {"E5", PmuEvent::Type::SOFTWARE},
-    };
-
-    events = pmuEvents;
-
-    EventGraph graph;
-    for (const PmuEvent& event : pmuEvents){
-        graph.addNode(event);
-    }
-
-
-//    TODO? UNSURE graph.addEdge(pmuEvents[0], pmuEvents[1],
-//                  linearCorrectionUpdater(0.1, 0.11, 0.1)
-//                  );
-
-    return graph;
-}
 
 int reportError(const std::string& msg){
     int error = errno; //logging may modify errno, so we save it beforehand
@@ -145,8 +113,17 @@ int reportError(const std::string& msg){
 int main(int argc, char *argv[]) {
     PfmLib pfmlib; //instantiates pflmlib
 
-    handleCmdArgs(argc, argv);
+    std::string eventsString;
+    std::vector<std::string> programToTrace;
+    try {
+        std::tie(eventsString, programToTrace) = handleCmdArgs(argc, argv);
+    } catch (const std::invalid_argument& e){
+        std::cerr << e.what() << "\n";
+        printUsage();
+        return EINVAL;
+    }
 
+    std::vector<PmuEvent> events = PmuParser::parseEvents(eventsString);
     size_t groupSize = Perf::numProgrammableHPCs();
     std::vector<std::vector<PmuEvent>> groups = PmuGrouper::group(events, groupSize);
 

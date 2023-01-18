@@ -1,12 +1,12 @@
 #include <gtest/gtest.h>
 #include "../include/PmuEvent.h"
-#include "../include/PmuEventParser.h"
+#include "../include/PmuParser.h"
 
 
 
-TEST(PmuEventParserTest, parseSoftwareEvents){
+TEST(PmuParserTest, parseEvents){
     std::string eventsCmdInput = "branches,branch-misses:u,instructions:uv,bpf-output,duration_time,L1-dcache-loads";
-    std::vector<PmuEvent> parsedEvents = parseEvents(eventsCmdInput);
+    std::vector<PmuEvent> parsedEvents = PmuParser::parseEvents(eventsCmdInput);
     std::vector<PmuEvent> expectedEvents = {
             {"branches", PmuEvent::Type::HARDWARE},
             {"branch-misses:u", PmuEvent::Type::HARDWARE},

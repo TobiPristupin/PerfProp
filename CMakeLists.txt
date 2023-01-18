@@ -11,7 +11,7 @@ endif()
 set( SOURCE_FILES
         main.cpp
         PmuEvent.cpp
-        PmuEventParser.cpp
+        PmuParser.cpp
         Utils.cpp
         EventGraph.cpp Updaters.cpp PmuGrouper.cpp Perf.cpp TraceableProcess.cpp)
 

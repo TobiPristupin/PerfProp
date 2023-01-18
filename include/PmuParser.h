@@ -1,5 +1,5 @@
-#ifndef BAYESPERF_CPP_PMUEVENTPARSER_H
-#define BAYESPERF_CPP_PMUEVENTPARSER_H
+#ifndef BAYESPERF_CPP_PMUPARSER_H
+#define BAYESPERF_CPP_PMUPARSER_H
 
 // Collection of functions to parse events from the command line
 
@@ -8,6 +8,7 @@
 #include <unordered_set>
 #include "PmuEvent.h"
 
+namespace PmuParser {
 /**
  * Parses a list of events from the command line. The input format for the events is the same as `perf stat`.
  * Events must be in a comma separated list with no spaces. Event names can be appended with a : and a modifier, which
@@ -15,7 +16,9 @@
  *
  * Example input: cycles,instructions:k,cache-misses:ku
  */
-std::vector<PmuEvent> parseEvents(const std::string& cmdEventString);
+    std::vector<PmuEvent> parseEvents(const std::string& cmdEventString);
+}
 
 
-#endif //BAYESPERF_CPP_PMUEVENTPARSER_H
+
+#endif //BAYESPERF_CPP_PMUPARSER_H
