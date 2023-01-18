@@ -19,13 +19,13 @@ namespace Logger {
 
     inline void debug(const std::string& message) {
         if (level == DEBUG){
-            std::cout << "[DEBUG]\t"<< message << "\n";
+            std::cout << "[DEBUG]\t"<< message << std::endl;
         }
     }
 
     inline void info(const std::string& message) {
         if (level == DEBUG || level == INFO){
-            std::cout << "[INFO]\t" << message << "\n";
+            std::cout << "[INFO]\t" << message << std::endl;
         }
     }
 
@@ -33,7 +33,7 @@ namespace Logger {
      * Error messages will always be shown regardless of debug level
      */
     inline void error(const std::string& message) {
-        std::cerr << "[ERROR]\t" << message << "\n";
+        std::cerr << "[ERROR]\t" << message << std::endl;
     }
 }
 

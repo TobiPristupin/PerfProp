@@ -163,12 +163,35 @@ int main(int argc, char *argv[]) {
     size_t groupSize = Perf::numProgrammableHPCs();
     std::vector<std::vector<PmuEvent>> groups = PmuGrouper::group(events, groupSize);
 
+    /*
+     * Set up a pipe so that the parent can send data to the child. The parent will notify the child that its
+     * setup is done, so the child can begin executing.
+     */
+    int pipeFd[2];
+    pipe(pipeFd);
+    int childStartExecutionCode = 91218; //arbitrary number
+
     pid_t pid = fork();
     if (pid < 0) {
         return reportError("fork()");
     }
 
     if (pid == 0) { //Child process
+        Logger::debug("Child: waiting until execution signal");
+        close(pipeFd[1]); //Child closes its output side of pipe i.e. child cannot send data to parent
+        int childInputFd = pipeFd[0];
+        int buf = 0;
+        size_t bytesRead = read(childInputFd, &buf, sizeof(buf));
+        if (bytesRead < 0){
+            return reportError("read()");
+        }
+
+        if (buf != childStartExecutionCode){
+            Logger::error("Child received invalid pipe message. Exiting");
+            return EINVAL;
+        }
+
+        Logger::debug("Child: received execution signal. Calling exec");
         if (execvp(programToRun[0], programToRun.get()) < 0) {
             return reportError("execvpe()");
         }
@@ -176,7 +199,18 @@ int main(int argc, char *argv[]) {
 
     //Parent process
     Logger::debug("Child process created with pid " + std::to_string(pid));
+
+    close(pipeFd[0]); //Parent closes its input side of pipe i.e. parent cannot send data to child
+    int parentOutputFd = pipeFd[1];
+    if (write(parentOutputFd, &childStartExecutionCode, sizeof(childStartExecutionCode)) < 0){
+        return reportError("write()");
+    }
+
     auto [fds, groupLeaderFds] = Perf::perfOpenEvents(groups, pid);
+
+    //Parent setup done, notify child that they can begin execution
+
+
     Perf::enableEvents(groupLeaderFds); //Enabling only group leaders causes all events to be enabled
 
     int ret = waitpid(pid, nullptr, WNOHANG);
