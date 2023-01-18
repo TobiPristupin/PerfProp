@@ -127,22 +127,21 @@ int main(int argc, char *argv[]) {
     size_t groupSize = Perf::numProgrammableHPCs();
     std::vector<std::vector<PmuEvent>> groups = PmuGrouper::group(events, groupSize);
 
-    TraceableProcess tracedProcess;
-    pid_t tracedProcessPid;
+    std::unique_ptr<TraceableProcess> tracedProcess;
     try {
-        tracedProcessPid = tracedProcess.create(programToTrace);
+        tracedProcess = TraceableProcessFactory::create(programToTrace);
     } catch (const std::runtime_error &e){
         std::cerr << e.what() << "\n";
         return ECHILD;
     }
 
     //Parent setup, code that follows is code that we want to run before we start our traced program
-    Logger::debug("Child process created with pid " + std::to_string(tracedProcessPid));
-    auto [fds, groupLeaderFds] = Perf::perfOpenEvents(groups, tracedProcessPid);
+    Logger::debug("Child process created with pid " + std::to_string(tracedProcess->getPid()));
+    auto [fds, groupLeaderFds] = Perf::perfOpenEvents(groups, tracedProcess->getPid());
 
     //Parent setup done, notify child that they can begin execution
     try {
-        tracedProcess.beginExecution();
+        tracedProcess->beginExecution();
     } catch (const std::runtime_error& e){
         std::cerr << e.what() << "\n";
         return ECHILD;
@@ -150,7 +149,7 @@ int main(int argc, char *argv[]) {
 
     Perf::enableEvents(groupLeaderFds); //Enabling only group leaders causes all events to be enabled
 
-    int ret = waitpid(tracedProcessPid, nullptr, WNOHANG);
+    int ret = waitpid(tracedProcess->getPid(), nullptr, WNOHANG);
     while (ret <= 0){
         if (ret < 0){
             return reportError("waitpid()");
@@ -161,7 +160,7 @@ int main(int argc, char *argv[]) {
             Perf::readSamplesForGroup(groupLeaderFd);
         }
 
-        ret = waitpid(tracedProcessPid, nullptr, WNOHANG);
+        ret = waitpid(tracedProcess->getPid(), nullptr, WNOHANG);
     }
 
     Perf::disableEvents(groupLeaderFds); //Disabling only group leaders causes all events to be disabled
