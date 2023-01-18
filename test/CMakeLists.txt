@@ -12,13 +12,14 @@ set ( MAIN_SOURCE_FILES
         ../EventGraph.cpp
         ../Updaters.cpp
         ../PmuGrouper.cpp
-        ../Perf.cpp)
-
-include_directories(
-        ../include/
-)
+        ../Perf.cpp ../TraceableProcess.cpp)
 
 add_executable( bayesperf_cpp_tests ${MAIN_SOURCE_FILES} ${TEST_SOURCE_FILES})
+
+target_include_directories(bayesperf_cpp_tests PUBLIC
+        ../include/
+        ../lib/expected/
+)
 
 include(FetchContent)
 FetchContent_Declare(

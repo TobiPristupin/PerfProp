@@ -23,27 +23,25 @@
 #include <memory>
 #include <sys/wait.h>
 #include <cstring>
-#include "include/PmuEvent.h"
-#include "include/PmuEventParser.h"
-#include "include/EventGraph.h"
+#include "PmuEvent.h"
+#include "PmuEventParser.h"
+#include "EventGraph.h"
 #include "include/Updaters.h"
-#include "include/PmuGrouper.h"
+#include "PmuGrouper.h"
 #include "Perf.h"
 #include "Logger.h"
 #include "PfmLib.h"
+#include "TraceableProcess.h"
+#include "expected.h"
 
 
 static const std::string usageString = "Usage: bayesperf stat -e {events} {program}\n";
 static std::vector<PmuEvent> events;
 
 /*
- * cmd args for the program to run. This is stored as a char*[] instead of std::string because it will be
- * later fed into exec, which requires C-strings. argv already comes as C-strings, so it is easier to keep it
- * that way instead of converting between C-strings to std::string and back to C-string.
- *
- * This array's last element will be NULL, because it is required by exec.
+ * cmd args for the program to trace. For example, if we want to trace "ls -lah", this will store {"ls", "-lah"}
  */
-static std::unique_ptr<char*[]> programToRun;
+static std::vector<std::string> programToTrace;
 
 void printUsage(){
     std::cout << usageString;
@@ -93,20 +91,14 @@ void handleCmdArgs(int argc, char* argv[]){
 
     int numCommandArgs = argc - optind;
     if (numCommandArgs == 0){
-        std::cout << "Please input a program to execute\n";
+        std::cout << "Please input a program to trace\n";
         printUsage();
     }
 
-    /*
-     * NOTE: These args will be fed into exec. exec requires the last item of the array to be NULL. So we
-     * need a +1 in size to add this final element.
-     */
-    programToRun = std::make_unique<char*[]>(numCommandArgs + 1);
     int i = 0;
     while (optind < argc){
-        programToRun[i++] = argv[optind++];
+        programToTrace.emplace_back(argv[optind++]);
     }
-    programToRun[i] = nullptr;
 }
 
 EventGraph populateEventGraph(const std::vector<PmuEvent>& pmuEvents){
@@ -154,66 +146,29 @@ int main(int argc, char *argv[]) {
     PfmLib pfmlib; //instantiates pflmlib
 
     handleCmdArgs(argc, argv);
-#ifdef BAYESPERF_DEBUG
-    EventGraph graph = generateDebugGraph();
-#else
-    EventGraph graph = populateEventGraph(events);
-#endif
 
     size_t groupSize = Perf::numProgrammableHPCs();
     std::vector<std::vector<PmuEvent>> groups = PmuGrouper::group(events, groupSize);
 
-    /*
-     * Set up a pipe so that the parent can send data to the child. The parent will notify the child that its
-     * setup is done, so the child can begin executing.
-     */
-    int pipeFd[2];
-    pipe(pipeFd);
-    int childStartExecutionCode = 91218; //arbitrary number
-
-    pid_t pid = fork();
-    if (pid < 0) {
-        return reportError("fork()");
+    TraceableProcess tracedProcess;
+    tl::expected<pid_t, int> pidOrError = tracedProcess.create(programToTrace);
+    if (!pidOrError.has_value()){
+        return pidOrError.error();
     }
+    pid_t tracedProcessPid = pidOrError.value();
 
-    if (pid == 0) { //Child process
-        Logger::debug("Child: waiting until execution signal");
-        close(pipeFd[1]); //Child closes its output side of pipe i.e. child cannot send data to parent
-        int childInputFd = pipeFd[0];
-        int buf = 0;
-        size_t bytesRead = read(childInputFd, &buf, sizeof(buf));
-        if (bytesRead < 0){
-            return reportError("read()");
-        }
-
-        if (buf != childStartExecutionCode){
-            Logger::error("Child received invalid pipe message. Exiting");
-            return EINVAL;
-        }
-
-        Logger::debug("Child: received execution signal. Calling exec");
-        if (execvp(programToRun[0], programToRun.get()) < 0) {
-            return reportError("execvpe()");
-        }
-    }
-
-    //Parent process
-    Logger::debug("Child process created with pid " + std::to_string(pid));
-
-    close(pipeFd[0]); //Parent closes its input side of pipe i.e. parent cannot send data to child
-    int parentOutputFd = pipeFd[1];
-    if (write(parentOutputFd, &childStartExecutionCode, sizeof(childStartExecutionCode)) < 0){
-        return reportError("write()");
-    }
-
-    auto [fds, groupLeaderFds] = Perf::perfOpenEvents(groups, pid);
+    Logger::debug("Child process created with pid " + std::to_string(tracedProcessPid));
+    auto [fds, groupLeaderFds] = Perf::perfOpenEvents(groups, tracedProcessPid);
 
     //Parent setup done, notify child that they can begin execution
-
+    std::optional<int> error = tracedProcess.beginExecution();
+    if (error){
+        return error.value();
+    }
 
     Perf::enableEvents(groupLeaderFds); //Enabling only group leaders causes all events to be enabled
 
-    int ret = waitpid(pid, nullptr, WNOHANG);
+    int ret = waitpid(tracedProcessPid, nullptr, WNOHANG);
     while (ret <= 0){
         if (ret < 0){
             return reportError("waitpid()");
@@ -224,7 +179,7 @@ int main(int argc, char *argv[]) {
             Perf::readSamplesForGroup(groupLeaderFd);
         }
 
-        ret = waitpid(pid, nullptr, WNOHANG);
+        ret = waitpid(tracedProcessPid, nullptr, WNOHANG);
     }
 
     Perf::disableEvents(groupLeaderFds); //Disabling only group leaders causes all events to be disabled
