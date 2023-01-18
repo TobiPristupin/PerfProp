@@ -17,6 +17,11 @@
  * before the traced process begins executing.
  *
  * This class follows RAII. The destructor for this class will send SIGTERM to the traced process.
+ *
+ * NOTE: There is a method order dependency. create() must be called before beginExecution(). Why not put the create()
+ * code in the constructor? create() is complex code with multiple syscalls that may fail. If we fail in a constructor
+ * our only alternative is to throw an exception, which means that the destructor will never be called. By having a
+ * separate create() method and a default constructor, we ensure that the destructor is always called.
  */
 class TraceableProcess {
 public:
@@ -26,15 +31,19 @@ public:
      * child process will execute. For example, if you want to execute "ls -lah", programToTrace would
      * contain {"ls", "-lah"}.
      *
+     * May throw std::runtime_exception.
+     *
      * Note that the child process will not begin execution until beginExecution() is called.
      */
-    tl::expected<pid_t, int> create(const std::vector<std::string> &programToTrace);
+    pid_t create(const std::vector<std::string> &programToTrace);
 
     /*
      * Signals to the traceable process that it can begin execution. create() needs to be called before
      * calling this method.
+     *
+     * May throw std::runtime_exception
      */
-    std::optional<int> beginExecution();
+    void beginExecution();
 
     /*
      * Close file descriptors and send SIGTERM to child

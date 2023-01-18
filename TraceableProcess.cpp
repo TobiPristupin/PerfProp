@@ -1,6 +1,6 @@
 #include "TraceableProcess.h"
 
-tl::expected<pid_t, int> TraceableProcess::create(const std::vector<std::string> &programToTrace){
+pid_t TraceableProcess::create(const std::vector<std::string> &programToTrace){
     /*
     * Set up a pipe so that the parent can send data to the child. The parent will notify the child that its
     * setup is done, so the child can begin executing.
@@ -11,7 +11,7 @@ tl::expected<pid_t, int> TraceableProcess::create(const std::vector<std::string>
     pid_t pid = fork();
     if (pid < 0){
         Logger::error("fork(): " + std::string(strerror(errno)));
-        return tl::unexpected(errno);
+        throw std::runtime_error("Failed to create child process");
     }
 
     if (pid == 0){ //child. This code segment will never return
@@ -30,24 +30,28 @@ tl::expected<pid_t, int> TraceableProcess::create(const std::vector<std::string>
 
     //parent
     childPid = pid;
-    close(childReadFd);
+    if (close(childReadFd) < 0){
+        Logger::error("close(): " + std::string(strerror(errno)));
+        throw std::runtime_error("Failed to create child process");
+    }
     return pid;
 }
 
-std::optional<int> TraceableProcess::beginExecution(){
+void TraceableProcess::beginExecution(){
     if (!childPid.has_value()){
         throw std::runtime_error("Must call create() before calling begin execution");
     }
     assert(parentWriteFd.has_value()); //parentWriteFd should have value if childPid has value
 
     if (write(parentWriteFd.value(), &childStartExecutionCode, sizeof(childStartExecutionCode)) < 0){
-        int error = errno;
         Logger::error("write(): " + std::string(strerror(errno)));
-        return error;
+        throw std::runtime_error("Failed to start child execution");
     }
 
-    close(parentWriteFd.value());
-    return std::nullopt;
+    if (close(parentWriteFd.value()) < 0){
+        Logger::error("close(): " + std::string(strerror(errno)));
+        throw std::runtime_error("Failed to start child execution");
+    }
 }
 
 void TraceableProcess::waitUntilReadyToExecute(int childReadFd) const {

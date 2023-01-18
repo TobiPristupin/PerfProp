@@ -128,19 +128,24 @@ int main(int argc, char *argv[]) {
     std::vector<std::vector<PmuEvent>> groups = PmuGrouper::group(events, groupSize);
 
     TraceableProcess tracedProcess;
-    tl::expected<pid_t, int> pidOrError = tracedProcess.create(programToTrace);
-    if (!pidOrError.has_value()){
-        return pidOrError.error();
+    pid_t tracedProcessPid;
+    try {
+        tracedProcessPid = tracedProcess.create(programToTrace);
+    } catch (const std::runtime_error &e){
+        std::cerr << e.what() << "\n";
+        return ECHILD;
     }
-    pid_t tracedProcessPid = pidOrError.value();
 
+    //Parent setup, code that follows is code that we want to run before we start our traced program
     Logger::debug("Child process created with pid " + std::to_string(tracedProcessPid));
     auto [fds, groupLeaderFds] = Perf::perfOpenEvents(groups, tracedProcessPid);
 
     //Parent setup done, notify child that they can begin execution
-    std::optional<int> error = tracedProcess.beginExecution();
-    if (error){
-        return error.value();
+    try {
+        tracedProcess.beginExecution();
+    } catch (const std::runtime_error& e){
+        std::cerr << e.what() << "\n";
+        return ECHILD;
     }
 
     Perf::enableEvents(groupLeaderFds); //Enabling only group leaders causes all events to be enabled
