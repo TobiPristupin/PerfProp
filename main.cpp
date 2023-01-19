@@ -26,70 +26,23 @@
 #include "Logger.h"
 #include "PfmLib.h"
 #include "TraceableProcess.h"
-#include "expected.h"
+#include "CommandParser.h"
 
-static const std::string usageString = "Usage: bayesperf stat -e {events} {program}\n";
+static const std::string usageString = R"(
+Usage: bayesperf {command} {args}
+
+The stat command traces given PMU events on a program.
+Usage: bayesperf stat -e {events} {program}
+Where events is a comma delimited list of events with no spaces
+
+The list command outputs the available PMU events
+Usage: bayesperf list
+)";
 
 void printUsage(){
     std::cout << usageString;
 }
 
-/*
- * Parses cmd args and returns a string of events, and a vector with the shell commands for bayesperf to trace.
- * Throws std::invalid_argument
- * Will call exit(0) if the user calls -h
- */
-std::pair<std::string, std::vector<std::string>> handleCmdArgs(int argc, char* argv[]){
-    if (strcmp(argv[1], "stat") != 0){
-        throw std::invalid_argument("Invalid command '" + std::string(argv[1]) + "' to bayesperf");
-    }
-
-    std::string events;
-    std::vector<std::string> programToTrace;
-
-    int optionsIndex = 0;
-    static struct option long_options[] = {
-            {"help",     no_argument, nullptr,  'h'},
-            {"events",    required_argument,nullptr,  'e'},
-            //last element of options array has to be filled with zeros
-            {nullptr,      0,                 nullptr,    0}
-    };
-
-    /*we start at argv[1] because we want to skip the bayesperf command. That is, if we call `bayesperf stat -e ...`,
-    * we want to skip the "stat"
-    * */
-    int opt;
-    while ((opt = getopt_long(argc - 1, &argv[1], "+e:", long_options, &optionsIndex)) != -1){
-        switch(opt){
-            case '?':
-                //getopt will automatically print the error to stderr
-                throw std::invalid_argument("Unrecognized argument");
-            case 'h':
-                printUsage();
-                exit(0);
-            case 'e': {
-                events = optarg;
-                break;
-            }
-            default:
-                printUsage();
-                exit(0);
-        }
-    }
-
-    optind += 1; //skip command to bayesperf
-
-    int numCommandArgs = argc - optind;
-    if (numCommandArgs == 0){
-        throw std::invalid_argument("Please input a program to trace");
-    }
-
-    while (optind < argc){
-        programToTrace.emplace_back(argv[optind++]);
-    }
-
-    return std::make_pair(events, programToTrace);
-}
 
 EventGraph populateEventGraph(const std::vector<PmuEvent>& pmuEvents){
     EventGraph graph;
@@ -115,21 +68,11 @@ void readAndProcessSamples(const std::unordered_map<int, PmuEvent>& fdsToEvent){
     }
 }
 
-int main(int argc, char *argv[]) {
+int handleStatCommand(const std::string& unparsedEventsList, const std::vector<std::string>& programToTrace){
     PfmLib pfmlib;
     pfmlib.initialize();
 
-    std::string eventsString;
-    std::vector<std::string> programToTrace;
-    try {
-        std::tie(eventsString, programToTrace) = handleCmdArgs(argc, argv);
-    } catch (const std::invalid_argument& e){
-        std::cerr << e.what() << "\n";
-        printUsage();
-        return EINVAL;
-    }
-
-    std::vector<PmuEvent> events = PmuParser::parseEvents(eventsString);
+    std::vector<PmuEvent> events = PmuParser::parseEvents(unparsedEventsList);
     size_t groupSize = Perf::numProgrammableHPCs();
     std::vector<std::vector<PmuEvent>> groups = PmuGrouper::group(events, groupSize);
 
@@ -166,6 +109,33 @@ int main(int argc, char *argv[]) {
     Perf::closeFds(fdsToEvent);
 
     return 0;
+}
+
+int handleListCommand(){
+    return 0;
+}
+
+int main(int argc, char *argv[]) {
+    CommandParser::CmdArgs cmdArgs;
+    try {
+        cmdArgs = CommandParser::parseCmdArgs(argc, argv);
+    } catch (const std::runtime_error& e){
+        std::cerr << e.what() << "\n";
+        return EINVAL;
+    } catch (const std::invalid_argument& e){
+        std::cerr << e.what() << "\n";
+        return EINVAL;
+    }
+
+    switch (cmdArgs.command) {
+        case CommandParser::Command::STAT_HELP:
+            printUsage();
+            return 0;
+        case CommandParser::Command::STAT:
+            return handleStatCommand(cmdArgs.unparsedEventsList.value(), cmdArgs.programToTrace.value());
+        case CommandParser::Command::LIST:
+            return handleListCommand();
+    }
 }
 
 
