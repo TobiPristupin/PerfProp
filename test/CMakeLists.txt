@@ -12,7 +12,9 @@ set ( MAIN_SOURCE_FILES
         ../EventGraph.cpp
         ../Updaters.cpp
         ../PmuGrouper.cpp
-        ../Perf.cpp ../TraceableProcess.cpp)
+        ../Perf.cpp
+        ../TraceableProcess.cpp
+        ../StringUtils.cpp)
 
 add_executable( bayesperf_cpp_tests ${MAIN_SOURCE_FILES} ${TEST_SOURCE_FILES})
 

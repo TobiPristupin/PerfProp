@@ -11,9 +11,12 @@
 #include <unordered_map>
 #include <vector>
 #include <linux/perf_event.h>
+#include <perfmon/pfmlib.h>
 #include "PmuEvent.h"
 
 namespace Perf {
+
+    pfm_pmu_info_t getDefaultPmu();
 
     size_t numProgrammableHPCs();
 
@@ -47,9 +50,9 @@ namespace Perf {
     void closeFds(std::unordered_map<int, PmuEvent>& fds);
 
     /*
-     * Reads samples for a group given the group's leader fd.
+     * Might throw std::runtime_error
      */
-    std::vector<uint64_t> readSamplesForGroup(int groupLeaderFd);
+    uint64_t readSample(int groupLeaderFd);
 }
 
 #endif

@@ -13,7 +13,12 @@ set( SOURCE_FILES
         PmuEvent.cpp
         PmuParser.cpp
         Utils.cpp
-        EventGraph.cpp Updaters.cpp PmuGrouper.cpp Perf.cpp TraceableProcess.cpp)
+        EventGraph.cpp
+        Updaters.cpp
+        PmuGrouper.cpp
+        Perf.cpp
+        TraceableProcess.cpp
+        StringUtils.cpp)
 
 add_executable( ${PROJECT_NAME} ${SOURCE_FILES} )
 

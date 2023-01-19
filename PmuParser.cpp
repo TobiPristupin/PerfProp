@@ -2,6 +2,7 @@
 #include <iostream>
 #include "include/PmuParser.h"
 #include "include/Utils.h"
+#include "StringUtils.h"
 
 namespace PmuParser {
 
@@ -12,7 +13,7 @@ namespace PmuParser {
         std::unordered_set<std::string> softwareEvents = obtainSoftwareEvents();
 
         std::vector<PmuEvent> events;
-        std::vector<std::string> eventStrings = Utils::splitString(cmdEventString, ',');
+        std::vector<std::string> eventStrings = StringUtils::split(cmdEventString, ',');
         for (const std::string &e : eventStrings){
             std::string eventName = e;
             PmuEvent::Type type = softwareEvents.find(eventName) != softwareEvents.end() ? PmuEvent::SOFTWARE : PmuEvent::HARDWARE;
@@ -54,7 +55,7 @@ namespace PmuParser {
                 continue;
             }
 
-            std::vector<std::string> splitLine = Utils::splitString(line, ' ');
+            std::vector<std::string> splitLine = StringUtils::split(line, ' ');
             if (splitLine[1] == "OR"){
                 softwareEvents.insert(splitLine[0]);
                 softwareEvents.insert(splitLine[2]);

@@ -34,6 +34,8 @@ public:
 
     pid_t getPid() const;
 
+    bool hasTerminated() const;
+
     /*
      * Sends SIGTERM to child
      */

@@ -1,3 +1,4 @@
+#include <sys/wait.h>
 #include "TraceableProcess.h"
 
 TraceableProcess::TraceableProcess(pid_t childPid, int parentWriteFd, int childStartExecutionCode)
@@ -14,11 +15,19 @@ pid_t TraceableProcess::getPid() const {
     return childPid;
 }
 
+bool TraceableProcess::hasTerminated() const {
+    int ret = waitpid(childPid, nullptr, WNOHANG);
+    if (ret < 0){
+        throw std::runtime_error("wait():" + std::string(strerror(errno)));
+    }
+
+    return ret > 0;
+}
+
 TraceableProcess::~TraceableProcess() {
     close(parentWriteFd);
     kill(childPid, SIGTERM);
 }
-
 
 std::unique_ptr<TraceableProcess> TraceableProcessFactory::create(const std::vector<std::string> &programToTrace) {
     /*

@@ -1647,7 +1647,7 @@ Code     : 0x45
 Umask-00 : 0x80 : PMU : [TLB_RELOAD_1G_L2_MISS] : None : Data TLB reload to a 1GB page that missed in the L2 TLB
 Umask-01 : 0x40 : PMU : [TLB_RELOAD_2M_L2_MISS] : None : Data TLB reload to a 2MB page that missed in the L2 TLB
 Umask-02 : 0x20 : PMU : [TLB_RELOAD_COALESCED_PAGE_MISS] : None : Data TLB reload to coalesced pages that missed
-Umask-03 : 0x10 : PMU : [TLB_RELOAD_4K_L2_MISS] : None : Data TLB reload to a 4KB page that missed in the L2 TLB
+Umask-03 : 0cpu-clockx10 : PMU : [TLB_RELOAD_4K_L2_MISS] : None : Data TLB reload to a 4KB page that missed in the L2 TLB
 Umask-04 : 0x08 : PMU : [TLB_RELOAD_1G_L2_HIT] : None : Data TLB reload to a 1GB page that hit in the L2 TLB
 Umask-05 : 0x04 : PMU : [TLB_RELOAD_2M_L2_HIT] : None : Data TLB reload to a 2MB page that hit in the L2 TLB
 Umask-06 : 0x02 : PMU : [TLB_RELOAD_COALESCED_PAGE_HIT] : None : Data TLB reload to coalesced pages that hit

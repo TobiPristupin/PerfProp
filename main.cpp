@@ -1,13 +1,14 @@
 /*
  * TODO:
+ *  Add a way to generate libpfm_events.txt programatically.
+ *  Name migration
  *  Figure out updaters
  *  Number of programmable HPCs
  *  Grouping algorithm, and handle if a group can't be scheduled? + unit tests
- *  Refactor PmuEventParser to use a namespace
- *  Refactor handleCmdArgs to return a struct instead of modifying global vars.
- *  Take code out of main.cpp
+ *  Read frequency as param?
  *  Refactor includes using include-what-you-use
  *  Fix problem where certain tests produce error logs when testing failures.
+ *  Consider using std::async when reading perf samples to increase read frequency?
  */
 
 #include <vector>
@@ -17,11 +18,9 @@
 #include <string>
 #include <memory>
 #include <sys/wait.h>
-#include <cstring>
 #include "PmuEvent.h"
 #include "PmuParser.h"
 #include "EventGraph.h"
-#include "include/Updaters.h"
 #include "PmuGrouper.h"
 #include "Perf.h"
 #include "Logger.h"
@@ -103,15 +102,22 @@ EventGraph populateEventGraph(const std::vector<PmuEvent>& pmuEvents){
     return graph;
 }
 
+void readAndProcessSamples(const std::unordered_map<int, PmuEvent>& fdsToEvent){
+    for (const auto& [fd, event] : fdsToEvent){
+        uint64_t sample;
+        try {
+            sample = Perf::readSample(fd);
+        } catch (const std::runtime_error &e){
+            Logger::error("read failed for event " + event.getName() + ": " + e.what());
+        }
 
-int reportError(const std::string& msg){
-    int error = errno; //logging may modify errno, so we save it beforehand
-    Logger::error(msg + ": " + strerror(errno));
-    return error;
+        Logger::info("Read sample for event " + event.getName() + ": " + std::to_string(sample));
+    }
 }
 
 int main(int argc, char *argv[]) {
-    PfmLib pfmlib; //instantiates pflmlib
+    PfmLib pfmlib;
+    pfmlib.initialize();
 
     std::string eventsString;
     std::vector<std::string> programToTrace;
@@ -137,7 +143,7 @@ int main(int argc, char *argv[]) {
 
     //Parent setup, code that follows is code that we want to run before we start our traced program
     Logger::debug("Child process created with pid " + std::to_string(tracedProcess->getPid()));
-    auto [fds, groupLeaderFds] = Perf::perfOpenEvents(groups, tracedProcess->getPid());
+    auto [fdsToEvent, groupLeaderFds] = Perf::perfOpenEvents(groups, tracedProcess->getPid());
 
     //Parent setup done, notify child that they can begin execution
     try {
@@ -147,25 +153,17 @@ int main(int argc, char *argv[]) {
         return ECHILD;
     }
 
-    Perf::enableEvents(groupLeaderFds); //Enabling only group leaders causes all events to be enabled
+    Perf::enableEvents(Utils::keysToVector(fdsToEvent));
 
-    int ret = waitpid(tracedProcess->getPid(), nullptr, WNOHANG);
-    while (ret <= 0){
-        if (ret < 0){
-            return reportError("waitpid()");
-        }
-
-        usleep(200000);
-        for (int groupLeaderFd : groupLeaderFds){
-            Perf::readSamplesForGroup(groupLeaderFd);
-        }
-
-        ret = waitpid(tracedProcess->getPid(), nullptr, WNOHANG);
+    while (!tracedProcess->hasTerminated()){
+        readAndProcessSamples(fdsToEvent);
+        int millis = 200;
+        usleep(millis * 1000);
     }
 
-    Perf::disableEvents(groupLeaderFds); //Disabling only group leaders causes all events to be disabled
-    Perf::closeFds(fds);
     Logger::debug("Child process finalized executing");
+    Perf::disableEvents(groupLeaderFds); //Disabling only group leaders causes all events to be disabled
+    Perf::closeFds(fdsToEvent);
 
     return 0;
 }

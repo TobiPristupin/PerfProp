@@ -4,16 +4,20 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <unordered_map>
 
 namespace Utils {
 
-    std::vector<std::string> splitString(const std::string& str, char delimiter);
+    template<class K, class V>
+    std::vector<K> keysToVector(std::unordered_map<K,V> map){
+        std::vector<K> vec;
+        for (const auto& [key, val] : map){
+            vec.push_back(key);
+        }
+        return vec;
+    }
 
-    std::string ltrim(std::string s, const char* t = " \t\n\r\f\v");
-    std::string rtrim(std::string s, const char* t = " \t\n\r\f\v");
-    std::string trim(std::string s, const char* t = " \t\n\r\f\v");
-
-//Taken from https://stackoverflow.com/a/54728293/8402038
+    //Taken from https://stackoverflow.com/a/54728293/8402038
     template <typename T, typename... Rest>
     void hash_combine(std::size_t& seed, const T& v, const Rest&... rest)
     {

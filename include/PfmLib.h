@@ -4,12 +4,12 @@
 #include "perfmon/pfmlib.h"
 
 /*
- * Simple RAII style class to manage initialization and termination of the library. This class needs to be
- * instantiated only once.
+ * Simple RAII style class to manage initialization and termination of the library. It is enough to instantiate
+ * pfm only once by initializing one PfmLib object in main. Further initializations of this class will have no effect.
  */
 class PfmLib {
 public:
-    PfmLib(){
+    void initialize(){
         pfm_initialize();
     }
 

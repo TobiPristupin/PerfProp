@@ -13,9 +13,43 @@
  */
 namespace Perf {
 
+    pfm_pmu_t nextPmu(const pfm_pmu_t& pmu);
+
+    /*
+     * FIXME: There might be more than one pmu. This function returns the first one. This can cause problems because
+     * we may return a pmu that has say 6 available counters, but the actual pmu that is used by the OS has less than 6
+     * available counters.We should have a way for the user to select which one to use.
+     */
+    pfm_pmu_info_t getDefaultPmu() {
+        pfm_pmu_info_t pmu_info;
+        for (pfm_pmu_t pmu = PFM_PMU_NONE; pmu < PFM_PMU_MAX; pmu = nextPmu(pmu)){
+            int ret = pfm_get_pmu_info(pmu, &pmu_info);
+            if (ret != PFM_SUCCESS){
+                continue;
+            }
+
+            if (pmu_info.is_present && pmu_info.type != PFM_PMU_TYPE_OS_GENERIC){
+                return pmu_info;
+            }
+        }
+
+        throw std::runtime_error("libpfm could not find default pmu");
+    }
+
+    pfm_pmu_t nextPmu(const pfm_pmu_t& pmu){
+        /*
+         * pfm_pmu_t is a C enum defined by libpfm. Cpp doesn't allow incrementing an enum, which is what the
+         * examples of libpfm do to obtain the next pmu. This is a little casting hack to achieve that.
+         *
+         * Aside: cpp doesn't allow incrementing enums, because enum values may not be contiguous. In C, enum
+         * values are contiguous, which means this code is safe.
+         */
+        return (pfm_pmu_t)(1 + (int)(pmu));
+    }
+
     size_t numProgrammableHPCs() {
-        //TODO: Fill this in by using pfm_get_pmu_info and num_cntrs field, see man pages for details
-        return 3;
+        static pfm_pmu_info_t defaultPmu{getDefaultPmu()};
+        return defaultPmu.num_cntrs;
     }
 
     std::optional<perf_event_attr> getPerfEventAttr(const PmuEvent& event) {
@@ -53,8 +87,7 @@ namespace Perf {
                     continue;
                 }
 
-                attr->disabled = 0; //TODO? WHy 0 works and not 1
-                attr->read_format = PERF_FORMAT_GROUP | PERF_FORMAT_ID;
+                attr->disabled = 1;
                 int fd = perf_event_open(&attr.value(), pid, -1, groupLeaderFd, 0);
                 if (fd < 0){
                     Logger::error("perf_event_open failed for event " + event.getName() + ", " + strerror(errno));
@@ -84,20 +117,13 @@ namespace Perf {
             ioctl(fd, PERF_EVENT_IOC_DISABLE, 0);
         }
     }
-    std::vector<uint64_t> readSamplesForGroup(int groupLeaderFd) {
-        std::vector<uint64_t> samples(4, 0);
-        //need to know group size here
-        //data read as bytes, needs to be turned into a class
-        //we will obtain perf ids for everything that we read, need to return that so the caller can associate pmu events
-        //with their samples
 
-        uint64_t data[32]{0};
-
-        read(groupLeaderFd, &data, sizeof(data));
-
-        //for some reason only the first two events produce non zero values?
-
-        return samples;
+    uint64_t readSample(int fd) {
+        uint64_t data;
+        if (read(fd, &data, sizeof(data)) < 0){
+            throw std::runtime_error(strerror(errno));
+        }
+        return data;
     }
 
     void closeFds(std::unordered_map<int, PmuEvent> &fds) {
@@ -105,5 +131,6 @@ namespace Perf {
             close(pair.first);
         }
     }
+
 
 }
