@@ -4,9 +4,9 @@
  *  Name migration
  *  Number of programmable HPCs
  *  Grouping algorithm, and handle if a group can't be scheduled? + unit tests
- *  Read frequency as param?
  *  Refactor includes using include-what-you-use
  *  Fix problem where certain tests produce error logs when testing failures.
+ *  Write README, link style guide
  */
 
 #include <vector>
@@ -43,36 +43,53 @@ void printUsage(){
 }
 
 
-SampleCollector initDebugCollector(const std::vector<PmuEvent>& pmuEvents){
-    SampleCollector collector(pmuEvents);
+std::unique_ptr<SampleCollector> initDebugCollector(const std::vector<PmuEvent>& pmuEvents){
+    auto collector = std::make_unique<SampleCollector>(pmuEvents);
     //TODO: read in statistical dependencies and add them.
 
-//    collector.addRelationship(pmuEvents.at(0), pmuEvents.at(1), [] (const PmuEvent::Stats& relatedEventStats,
-//                                                              PmuEvent::Stats &eventToUpdate) {
-//        eventToUpdate.mean = Updater::linearCorrection(2*relatedEventStats.mean, eventToUpdate.mean, 0.2);
-//        std::cout << 1;
-//    });
+    collector->addRelationship(pmuEvents.at(0), pmuEvents.at(1), [&] (const PmuEvent::Stats& relatedEventStats,
+                                                              PmuEvent::Stats &eventToUpdate) {
+        std::cout << "[Stat Propagation] from=" << pmuEvents.at(0).getName() << " to=" << pmuEvents.at(1).getName() << "\n";
+        std::cout << "[Stat Propagation] Before=" << eventToUpdate << "\n";
+        eventToUpdate.meanCountsPerMillis = Updater::linearCorrection(
+                2*relatedEventStats.meanCountsPerMillis, eventToUpdate.meanCountsPerMillis, 0.2);
+        std::cout << "[Stat Propagation] After=" << eventToUpdate << "\n";
+
+    });
 
     return collector;
 }
 
-void readAndProcessSamplesOneRound(const std::map<int, PmuEvent>& fdsToEvent, SampleCollector& sampleCollector){
+void printCurrentStats(const std::map<int, PmuEvent>& fdsToEvent, SampleCollector* sampleCollector){
+    //TODO: would be nice if this printed as a formatted table
+    for (const auto& [fd, event] : fdsToEvent){
+        std::optional<PmuEvent::Stats> stats = sampleCollector->getEventStatistics(event);
+        if (stats.has_value()){
+            std::cout << "[Stat] Event=" << event.getName() << " " << stats.value() << "\n";
+        }
+    }
+    std::cout << "\n";
+}
+
+void readAndProcessSamplesOneRound(const std::map<int, PmuEvent>& fdsToEvent, SampleCollector* sampleCollector){
     for (const auto& [fd, event] : fdsToEvent){
         Perf::Sample sample{};
         try {
             sample = Perf::readSample(fd);
-            //sampleCollector.pushSample(event, sample);
+            if (sample.timeEnabled.count() == 0){ //we may get empty samples if the child process has not yet been scheduled
+                continue;
+            }
+
+            sampleCollector->pushSample(event, sample);
         } catch (const std::runtime_error &e){
             Logger::error("read failed for event " + event.getName() + ": " + e.what());
         }
 
         Logger::info("Read sample for event " + event.getName() + ": val=" + std::to_string(sample.value)
-        + " enabled=" + std::to_string(sample.timeEnabled) + " running=" + std::to_string(sample.timeRunning));
+        + " enabled=" + std::to_string(sample.timeEnabled.count()) + " running=" + std::to_string(sample.timeRunning.count()));
     }
 
-    //TODO:Print
-
-
+    printCurrentStats(fdsToEvent, sampleCollector);
 }
 
 int handleStatCommand(const std::string& unparsedEventsList, const std::vector<std::string>& programToTrace){
@@ -95,7 +112,7 @@ int handleStatCommand(const std::string& unparsedEventsList, const std::vector<s
     Logger::debug("Child process created with pid " + std::to_string(tracedProcess->getPid()));
     auto [fdsToEvent, groupLeaderFds] = Perf::perfOpenEvents(groups, tracedProcess->getPid());
     std::vector<int> allFds = Utils::keysToVector(fdsToEvent);
-    SampleCollector sampleCollector = initDebugCollector(events);
+    std::unique_ptr<SampleCollector> sampleCollector = initDebugCollector(events);
 
     //Parent setup done, notify child that they can begin execution
     try {
@@ -106,7 +123,7 @@ int handleStatCommand(const std::string& unparsedEventsList, const std::vector<s
     }
 
     while (!tracedProcess->hasTerminated()){
-        readAndProcessSamplesOneRound(fdsToEvent, sampleCollector);
+        readAndProcessSamplesOneRound(fdsToEvent, sampleCollector.get());
         int millis = 200;
         usleep(millis * 1000);
     }
@@ -121,7 +138,6 @@ int handleStatCommand(const std::string& unparsedEventsList, const std::vector<s
 int handleListCommand(){
     PfmLib pfmLib;
     pfmLib.initialize();
-
 
     return 0;
 }
@@ -148,7 +164,3 @@ int main(int argc, char *argv[]) {
             return handleListCommand();
     }
 }
-
-//need to reset counter after each read.
-
-

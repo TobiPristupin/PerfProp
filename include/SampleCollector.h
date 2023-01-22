@@ -8,6 +8,7 @@
 #include "PmuEvent.h"
 #include "Utils.h"
 #include "Perf.h"
+#include "PerfStats.h"
 
 
 //comments for this class are outdated TODO: comments

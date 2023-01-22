@@ -4,6 +4,7 @@
 #include <string>
 #include <utility>
 #include <chrono>
+#include <sstream>
 #include "PerfStats.h"
 
 using Statistic = long double;
@@ -18,18 +19,25 @@ public:
 
     struct Stats {
 
-        Stats(EventCount count, Nanosecs &timeEnabled, Statistic meanCountsPerNs,
-              Statistic varianceCountPerNs, EventCount samples) : count(count), timeEnabled(timeEnabled),
-                                                                  meanCountsPerNs(meanCountsPerNs),
-                                                                  varianceCountPerNs(varianceCountPerNs),
+        Stats(EventCount count, Nanosecs &timeEnabled, Statistic meanCountsPerMillis,
+              Statistic varianceCountPerMillis, EventCount samples) : count(count), timeEnabled(timeEnabled),
+                                                                  meanCountsPerMillis(meanCountsPerMillis),
+                                                                  varianceCountPerMillis(varianceCountPerMillis),
                                                                   samples(samples) {}
         Stats() = default;
+
+        std::string toString() const{
+            std::stringstream ss;
+            ss << "meanCountPerMillis=" << meanCountsPerMillis << " " << "varPerMillis=" << varianceCountPerMillis
+            << " count=" << count << " timeEnabled=" << timeEnabled.count() << " samples=" << samples;
+            return ss.str();
+        }
 
         EventCount count{};
         EventCount samples{};
         Nanosecs timeEnabled{};
-        Statistic meanCountsPerNs{};
-        Statistic varianceCountPerNs{};
+        Statistic meanCountsPerMillis{};
+        Statistic varianceCountPerMillis{};
     };
 
     /*
@@ -43,6 +51,9 @@ public:
 
     bool operator==(const PmuEvent& e) const;
     bool operator<(const PmuEvent &e) const;
+    friend std::ostream& operator<< (std::ostream& os, const PmuEvent::Stats& obj) {
+        return os << obj.toString();
+    }
 
 private:
     std::string name;

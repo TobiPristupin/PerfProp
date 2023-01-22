@@ -52,15 +52,19 @@ void SampleCollector::pushSample(const PmuEvent &event, Perf::Sample sample) {
 
 void SampleCollector::updateMean(PmuEvent::Stats &stats, EventCount newCount, Nanosecs timeDiff) {
     EventCount oldSampleCount = stats.samples;
-    Statistic newCountPerNs = (Statistic) newCount / timeDiff;
+    Statistic newCountPerMillis = 0;
+    if (timeDiff.count()!= 0){
+        newCountPerMillis = (Statistic) newCount / nsToMs(timeDiff).count();
+    }
 
-    Statistic currSum = stats.meanCountsPerNs * (oldSampleCount);
-    Statistic newMean = (currSum + newCountPerNs) / (oldSampleCount + 1);
-    stats.meanCountsPerNs = newMean;
+
+    Statistic currSum = stats.meanCountsPerMillis * (oldSampleCount);
+    Statistic newMean = (currSum + newCountPerMillis) / (oldSampleCount + 1);
+    stats.meanCountsPerMillis = newMean;
 }
 
 void SampleCollector::updateVariance(PmuEvent::Stats &stats, EventCount newCount, Nanosecs timeDiff) {
-    stats.varianceCountPerNs = 0;
+    stats.varianceCountPerMillis = 0;
     //TODO: update running variance
 }
 

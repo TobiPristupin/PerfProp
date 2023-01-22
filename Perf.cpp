@@ -128,8 +128,8 @@ namespace Perf {
         }
 
         sample.value = buf[0];
-        sample.timeEnabled = buf[1];
-        sample.timeRunning = buf[2];
+        sample.timeEnabled = Nanosecs(buf[1]);
+        sample.timeRunning = Nanosecs(buf[2]);
 
         return sample;
     }

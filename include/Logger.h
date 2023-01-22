@@ -1,7 +1,7 @@
 #ifndef BAYESPERF_CPP_LOGGER_H
 #define BAYESPERF_CPP_LOGGER_H
 
-#define BAYESPERF_LOG_LEVEL 1 //0 for OFF, 1 for DEBUG, 2 for INFO
+#define BAYESPERF_LOG_LEVEL 0 //0 for OFF, 1 for DEBUG, 2 for INFO
 
 #include <string>
 #include <iostream>
