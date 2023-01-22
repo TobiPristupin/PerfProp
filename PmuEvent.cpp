@@ -24,21 +24,16 @@ PmuEvent::Type PmuEvent::getType() const {
     return type;
 }
 
-std::optional<double> PmuEvent::getMean() const {
-    return mean;
+bool PmuEvent::operator<(const PmuEvent& e) const {
+    if (this->name == e.name){
+        if (this->modifiers == e.modifiers){
+            return this->type < e.type;
+        }
+        return this->modifiers < e.modifiers;
+    }
+    return this->name < e.name;
 }
 
-std::optional<double> PmuEvent::getVariance() const {
-    return variance;
-}
-
-void PmuEvent::setMean(double m) {
-    mean = m;
-}
-
-void PmuEvent::setVariance(double var) {
-    variance = var;
-}
 
 
 

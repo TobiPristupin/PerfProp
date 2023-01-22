@@ -3,8 +3,9 @@
 
 #include <string>
 #include <utility>
-#include <optional>
-#include <linux/perf_event.h>
+
+using Statistic = long double;
+using SampleCount = uint64_t;
 
 class PmuEvent {
 public:
@@ -12,6 +13,18 @@ public:
     enum Type {
         SOFTWARE,
         HARDWARE
+    };
+
+    struct Stats {
+
+        Stats(Statistic mean, Statistic variance, SampleCount samples)
+        : mean(mean), variance(variance), samples(samples) {}
+
+        Stats() = default;
+
+        Statistic mean{};
+        Statistic variance{};
+        SampleCount samples{};
     };
 
     /*
@@ -22,22 +35,14 @@ public:
     const std::string &getName() const;
     const std::string &getModifiers() const;
     Type getType() const;
-    std::optional<double> getMean() const;
-    std::optional<double> getVariance() const;
 
     bool operator==(const PmuEvent& e) const;
-
-    void setMean(double mean);
-    void setVariance(double variance);
+    bool operator<(const PmuEvent &e) const;
 
 private:
     std::string name;
     std::string modifiers;
     PmuEvent::Type type;
-
-    //optional because they may be uninitialized until we receive our first sample
-    std::optional<double> mean;
-    std::optional<double> variance;
 };
 
 namespace std {
@@ -48,4 +53,4 @@ namespace std {
         }
     };
 }
-#endif //BAYESPERF_CPP_PMUEVENT_H
+#endif

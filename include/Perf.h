@@ -8,13 +8,15 @@
 #include <cstdint>
 #include <string>
 #include <optional>
-#include <unordered_map>
+#include <map>
 #include <vector>
 #include <linux/perf_event.h>
 #include <perfmon/pfmlib.h>
 #include "PmuEvent.h"
 
 namespace Perf {
+
+    using Sample = uint64_t;
 
     pfm_pmu_info_t getDefaultPmu();
 
@@ -41,18 +43,22 @@ namespace Perf {
      * NOTE: A PmuEvent may fail to be encoded into a valid event for perf_event_open. In that case, this function
      * will log an error message and skip placing that event in the map.
      */
-    std::pair<std::unordered_map<int, PmuEvent>, std::vector<int>> perfOpenEvents(const std::vector<std::vector<PmuEvent>>& eventGroups, pid_t pid);
+    std::pair<std::map<int, PmuEvent>, std::vector<int>> perfOpenEvents(const std::vector<std::vector<PmuEvent>>& eventGroups, pid_t pid);
 
+    /*
+     * Events are enabled by default by setting enable_on_exec=1 on perfOpenEvents, so there should be no reason
+     * to call this function.
+     */
     void enableEvents(const std::vector<int>& fds);
 
     void disableEvents(const std::vector<int>& fds);
 
-    void closeFds(std::unordered_map<int, PmuEvent>& fds);
+    void closeFds(std::map<int, PmuEvent>& fds);
 
     /*
      * Might throw std::runtime_error
      */
-    uint64_t readSample(int groupLeaderFd);
+    Sample readSample(int groupLeaderFd);
 }
 
 #endif

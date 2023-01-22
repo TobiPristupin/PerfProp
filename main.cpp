@@ -2,13 +2,11 @@
  * TODO:
  *  Add a way to generate libpfm_events.txt programatically.
  *  Name migration
- *  Figure out updaters
  *  Number of programmable HPCs
  *  Grouping algorithm, and handle if a group can't be scheduled? + unit tests
  *  Read frequency as param?
  *  Refactor includes using include-what-you-use
  *  Fix problem where certain tests produce error logs when testing failures.
- *  Consider using std::async when reading perf samples to increase read frequency?
  */
 
 #include <vector>
@@ -20,13 +18,14 @@
 #include <sys/wait.h>
 #include "PmuEvent.h"
 #include "PmuParser.h"
-#include "EventGraph.h"
+#include "SampleCollector.h"
 #include "PmuGrouper.h"
 #include "Perf.h"
 #include "Logger.h"
 #include "PfmLib.h"
 #include "TraceableProcess.h"
 #include "CommandParser.h"
+#include "Updaters.h"
 
 static const std::string usageString = R"(
 Usage: bayesperf {command} {args}
@@ -44,28 +43,35 @@ void printUsage(){
 }
 
 
-EventGraph populateEventGraph(const std::vector<PmuEvent>& pmuEvents){
-    EventGraph graph;
-    for (const PmuEvent& event : pmuEvents){
-        graph.addNode(event);
-    }
-
+SampleCollector initDebugCollector(const std::vector<PmuEvent>& pmuEvents){
+    SampleCollector collector(pmuEvents);
     //TODO: read in statistical dependencies and add them.
 
-    return graph;
+    collector.addRelationship(pmuEvents[0], pmuEvents[1], [] (const PmuEvent::Stats& relatedEventStats,
+                                                              PmuEvent::Stats &eventToUpdate) {
+        eventToUpdate.mean = Updater::linearCorrection(2*relatedEventStats.mean, eventToUpdate.mean, 0.2);
+        std::cout << 1;
+    });
+
+    return collector;
 }
 
-void readAndProcessSamples(const std::unordered_map<int, PmuEvent>& fdsToEvent){
+void readAndProcessSamplesOneRound(const std::map<int, PmuEvent>& fdsToEvent, SampleCollector& sampleCollector){
     for (const auto& [fd, event] : fdsToEvent){
-        uint64_t sample;
+        Perf::Sample sample;
         try {
             sample = Perf::readSample(fd);
+            sampleCollector.pushSample(event, sample);
         } catch (const std::runtime_error &e){
             Logger::error("read failed for event " + event.getName() + ": " + e.what());
         }
 
-        Logger::info("Read sample for event " + event.getName() + ": " + std::to_string(sample));
+//        Logger::info("Read sample for event " + event.getName() + ": " + std::to_string(sample));
     }
+
+    //TODO:Print
+
+
 }
 
 int handleStatCommand(const std::string& unparsedEventsList, const std::vector<std::string>& programToTrace){
@@ -87,6 +93,8 @@ int handleStatCommand(const std::string& unparsedEventsList, const std::vector<s
     //Parent setup, code that follows is code that we want to run before we start our traced program
     Logger::debug("Child process created with pid " + std::to_string(tracedProcess->getPid()));
     auto [fdsToEvent, groupLeaderFds] = Perf::perfOpenEvents(groups, tracedProcess->getPid());
+    std::vector<int> allFds = Utils::keysToVector(fdsToEvent);
+    SampleCollector sampleCollector = initDebugCollector(events);
 
     //Parent setup done, notify child that they can begin execution
     try {
@@ -96,22 +104,24 @@ int handleStatCommand(const std::string& unparsedEventsList, const std::vector<s
         return ECHILD;
     }
 
-    Perf::enableEvents(Utils::keysToVector(fdsToEvent));
-
     while (!tracedProcess->hasTerminated()){
-        readAndProcessSamples(fdsToEvent);
+        readAndProcessSamplesOneRound(fdsToEvent, sampleCollector);
         int millis = 200;
         usleep(millis * 1000);
     }
 
     Logger::debug("Child process finalized executing");
-    Perf::disableEvents(groupLeaderFds); //Disabling only group leaders causes all events to be disabled
+    Perf::disableEvents(allFds);
     Perf::closeFds(fdsToEvent);
 
     return 0;
 }
 
 int handleListCommand(){
+    PfmLib pfmLib;
+    pfmLib.initialize();
+
+
     return 0;
 }
 
@@ -138,14 +148,6 @@ int main(int argc, char *argv[]) {
     }
 }
 
-
-/*
- * Hide idea of event graoh, instead just have an event manager
- * remove mean/std dev from event, have event manager store it
- * you can add events to the manager, and register connections between events, with a callback
- * when a new sample is obtained, push the sample to the manager
- * manager should update mean/variances, and then propagate changes
- */
 
 
 

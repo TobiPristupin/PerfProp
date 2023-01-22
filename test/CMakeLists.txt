@@ -9,7 +9,7 @@ set ( MAIN_SOURCE_FILES
         ../PmuEvent.cpp
         ../PmuParser.cpp
         ../Utils.cpp
-        ../EventGraph.cpp
+        ../SampleCollector.cpp
         ../Updaters.cpp
         ../PmuGrouper.cpp
         ../Perf.cpp

@@ -19,6 +19,10 @@ namespace PmuGrouper {
     /*
      * Group events as they come in.
      * TODO: modify grouping algorithm to take into account statistical dependencies
+     * Note for future grouping algorithm: need to take into account if an event group cannot be scheduled because
+     * it does not meet the hardware's constraints (for example, two events in the same group can only be measured
+     * in the same counter). When that happens, perf_events_open will return EINVAL. To account for that, the logic of
+     * grouping and opening events, which is now separate, will probably have to be joined.
      */
     std::vector<std::vector<PmuEvent>> group(const std::vector<PmuEvent> &events, size_t maxGroupSize) {
         std::vector<std::vector<PmuEvent>> groups;

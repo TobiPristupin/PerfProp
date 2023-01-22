@@ -6,11 +6,11 @@
 
 namespace PmuParser {
 
-    static std::unordered_set<std::string> obtainSoftwareEvents();
+    static std::set<std::string> obtainSoftwareEvents();
     static std::string obtainStdoutFromCmd(const char* cmd);
 
     std::vector<PmuEvent> parseEvents(const std::string& cmdEventString) {
-        std::unordered_set<std::string> softwareEvents = obtainSoftwareEvents();
+        std::set<std::string> softwareEvents = obtainSoftwareEvents();
 
         std::vector<PmuEvent> events;
         std::vector<std::string> eventStrings = StringUtils::split(cmdEventString, ',');
@@ -46,8 +46,8 @@ namespace PmuParser {
      * user_time                                          [Tool event]
      * system_time                                        [Tool event]
      */
-    static std::unordered_set<std::string> obtainSoftwareEvents(){
-        std::unordered_set<std::string> softwareEvents;
+    static std::set<std::string> obtainSoftwareEvents(){
+        std::set<std::string> softwareEvents;
         std::string perfListEvents = obtainStdoutFromCmd("perf list sw --no-desc");
         std::istringstream iss(perfListEvents);
         for (std::string line; std::getline(iss, line); ){

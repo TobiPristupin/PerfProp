@@ -43,4 +43,6 @@ int main(int argc, char **argv) {
 //        printf("cannot get encoding %s", pfm_strerror(ret));
 //
 //    return 0;
+    uint64_t x = 5;
+    long double y = x;
 }

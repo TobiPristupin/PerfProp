@@ -18,7 +18,7 @@ namespace Perf {
     /*
      * FIXME: There might be more than one pmu. This function returns the first one. This can cause problems because
      * we may return a pmu that has say 6 available counters, but the actual pmu that is used by the OS has less than 6
-     * available counters.We should have a way for the user to select which one to use.
+     * available counters. We should have a way for the user to select which one to use.
      */
     pfm_pmu_info_t getDefaultPmu() {
         pfm_pmu_info_t pmu_info;
@@ -74,8 +74,8 @@ namespace Perf {
         return attr;
     }
 
-    std::pair<std::unordered_map<int, PmuEvent>, std::vector<int>> perfOpenEvents(const std::vector<std::vector<PmuEvent>>& eventGroups, pid_t pid) {
-        std::unordered_map<int, PmuEvent> fds;
+    std::pair<std::map<int, PmuEvent>, std::vector<int>> perfOpenEvents(const std::vector<std::vector<PmuEvent>>& eventGroups, pid_t pid) {
+        std::map<int, PmuEvent> fds;
         std::vector<int> groupLeaderFds;
 
         for (auto& eventGroup : eventGroups){
@@ -88,6 +88,7 @@ namespace Perf {
                 }
 
                 attr->disabled = 1;
+                attr->enable_on_exec = 1;
                 int fd = perf_event_open(&attr.value(), pid, -1, groupLeaderFd, 0);
                 if (fd < 0){
                     Logger::error("perf_event_open failed for event " + event.getName() + ", " + strerror(errno));
@@ -118,15 +119,15 @@ namespace Perf {
         }
     }
 
-    uint64_t readSample(int fd) {
-        uint64_t data;
+    Sample readSample(int fd) {
+        Sample data;
         if (read(fd, &data, sizeof(data)) < 0){
             throw std::runtime_error(strerror(errno));
         }
         return data;
     }
 
-    void closeFds(std::unordered_map<int, PmuEvent> &fds) {
+    void closeFds(std::map<int, PmuEvent> &fds) {
         for (const auto& pair : fds){
             close(pair.first);
         }

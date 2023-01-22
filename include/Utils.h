@@ -4,12 +4,12 @@
 #include <vector>
 #include <string>
 #include <memory>
-#include <unordered_map>
+#include <map>
 
 namespace Utils {
 
     template<class K, class V>
-    std::vector<K> keysToVector(std::unordered_map<K,V> map){
+    std::vector<K> keysToVector(std::map<K,V> map){
         std::vector<K> vec;
         for (const auto& [key, val] : map){
             vec.push_back(key);
