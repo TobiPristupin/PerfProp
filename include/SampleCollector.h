@@ -69,7 +69,7 @@ private:
      * WARNING: Do not update stats.sampleCount before calling this method. Do it after, as this method
      * expected sampleCount to not include the new sample in the count.
      */
-    static void updateMean(PmuEvent::Stats& stats, Perf::Sample sample);
+    static void updateMean(PmuEvent::Stats &stats, EventCount newCount, Nanosecs timeDiff);
 
     /*
      * Modifies the stats struct by updating its variance with the new sample.
@@ -77,7 +77,7 @@ private:
      * WARNING: Do not update stats.sampleCount before calling this method. Do it after, as this method
      * expected sampleCount to not include the new sample in the count.
      */
-    static void updateVariance(PmuEvent::Stats& stats, Perf::Sample sample);
+    static void updateVariance(PmuEvent::Stats &stats, EventCount newCount, Nanosecs timeDiff);
 
 
     /*

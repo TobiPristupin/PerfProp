@@ -3,9 +3,10 @@
 
 #include <string>
 #include <utility>
+#include <chrono>
+#include "PerfStats.h"
 
 using Statistic = long double;
-using SampleCount = uint64_t;
 
 class PmuEvent {
 public:
@@ -17,14 +18,18 @@ public:
 
     struct Stats {
 
-        Stats(Statistic mean, Statistic variance, SampleCount samples)
-        : mean(mean), variance(variance), samples(samples) {}
-
+        Stats(EventCount count, Nanosecs &timeEnabled, Statistic meanCountsPerNs,
+              Statistic varianceCountPerNs, EventCount samples) : count(count), timeEnabled(timeEnabled),
+                                                                  meanCountsPerNs(meanCountsPerNs),
+                                                                  varianceCountPerNs(varianceCountPerNs),
+                                                                  samples(samples) {}
         Stats() = default;
 
-        Statistic mean{};
-        Statistic variance{};
-        SampleCount samples{};
+        EventCount count{};
+        EventCount samples{};
+        Nanosecs timeEnabled{};
+        Statistic meanCountsPerNs{};
+        Statistic varianceCountPerNs{};
     };
 
     /*

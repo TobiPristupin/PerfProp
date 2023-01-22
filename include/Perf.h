@@ -2,7 +2,7 @@
 #define BAYESPERF_CPP_PERF_H
 
 /**
- * Collection of methods that deal with the underlying PMU architecture
+ * Collection of objects that interface with the perf subsystem in the kernel
  */
 #include <cstddef>
 #include <cstdint>
@@ -13,10 +13,15 @@
 #include <linux/perf_event.h>
 #include <perfmon/pfmlib.h>
 #include "PmuEvent.h"
+#include "PerfStats.h"
 
 namespace Perf {
 
-    using Sample = uint64_t;
+    struct Sample {
+        EventCount value;
+        Nanosecs timeEnabled;
+        Nanosecs timeRunning;
+    };
 
     pfm_pmu_info_t getDefaultPmu();
 
@@ -52,6 +57,8 @@ namespace Perf {
     void enableEvents(const std::vector<int>& fds);
 
     void disableEvents(const std::vector<int>& fds);
+
+    void resetCounter(int fd);
 
     void closeFds(std::map<int, PmuEvent>& fds);
 

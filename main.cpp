@@ -47,26 +47,27 @@ SampleCollector initDebugCollector(const std::vector<PmuEvent>& pmuEvents){
     SampleCollector collector(pmuEvents);
     //TODO: read in statistical dependencies and add them.
 
-    collector.addRelationship(pmuEvents[0], pmuEvents[1], [] (const PmuEvent::Stats& relatedEventStats,
-                                                              PmuEvent::Stats &eventToUpdate) {
-        eventToUpdate.mean = Updater::linearCorrection(2*relatedEventStats.mean, eventToUpdate.mean, 0.2);
-        std::cout << 1;
-    });
+//    collector.addRelationship(pmuEvents.at(0), pmuEvents.at(1), [] (const PmuEvent::Stats& relatedEventStats,
+//                                                              PmuEvent::Stats &eventToUpdate) {
+//        eventToUpdate.mean = Updater::linearCorrection(2*relatedEventStats.mean, eventToUpdate.mean, 0.2);
+//        std::cout << 1;
+//    });
 
     return collector;
 }
 
 void readAndProcessSamplesOneRound(const std::map<int, PmuEvent>& fdsToEvent, SampleCollector& sampleCollector){
     for (const auto& [fd, event] : fdsToEvent){
-        Perf::Sample sample;
+        Perf::Sample sample{};
         try {
             sample = Perf::readSample(fd);
-            sampleCollector.pushSample(event, sample);
+            //sampleCollector.pushSample(event, sample);
         } catch (const std::runtime_error &e){
             Logger::error("read failed for event " + event.getName() + ": " + e.what());
         }
 
-//        Logger::info("Read sample for event " + event.getName() + ": " + std::to_string(sample));
+        Logger::info("Read sample for event " + event.getName() + ": val=" + std::to_string(sample.value)
+        + " enabled=" + std::to_string(sample.timeEnabled) + " running=" + std::to_string(sample.timeRunning));
     }
 
     //TODO:Print
@@ -148,6 +149,6 @@ int main(int argc, char *argv[]) {
     }
 }
 
-
+//need to reset counter after each read.
 
 

@@ -89,6 +89,7 @@ namespace Perf {
 
                 attr->disabled = 1;
                 attr->enable_on_exec = 1;
+                attr->read_format = PERF_FORMAT_TOTAL_TIME_ENABLED | PERF_FORMAT_TOTAL_TIME_RUNNING;
                 int fd = perf_event_open(&attr.value(), pid, -1, groupLeaderFd, 0);
                 if (fd < 0){
                     Logger::error("perf_event_open failed for event " + event.getName() + ", " + strerror(errno));
@@ -120,17 +121,26 @@ namespace Perf {
     }
 
     Sample readSample(int fd) {
-        Sample data;
-        if (read(fd, &data, sizeof(data)) < 0){
+        Sample sample{};
+        uint64_t buf[3];
+        if (read(fd, &buf, sizeof(buf)) < 0){
             throw std::runtime_error(strerror(errno));
         }
-        return data;
+
+        sample.value = buf[0];
+        sample.timeEnabled = buf[1];
+        sample.timeRunning = buf[2];
+
+        return sample;
     }
 
     void closeFds(std::map<int, PmuEvent> &fds) {
         for (const auto& pair : fds){
             close(pair.first);
         }
+    }
+    void resetCounter(int fd) {
+        ioctl(fd, PERF_EVENT_IOC_RESET, 0);
     }
 
 

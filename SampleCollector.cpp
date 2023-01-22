@@ -36,22 +36,31 @@ void SampleCollector::addRelationship(const PmuEvent &from, const PmuEvent &even
 
 void SampleCollector::pushSample(const PmuEvent &event, Perf::Sample sample) {
     PmuEvent::Stats &eventStats = collectorStats.at(event);
-    updateMean(eventStats, sample);
-    updateVariance(eventStats, sample);
+
+    Nanosecs timeDiff = sample.timeEnabled - eventStats.timeEnabled;
+    EventCount newCount = sample.value - eventStats.count;
+
+    updateMean(eventStats, newCount, timeDiff);
+    updateVariance(eventStats, newCount, timeDiff);
+    eventStats.count = sample.value;
+    eventStats.timeEnabled = sample.timeEnabled;
     eventStats.samples++;
     //Note: Update samples after mean and var, because mean and var updates expect an "old" count of samples
+
     propagateUpdateToNeighbors(event, eventStats);
 }
 
-void SampleCollector::updateMean(PmuEvent::Stats &stats, Perf::Sample sample) {
-    SampleCount oldSampleCount = stats.samples;
-    Statistic currSum = stats.mean * (oldSampleCount);
-    Statistic newMean = (currSum + sample) / (oldSampleCount + 1);
-    stats.mean = newMean;
+void SampleCollector::updateMean(PmuEvent::Stats &stats, EventCount newCount, Nanosecs timeDiff) {
+    EventCount oldSampleCount = stats.samples;
+    Statistic newCountPerNs = (Statistic) newCount / timeDiff;
+
+    Statistic currSum = stats.meanCountsPerNs * (oldSampleCount);
+    Statistic newMean = (currSum + newCountPerNs) / (oldSampleCount + 1);
+    stats.meanCountsPerNs = newMean;
 }
 
-void SampleCollector::updateVariance(PmuEvent::Stats &stats, Perf::Sample sample) {
-    stats.variance = 0;
+void SampleCollector::updateVariance(PmuEvent::Stats &stats, EventCount newCount, Nanosecs timeDiff) {
+    stats.varianceCountPerNs = 0;
     //TODO: update running variance
 }
 
