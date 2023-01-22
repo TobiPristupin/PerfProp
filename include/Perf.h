@@ -23,16 +23,16 @@ namespace Perf {
         Nanosecs timeRunning;
     };
 
-    pfm_pmu_info_t getDefaultPmu();
+    [[nodiscard]] pfm_pmu_info_t getDefaultPmu();
 
-    size_t numProgrammableHPCs();
+    [[nodiscard]] size_t numProgrammableHPCs();
 
     /*
      * Obtains the perf_event_attr from an event, which can then be used to call perf_event_open for this
      * event. Returns optional because the conversion might fail.
      *
      */
-    std::optional<perf_event_attr> getPerfEventAttr(const PmuEvent& event);
+    [[nodiscard]] std::optional<perf_event_attr> getPerfEventAttr(const PmuEvent& event);
 
     /*
      * For every event group, calls perf_event_open on every event.
@@ -65,7 +65,7 @@ namespace Perf {
     /*
      * Might throw std::runtime_error
      */
-    Sample readSample(int groupLeaderFd);
+    [[nodiscard]] Sample readSample(int groupLeaderFd);
 }
 
 #endif

@@ -11,7 +11,7 @@ namespace PmuGrouper {
     /*
      * Splits events into a vector of hardware events and a vector of software events. Returned in that order.
      */
-    std::pair<EventVector, EventVector> splitHardwareSoftware(const EventVector& events);
+    [[nodiscard]] std::pair<EventVector, EventVector> splitHardwareSoftware(const EventVector& events);
 
     /*
      * Groups events into an arbitrary number of groups, where each group has size at most maxGroupSize. Events are
@@ -24,7 +24,7 @@ namespace PmuGrouper {
      * once since they are measured in software and don't physically use any PMU counter.
      *
      */
-    std::vector<EventVector> group(const EventVector& events, size_t maxGroupSize);
+    [[nodiscard]] std::vector<EventVector> group(const EventVector& events, size_t maxGroupSize);
 }
 
 

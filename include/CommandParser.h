@@ -12,7 +12,7 @@ namespace CommandParser {
     };
 
     struct CmdArgs {
-        Command command;
+        Command command{};
 
         //only valid if command is STAT
         std::optional<std::string> unparsedEventsList;

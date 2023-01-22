@@ -6,11 +6,11 @@
 
 namespace StringUtils {
 
-    std::vector<std::string> split(const std::string& str, char delimiter);
+    [[nodiscard]] std::vector<std::string> split(const std::string& str, char delimiter);
 
-    std::string ltrim(std::string s, const char* t = " \t\n\r\f\v");
-    std::string rtrim(std::string s, const char* t = " \t\n\r\f\v");
-    std::string trim(std::string s, const char* t = " \t\n\r\f\v");
+    [[nodiscard]] std::string ltrim(std::string s, const char* t = " \t\n\r\f\v");
+    [[nodiscard]] std::string rtrim(std::string s, const char* t = " \t\n\r\f\v");
+    [[nodiscard]] std::string trim(std::string s, const char* t = " \t\n\r\f\v");
 }
 
 #endif

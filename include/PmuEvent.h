@@ -37,9 +37,9 @@ public:
      */
     PmuEvent(std::string name, PmuEvent::Type type);
 
-    const std::string &getName() const;
-    const std::string &getModifiers() const;
-    Type getType() const;
+    [[nodiscard]] const std::string &getName() const;
+    [[nodiscard]] const std::string &getModifiers() const;
+    [[nodiscard]] Type getType() const;
 
     bool operator==(const PmuEvent& e) const;
     bool operator<(const PmuEvent &e) const;

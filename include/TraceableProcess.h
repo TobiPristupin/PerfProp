@@ -32,9 +32,9 @@ public:
      */
     void beginExecution() const;
 
-    pid_t getPid() const;
+    [[nodiscard]] pid_t getPid() const;
 
-    bool hasTerminated() const;
+    [[nodiscard]] bool hasTerminated() const;
 
     /*
      * Sends SIGTERM to child
@@ -82,7 +82,7 @@ private:
      * NOTE: We cannot use smart pointers here, as we need to pass in the raw array to exec,
      * and unpacking nested smart pointers would be a lot of work.
      */
-    static char** stringVectorToExecArgs(const std::vector<std::string>& vector);
+    [[nodiscard]] static char** stringVectorToExecArgs(const std::vector<std::string>& vector);
 
 
     static const int childStartExecutionCode = 91218; //arbitrary number
