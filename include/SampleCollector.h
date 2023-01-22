@@ -40,7 +40,7 @@ public:
 
     void pushSample(const PmuEvent& event, Perf::Sample sample);
 
-    [[nodiscard]] std::optional<PmuEvent::Stats> getEventStatistics(const PmuEvent& event) const;
+    std::optional<PmuEvent::Stats> getEventStatistics(const PmuEvent& event) const;
 
 private:
 

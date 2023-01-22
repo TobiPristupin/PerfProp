@@ -14,7 +14,7 @@ namespace Updater {
      * (in this case 5 * mean e1), and a correction weight (between (0,1] ). We calculate the difference between the current mean of
      * e2 and its expected mean. Then we linearly scale the mean of e2 to be current mean e2 + diff * correction weight.
      */
-    [[nodiscard]] Statistic linearCorrection(Statistic expected, Statistic current, double correctionWeight);
+    Statistic linearCorrection(Statistic expected, Statistic current, double correctionWeight);
 }
 
 

@@ -32,9 +32,9 @@ public:
      */
     void beginExecution() const;
 
-    [[nodiscard]] pid_t getPid() const;
+    pid_t getPid() const;
 
-    [[nodiscard]] bool hasTerminated() const;
+    bool hasTerminated() const;
 
     /*
      * Sends SIGTERM to child

@@ -16,7 +16,7 @@ namespace PmuParser {
  *
  * Example input: cycles,instructions:k,cache-misses:ku
  */
-    [[nodiscard]] std::vector<PmuEvent> parseEvents(const std::string& cmdEventString);
+    std::vector<PmuEvent> parseEvents(const std::string& cmdEventString);
 }
 
 
