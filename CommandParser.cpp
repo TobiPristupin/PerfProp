@@ -60,6 +60,10 @@ namespace CommandParser {
 
 
     CmdArgs parseCmdArgs(int argc, char **argv) {
+        if (argc <= 1){
+            throw std::invalid_argument("No command to bayesperf");
+        }
+
         if (strcmp(argv[1], "list") == 0){
             return {Command::LIST, {}, {}};
         } else if (strcmp(argv[1], "stat") == 0){

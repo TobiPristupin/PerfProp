@@ -14,7 +14,9 @@ set ( MAIN_SOURCE_FILES
         ../PmuGrouper.cpp
         ../Perf.cpp
         ../TraceableProcess.cpp
-        ../StringUtils.cpp ../CommandParser.cpp)
+        ../StringUtils.cpp
+        ../CommandParser.cpp
+        ../showevtinfo.c)
 
 add_executable( bayesperf_cpp_tests ${MAIN_SOURCE_FILES} ${TEST_SOURCE_FILES})
 

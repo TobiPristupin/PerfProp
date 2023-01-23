@@ -1,6 +1,5 @@
 /*
  * TODO:
- *  Add a way to generate libpfm_events.txt programatically.
  *  Name migration
  *  Number of programmable HPCs
  *  Grouping algorithm, and handle if a group can't be scheduled? + unit tests
@@ -11,7 +10,6 @@
 
 #include <vector>
 #include <iostream>
-#include <getopt.h>
 #include <cstring>
 #include <string>
 #include <memory>
@@ -73,27 +71,26 @@ void printCurrentStats(const std::map<int, PmuEvent>& fdsToEvent, SampleCollecto
 
 void readAndProcessSamplesOneRound(const std::map<int, PmuEvent>& fdsToEvent, SampleCollector* sampleCollector){
     for (const auto& [fd, event] : fdsToEvent){
-        Perf::Sample sample{};
         try {
-            sample = Perf::readSample(fd);
+            Perf::Sample sample = Perf::readSample(fd);
             if (sample.timeEnabled.count() == 0){ //we may get empty samples if the child process has not yet been scheduled
                 continue;
             }
+
+            Logger::info("Read sample for event " + event.getName() + ": val=" + std::to_string(sample.value)
+                         + " enabled=" + std::to_string(sample.timeEnabled.count()) + " running=" + std::to_string(sample.timeRunning.count()));
 
             sampleCollector->pushSample(event, sample);
         } catch (const std::runtime_error &e){
             Logger::error("read failed for event " + event.getName() + ": " + e.what());
         }
-
-        Logger::info("Read sample for event " + event.getName() + ": val=" + std::to_string(sample.value)
-        + " enabled=" + std::to_string(sample.timeEnabled.count()) + " running=" + std::to_string(sample.timeRunning.count()));
     }
 
     printCurrentStats(fdsToEvent, sampleCollector);
 }
 
 int handleStatCommand(const std::string& unparsedEventsList, const std::vector<std::string>& programToTrace){
-    PfmLib pfmlib;
+    PfmLib::Instance pfmlib;
     pfmlib.initialize();
 
     std::vector<PmuEvent> events = PmuParser::parseEvents(unparsedEventsList);
@@ -136,9 +133,9 @@ int handleStatCommand(const std::string& unparsedEventsList, const std::vector<s
 }
 
 int handleListCommand(){
-    PfmLib pfmLib;
+    PfmLib::Instance pfmLib;
     pfmLib.initialize();
-
+    PfmLib::printAllEventsInfo();
     return 0;
 }
 
@@ -147,10 +144,12 @@ int main(int argc, char *argv[]) {
     try {
         cmdArgs = CommandParser::parseCmdArgs(argc, argv);
     } catch (const std::runtime_error& e){
-        std::cerr << e.what() << "\n";
+        std::cerr << e.what() << std::endl;
+        printUsage();
         return EINVAL;
     } catch (const std::invalid_argument& e){
-        std::cerr << e.what() << "\n";
+        std::cerr << e.what() << std::endl;
+        printUsage();
         return EINVAL;
     }
 

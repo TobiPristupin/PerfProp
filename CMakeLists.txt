@@ -18,7 +18,7 @@ set( SOURCE_FILES
         PmuGrouper.cpp
         Perf.cpp
         TraceableProcess.cpp
-        StringUtils.cpp CommandParser.cpp)
+        StringUtils.cpp CommandParser.cpp showevtinfo.c)
 
 add_executable( ${PROJECT_NAME} ${SOURCE_FILES} )
 
