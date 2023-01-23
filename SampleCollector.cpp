@@ -51,11 +51,13 @@ void SampleCollector::pushSample(const PmuEvent &event, Perf::Sample sample) {
 }
 
 void SampleCollector::updateMean(PmuEvent::Stats &stats, EventCount newCount, Nanosecs timeDiff) {
-    EventCount oldSampleCount = stats.samples;
-    Statistic newCountPerMillis = 0;
-    if (timeDiff.count()!= 0){
-        newCountPerMillis = (Statistic) newCount / nsToMs(timeDiff).count();
+    if (timeDiff.count() <= 0){
+        throw std::runtime_error("Time enabled must monotonically increase");
     }
+
+    EventCount oldSampleCount = stats.samples;
+    Statistic newCountPerMillis = newCountPerMillis = (Statistic) newCount / nsToMs(timeDiff).count();
+
 
 
     Statistic currSum = stats.meanCountsPerMillis * (oldSampleCount);
@@ -74,7 +76,7 @@ std::optional<PmuEvent::Stats> SampleCollector::getEventStatistics(const PmuEven
     }
 
     PmuEvent::Stats stats = collectorStats.at(event);
-    if (stats.samples == 0){
+    if (stats.samples == 0 && stats.propagations == 0){
         return std::nullopt;
     }
     return stats;
@@ -82,7 +84,9 @@ std::optional<PmuEvent::Stats> SampleCollector::getEventStatistics(const PmuEven
 
 void SampleCollector::propagateUpdateToNeighbors(const PmuEvent &event, const PmuEvent::Stats &eventUpdatedStats) {
     for (const Edge& edge : graph.at(event)){
-        edge.updaterFunc(eventUpdatedStats, collectorStats.at(edge.eventTo));
+        PmuEvent::Stats &statsToUpdate = collectorStats.at(edge.eventTo);
+        edge.updaterFunc(eventUpdatedStats, statsToUpdate);
+        statsToUpdate.propagations++;
     }
 }
 

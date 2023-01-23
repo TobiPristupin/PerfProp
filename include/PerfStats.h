@@ -15,4 +15,8 @@ inline Millis nsToMs(Nanosecs nanosecs){
     return std::chrono::duration_cast<Millis>(nanosecs);
 }
 
+inline Nanosecs msToNs(Millis millis){
+    return std::chrono::duration_cast<Nanosecs>(millis);
+}
+
 #endif

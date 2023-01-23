@@ -18,6 +18,9 @@
 namespace Perf {
 
     struct Sample {
+        Sample(EventCount value, const Nanosecs &timeEnabled, const Nanosecs &timeRunning)
+                : value(value), timeEnabled(timeEnabled),timeRunning(timeRunning) {};
+
         EventCount value;
         Nanosecs timeEnabled;
         Nanosecs timeRunning;

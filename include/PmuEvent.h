@@ -20,21 +20,22 @@ public:
     struct Stats {
 
         Stats(EventCount count, Nanosecs &timeEnabled, Statistic meanCountsPerMillis,
-              Statistic varianceCountPerMillis, EventCount samples) : count(count), timeEnabled(timeEnabled),
+              Statistic varianceCountPerMillis, EventCount samples, EventCount propagations) : count(count), timeEnabled(timeEnabled),
                                                                   meanCountsPerMillis(meanCountsPerMillis),
                                                                   varianceCountPerMillis(varianceCountPerMillis),
-                                                                  samples(samples) {}
+                                                                  samples(samples), propagations(propagations) {}
         Stats() = default;
 
         std::string toString() const{
             std::stringstream ss;
             ss << "meanCountPerMillis=" << meanCountsPerMillis << " " << "varPerMillis=" << varianceCountPerMillis
-            << " count=" << count << " timeEnabled=" << timeEnabled.count() << " samples=" << samples;
+            << " count=" << count << " timeEnabled=" << timeEnabled.count() << " samples=" << samples << " propagations=" << propagations;
             return ss.str();
         }
 
         EventCount count{};
         EventCount samples{};
+        EventCount propagations{};
         Nanosecs timeEnabled{};
         Statistic meanCountsPerMillis{};
         Statistic varianceCountPerMillis{};

@@ -121,17 +121,12 @@ namespace Perf {
     }
 
     Sample readSample(int fd) {
-        Sample sample{};
         uint64_t buf[3];
         if (read(fd, &buf, sizeof(buf)) < 0){
             throw std::runtime_error(strerror(errno));
         }
 
-        sample.value = buf[0];
-        sample.timeEnabled = Nanosecs(buf[1]);
-        sample.timeRunning = Nanosecs(buf[2]);
-
-        return sample;
+        return {buf[0], Nanosecs(buf[1]), Nanosecs(buf[2])};
     }
 
     void closeFds(std::map<int, PmuEvent> &fds) {
@@ -142,6 +137,4 @@ namespace Perf {
     void resetCounter(int fd) {
         ioctl(fd, PERF_EVENT_IOC_RESET, 0);
     }
-
-
 }
