@@ -8,6 +8,7 @@
 #include <string>
 #include <perfmon/pfmlib_perf_event.h>
 #include <iostream>
+#include <chrono>
 
 template<class K, class V>
 std::vector<K> keysToVector(std::unordered_map<K,V> map){

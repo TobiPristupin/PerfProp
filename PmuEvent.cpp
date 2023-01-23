@@ -12,11 +12,11 @@ bool PmuEvent::operator==(const PmuEvent &e) const {
     return (this->name == e.name) && (this->type == e.type);
 }
 
-const std::string &PmuEvent::getName() const {
+std::string PmuEvent::getName() const {
     return name;
 }
 
-const std::string &PmuEvent::getModifiers() const {
+std::string PmuEvent::getModifiers() const {
     return modifiers;
 }
 

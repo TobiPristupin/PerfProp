@@ -11,11 +11,11 @@ using EventCount = uint64_t;
 using Nanosecs = std::chrono::duration<uint64_t, std::nano>;
 using Millis = std::chrono::duration<uint64_t, std::milli>;
 
-inline Millis nsToMs(Nanosecs nanosecs){
+inline Millis nsToMs(const Nanosecs& nanosecs){
     return std::chrono::duration_cast<Millis>(nanosecs);
 }
 
-inline Nanosecs msToNs(Millis millis){
+inline Nanosecs msToNs(const Millis& millis){
     return std::chrono::duration_cast<Nanosecs>(millis);
 }
 

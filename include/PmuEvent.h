@@ -26,7 +26,7 @@ public:
                                                                   samples(samples), propagations(propagations) {}
         Stats() = default;
 
-        std::string toString() const{
+        std::string toString() const {
             std::stringstream ss;
             ss << "meanCountPerMillis=" << meanCountsPerMillis << " " << "varPerMillis=" << varianceCountPerMillis
             << " count=" << count << " timeEnabled=" << timeEnabled.count() << " samples=" << samples << " propagations=" << propagations;
@@ -46,8 +46,8 @@ public:
      */
     PmuEvent(std::string name, PmuEvent::Type type);
 
-    const std::string &getName() const;
-    const std::string &getModifiers() const;
+    std::string getName() const;
+    std::string getModifiers() const;
     Type getType() const;
 
     bool operator==(const PmuEvent& e) const;
@@ -57,6 +57,7 @@ public:
     }
 
     friend class StatPrinter;
+
 private:
     std::string name;
     std::string modifiers;

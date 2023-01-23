@@ -10,17 +10,13 @@ public:
     //columns: event name, meanCountPerMillis, varPerMillis, count, timeEnabled, samples, propagations
     using Table = VariadicTable<
             decltype(PmuEvent::name),
-            decltype(PmuEvent::Stats::meanCountsPerMillis),
-            decltype(PmuEvent::Stats::varianceCountPerMillis),
-            decltype(PmuEvent::Stats::count),
-            decltype(PmuEvent::Stats::timeEnabled.count()),
-            decltype(PmuEvent::Stats::samples),
-            decltype(PmuEvent::Stats::propagations)
+            Statistic,
+            Statistic,
+            EventCount,
+            Nanosecs::rep,
+            EventCount,
+            EventCount
             >;
-
-//    using Table = VariadicTable<
-//            std::string, Statistic, Statistic, EventCount, uint64_t , EventCount, EventCount
-//    >;
 
     std::vector<std::string> columns = {"Event", "meanCountPerMillis", "varPerMillis", "Count", "Time Enabled (ns)", "Samples", "Propagations"};
 
