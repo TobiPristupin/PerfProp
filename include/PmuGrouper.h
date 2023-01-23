@@ -1,5 +1,5 @@
-#ifndef BAYESPERF_CPP_PMUGROUPER_H
-#define BAYESPERF_CPP_PMUGROUPER_H
+#ifndef PERFPROP_PMUGROUPER_H
+#define PERFPROP_PMUGROUPER_H
 
 #include <vector>
 #include "PmuEvent.h"

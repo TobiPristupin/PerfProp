@@ -1,5 +1,5 @@
-#ifndef BAYESPERF_CPP_PMUPARSER_H
-#define BAYESPERF_CPP_PMUPARSER_H
+#ifndef PERFPROP_PMUPARSER_H
+#define PERFPROP_PMUPARSER_H
 
 // Collection of functions to parse events from the command line
 
@@ -21,4 +21,4 @@ namespace PmuParser {
 
 
 
-#endif //BAYESPERF_CPP_PMUPARSER_H
+#endif

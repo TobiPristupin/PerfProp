@@ -1,5 +1,5 @@
-#ifndef BAYESPERF_CPP_COMMANDPARSER_H
-#define BAYESPERF_CPP_COMMANDPARSER_H
+#ifndef PERFPROP_COMMANDPARSER_H
+#define PERFPROP_COMMANDPARSER_H
 
 #include <string>
 #include <vector>

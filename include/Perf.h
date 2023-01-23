@@ -1,5 +1,5 @@
-#ifndef BAYESPERF_CPP_PERF_H
-#define BAYESPERF_CPP_PERF_H
+#ifndef PERFPROP_PERF_H
+#define PERFPROP_PERF_H
 
 /**
  * Collection of objects that interface with the perf subsystem in the kernel

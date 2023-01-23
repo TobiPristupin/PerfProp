@@ -1,5 +1,5 @@
-#ifndef BAYESPERF_CPP_PERFSTATS_H
-#define BAYESPERF_CPP_PERFSTATS_H
+#ifndef PERFPROP_PERFSTATS_H
+#define PERFPROP_PERFSTATS_H
 
 #include <cstdint>
 

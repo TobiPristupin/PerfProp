@@ -1,5 +1,5 @@
-#ifndef BAYESPERF_CPP_PFMLIB_H
-#define BAYESPERF_CPP_PFMLIB_H
+#ifndef PERFPROP_PFMLIB_H
+#define PERFPROP_PFMLIB_H
 
 #include "perfmon/pfmlib.h"
 

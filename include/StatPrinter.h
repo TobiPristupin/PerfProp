@@ -1,5 +1,5 @@
-#ifndef BAYESPERF_CPP_STATPRINTER_H
-#define BAYESPERF_CPP_STATPRINTER_H
+#ifndef PERFPROP_STATPRINTER_H
+#define PERFPROP_STATPRINTER_H
 
 #include "VariadicTable.h"
 #include "PmuEvent.h"

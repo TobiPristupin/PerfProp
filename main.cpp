@@ -26,14 +26,14 @@
 #include "Updaters.h"
 
 static const std::string usageString = R"(
-Usage: bayesperf {command} {args}
+Usage: perfprop {command} {args}
 
 The stat command traces given PMU events on a program.
-Usage: bayesperf stat -e {events} {program}
+Usage: perfprop stat -e {events} {program}
 Where events is a comma delimited list of events with no spaces
 
 The list command outputs the available PMU events
-Usage: bayesperf list
+Usage: perfprop list
 )";
 
 #include "StatPrinter.h"

@@ -1,5 +1,5 @@
-#ifndef BAYESPERF_CPP_UTILS_H
-#define BAYESPERF_CPP_UTILS_H
+#ifndef PERFPROP_UTILS_H
+#define PERFPROP_UTILS_H
 
 #include <vector>
 #include <string>

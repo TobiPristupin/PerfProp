@@ -1,5 +1,5 @@
-#ifndef BAYESPERF_CPP_PMUEVENT_H
-#define BAYESPERF_CPP_PMUEVENT_H
+#ifndef PERFPROP_PMUEVENT_H
+#define PERFPROP_PMUEVENT_H
 
 #include <string>
 #include <utility>

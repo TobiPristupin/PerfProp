@@ -1,5 +1,5 @@
-#ifndef BAYESPERF_CPP_UPDATERS_H
-#define BAYESPERF_CPP_UPDATERS_H
+#ifndef PERFPROP_UPDATERS_H
+#define PERFPROP_UPDATERS_H
 
 #include <functional>
 #include <optional>

@@ -3,7 +3,9 @@ cmake_minimum_required(VERSION 3.21)
 set( TEST_SOURCE_FILES
         testMain.cpp
         PmuParserTest.cpp
-        PmuGrouperTest.cpp PerfTest.cpp SampleCollectorTest.cpp)
+        PmuGrouperTest.cpp
+        PerfTest.cpp
+        SampleCollectorTest.cpp)
 
 set ( MAIN_SOURCE_FILES
         ../PmuEvent.cpp
@@ -18,9 +20,9 @@ set ( MAIN_SOURCE_FILES
         ../CommandParser.cpp
         ../showevtinfo.c)
 
-add_executable( bayesperf_cpp_tests ${MAIN_SOURCE_FILES} ${TEST_SOURCE_FILES})
+add_executable( perfprop_tests ${MAIN_SOURCE_FILES} ${TEST_SOURCE_FILES})
 
-target_include_directories(bayesperf_cpp_tests PUBLIC
+target_include_directories(perfprop_tests PUBLIC
         ../include/
         ../lib/expected/
 )
@@ -36,14 +38,14 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 target_link_libraries(
-        bayesperf_cpp_tests
+        perfprop_tests
         GTest::gtest_main
 )
 
 include(GoogleTest)
-gtest_discover_tests(bayesperf_cpp_tests)
+gtest_discover_tests(perfprop_tests)
 
 add_executable( standalone_cpp standalone.cpp)
 find_library(PFM_LIB pfm REQUIRED)
-target_link_libraries(bayesperf_cpp_tests "${PFM_LIB}")
+target_link_libraries(perfprop_tests "${PFM_LIB}")
 target_link_libraries(standalone_cpp "${PFM_LIB}")

@@ -19,7 +19,7 @@ namespace CommandParser {
                     {nullptr,      0,                 nullptr,    0}
             };
 
-            /*we start at argv[1] because we want to skip the bayesperf stat command. That is, if we call `bayesperf stat -e ...`,
+            /*we start at argv[1] because we want to skip the command. That is, if we call `perfprop stat -e ...`,
             * we want to skip the "stat"
             * */
             int opt;
@@ -61,7 +61,7 @@ namespace CommandParser {
 
     CmdArgs parseCmdArgs(int argc, char **argv) {
         if (argc <= 1){
-            throw std::invalid_argument("No command to bayesperf");
+            throw std::invalid_argument("No command to perfprop");
         }
 
         if (strcmp(argv[1], "list") == 0){
@@ -69,7 +69,7 @@ namespace CommandParser {
         } else if (strcmp(argv[1], "stat") == 0){
             return parseStatArgs(argc, argv);
         } else {
-            throw std::invalid_argument("Invalid command '" + std::string(argv[1]) + "' to bayesperf");
+            throw std::invalid_argument("Invalid command '" + std::string(argv[1]) + "' to perfprop");
         }
     }
 }
