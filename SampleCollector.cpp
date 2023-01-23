@@ -84,9 +84,12 @@ std::optional<PmuEvent::Stats> SampleCollector::getEventStatistics(const PmuEven
 
 void SampleCollector::propagateUpdateToNeighbors(const PmuEvent &event, const PmuEvent::Stats &eventUpdatedStats) {
     for (const Edge& edge : graph.at(event)){
+        std::cout << "[Stat Propagation] from=" << event.getName() << " to=" << edge.eventTo.getName() << "\n";
         PmuEvent::Stats &statsToUpdate = collectorStats.at(edge.eventTo);
+        std::cout << "[Stat Propagation] Before=" << statsToUpdate << "\n";
         edge.updaterFunc(eventUpdatedStats, statsToUpdate);
         statsToUpdate.propagations++;
+        std::cout << "[Stat Propagation] After=" << statsToUpdate << "\n";
     }
 }
 

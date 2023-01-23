@@ -56,6 +56,7 @@ public:
         return os << obj.toString();
     }
 
+    friend class StatPrinter;
 private:
     std::string name;
     std::string modifiers;

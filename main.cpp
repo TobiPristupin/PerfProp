@@ -36,6 +36,9 @@ The list command outputs the available PMU events
 Usage: bayesperf list
 )";
 
+#include "StatPrinter.h"
+
+
 void printUsage(){
     std::cout << usageString;
 }
@@ -47,29 +50,27 @@ std::unique_ptr<SampleCollector> initDebugCollector(const std::vector<PmuEvent>&
 
     collector->addRelationship(pmuEvents.at(0), pmuEvents.at(1), [&] (const PmuEvent::Stats& relatedEventStats,
                                                               PmuEvent::Stats &eventToUpdate) {
-        std::cout << "[Stat Propagation] from=" << pmuEvents.at(0).getName() << " to=" << pmuEvents.at(1).getName() << "\n";
-        std::cout << "[Stat Propagation] Before=" << eventToUpdate << "\n";
         eventToUpdate.meanCountsPerMillis = Updater::linearCorrection(
                 2*relatedEventStats.meanCountsPerMillis, eventToUpdate.meanCountsPerMillis, 0.2);
-        std::cout << "[Stat Propagation] After=" << eventToUpdate << "\n";
-
     });
 
     return collector;
 }
 
 void printCurrentStats(const std::map<int, PmuEvent>& fdsToEvent, SampleCollector* sampleCollector){
-    //TODO: would be nice if this printed as a formatted table
+    StatPrinter table;
     for (const auto& [fd, event] : fdsToEvent){
         std::optional<PmuEvent::Stats> stats = sampleCollector->getEventStatistics(event);
         if (stats.has_value()){
-            std::cout << "[Stat] Event=" << event.getName() << " " << stats.value() << "\n";
+            table.addRow(event.getName(), stats.value());
         }
     }
+    table.print();
     std::cout << "\n";
 }
 
 void readAndProcessSamplesOneRound(const std::map<int, PmuEvent>& fdsToEvent, SampleCollector* sampleCollector){
+    bool atLeastOneValidSample = false;
     for (const auto& [fd, event] : fdsToEvent){
         try {
             Perf::Sample sample = Perf::readSample(fd);
@@ -77,6 +78,7 @@ void readAndProcessSamplesOneRound(const std::map<int, PmuEvent>& fdsToEvent, Sa
                 continue;
             }
 
+            atLeastOneValidSample = true;
             Logger::info("Read sample for event " + event.getName() + ": val=" + std::to_string(sample.value)
                          + " enabled=" + std::to_string(sample.timeEnabled.count()) + " running=" + std::to_string(sample.timeRunning.count()));
 
@@ -86,7 +88,9 @@ void readAndProcessSamplesOneRound(const std::map<int, PmuEvent>& fdsToEvent, Sa
         }
     }
 
-    printCurrentStats(fdsToEvent, sampleCollector);
+    if (atLeastOneValidSample){
+        printCurrentStats(fdsToEvent, sampleCollector);
+    }
 }
 
 int handleStatCommand(const std::string& unparsedEventsList, const std::vector<std::string>& programToTrace){
