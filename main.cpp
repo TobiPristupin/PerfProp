@@ -1,11 +1,9 @@
 /*
  * TODO:
- *  Name migration
  *  Number of programmable HPCs
  *  Grouping algorithm, and handle if a group can't be scheduled? + unit tests
  *  Refactor includes using include-what-you-use
  *  Fix problem where certain tests produce error logs when testing failures.
- *  Write README, link style guide
  */
 
 #include <vector>
