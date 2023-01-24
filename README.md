@@ -19,13 +19,13 @@ Once installed, build PerfProp like a standard `CMake` project. In PerfProp's ro
 # Usage
 perfprop {command} {args}
 
-The stat command traces given PMU events on a program.
-Usage: perfprop stat --events {events} {program}
-Where events is a comma delimited list of events with no spaces
-Ex: perfprop stat --events cycles,cache-misses,instructions dd if=/dev/zero of=/dev/null count=1000000
+The stat command traces given PMU events on a program.  
+**Usage:** `perfprop stat --events {events} {program}`  
+Where `events` is a comma delimited list of events with no spaces  
+Ex: `perfprop stat --events cycles,cache-misses,instructions dd if=/dev/zero of=/dev/null count=1000000`
 
-The list command outputs all the available PMU events. Will probably be useful to pipe them into a file for future reference.
-Usage: perfprop list
+The list command outputs all the available PMU events. Will probably be useful to pipe them into a file for future reference.  
+**Usage:** `perfprop list`
 
 # Coding Style
 
