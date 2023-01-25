@@ -42,7 +42,7 @@ void printUsage(){
 }
 
 
-std::unique_ptr<SampleCollector> initDebugCollector(const std::vector<PmuEvent>& pmuEvents){
+std::unique_ptr<SampleCollector> initCollector(const std::vector<PmuEvent>& pmuEvents){
     auto collector = std::make_unique<SampleCollector>(pmuEvents);
     //TODO: read in statistical dependencies and add them.
 
@@ -111,7 +111,7 @@ int handleStatCommand(const std::string& unparsedEventsList, const std::vector<s
     Logger::debug("Child process created with pid " + std::to_string(tracedProcess->getPid()));
     auto [fdsToEvent, groupLeaderFds] = Perf::perfOpenEvents(groups, tracedProcess->getPid());
     std::vector<int> allFds = Utils::keysToVector(fdsToEvent);
-    std::unique_ptr<SampleCollector> sampleCollector = initDebugCollector(events);
+    std::unique_ptr<SampleCollector> sampleCollector = initCollector(events);
 
     //Parent setup done, notify child that they can begin execution
     try {
