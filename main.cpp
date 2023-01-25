@@ -48,6 +48,15 @@ std::unique_ptr<SampleCollector> initCollector(const std::vector<PmuEvent>& pmuE
 
     collector->addRelationship(pmuEvents.at(0), pmuEvents.at(1), [&] (const PmuEvent::Stats& relatedEventStats,
                                                               PmuEvent::Stats &eventToUpdate) {
+        /*
+         * Here we have to modify eventToUpdate. We can do something simple like
+         * ->   eventToUpdate.meanCountsPerMillis = relatedEventStats.meanCountPerMillis;
+         * which would set the mean of the event to update to be the same as the event that received the new sample.
+         *
+         * Or, we can employ more advanced techniques such as using a linear corrector, as seen below
+         *
+         * In this function, only update mean and/or variance for eventToUpdate.
+         */
         eventToUpdate.meanCountsPerMillis = Updater::linearCorrection(
                 2*relatedEventStats.meanCountsPerMillis, eventToUpdate.meanCountsPerMillis, 0.2);
     });
