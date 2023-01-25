@@ -1,8 +1,9 @@
 #include <memory>
 #include <iostream>
 #include "include/PmuParser.h"
-#include "include/Utils.h"
 #include "StringUtils.h"
+#include "Perf.h"
+#include "Logger.h"
 
 namespace PmuParser {
 
@@ -16,12 +17,29 @@ namespace PmuParser {
         std::vector<std::string> eventStrings = StringUtils::split(cmdEventString, ',');
         for (const std::string &e : eventStrings){
             std::string eventName = e;
-            PmuEvent::Type type = softwareEvents.find(eventName) != softwareEvents.end() ? PmuEvent::SOFTWARE : PmuEvent::HARDWARE;
+//            PmuEvent::Type type = softwareEvents.find(eventName) != softwareEvents.end() ? PmuEvent::SOFTWARE : PmuEvent::HARDWARE;
+            PmuEvent::Type type;
+            try {
+                type = Perf::getEventType(eventName);
+            } catch (const std::runtime_error &e){
+                Logger::error(e.what());
+                Logger::error("Skipping event " + eventName);
+                continue;
+            }
+
             events.emplace_back(eventName, type);
         }
 
         return events;
     }
+
+    /*
+     * OLD CODE USING OLD WAY TO DETERMINE AN EVENT TYPE
+     * See docs/design.md "replicating perfs syntax"
+     * -----------------------------------------------------------------------------------------------------------------
+     *
+     */
+
 
     /**
      * We obtain software events by calling `perf list sw --no-desc` and parsing the stdout. This is not ideal,

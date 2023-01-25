@@ -20,14 +20,20 @@ protected:
  * getPerfEventAttr will generate error logs when an event's encoding cannot be found. Those should be ignored.
  */
 TEST_F(PerfTest, getEventEncodingTest){
-    PmuEvent valid = PmuEvent("RETIRED_INSTRUCTIONS", PmuEvent::HARDWARE);
-    ASSERT_TRUE(Perf::getPerfEventAttr(valid).has_value());
+    ASSERT_NO_THROW({
+        PmuEvent valid = PmuEvent("RETIRED_INSTRUCTIONS", PmuEvent::Type::PERF_TYPE_RAW);
+        ASSERT_EQ(Perf::getPerfEventAttr(valid).type, PmuEvent::Type::PERF_TYPE_RAW);
 
-    PmuEvent validPerfStandardEvent = PmuEvent("cycles", PmuEvent::SOFTWARE);
-    ASSERT_TRUE(Perf::getPerfEventAttr(validPerfStandardEvent).has_value());
+        valid = PmuEvent("instructions", PmuEvent::Type::PERF_TYPE_HARDWARE);
+        ASSERT_EQ(Perf::getPerfEventAttr(valid).type, PmuEvent::Type::PERF_TYPE_HARDWARE);
 
-    PmuEvent invalid = PmuEvent("caca", PmuEvent::HARDWARE);
-    ASSERT_FALSE(Perf::getPerfEventAttr(invalid).has_value());
+        PmuEvent validPerfStandardEvent = PmuEvent("context-switches", PmuEvent::Type::PERF_TYPE_SOFTWARE);
+        ASSERT_EQ(Perf::getPerfEventAttr(validPerfStandardEvent).type, PmuEvent::Type::PERF_TYPE_SOFTWARE);
+    });
+
+
+    PmuEvent invalid = PmuEvent("caca", PmuEvent::Type::PERF_TYPE_HARDWARE);
+    ASSERT_ANY_THROW(Perf::getPerfEventAttr(invalid));
 }
 
 /*
@@ -35,12 +41,12 @@ TEST_F(PerfTest, getEventEncodingTest){
  */
 TEST_F(PerfTest, perfOpenEventsTest){
     std::vector<PmuEvent> validEvents = {
-            {"branches", PmuEvent::Type::HARDWARE},
-            {"branch-misses:u", PmuEvent::Type::HARDWARE},
-            {"RETIRED_INSTRUCTIONS", PmuEvent::Type::HARDWARE},
-            {"bpf-output", PmuEvent::Type::SOFTWARE},
+            {"branches", PmuEvent::Type::PERF_TYPE_HARDWARE},
+            {"branch-misses:u", PmuEvent::Type::PERF_TYPE_HARDWARE},
+            {"RETIRED_INSTRUCTIONS", PmuEvent::Type::PERF_TYPE_HARDWARE},
+            {"bpf-output", PmuEvent::Type::PERF_TYPE_SOFTWARE},
     };
-    PmuEvent invalid = {"caca", PmuEvent::HARDWARE};
+    PmuEvent invalid = {"caca", PmuEvent::Type::PERF_TYPE_HARDWARE};
 
     std::vector<std::vector<PmuEvent>> groups = {
             {validEvents[0], validEvents[1], validEvents[2]},

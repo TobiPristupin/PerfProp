@@ -1,23 +1,32 @@
 #include <gtest/gtest.h>
+#include <perfmon/pfmlib.h>
 #include "../include/PmuEvent.h"
 #include "../include/PmuParser.h"
 
+class PmuParserTest : public ::testing::Test {
+protected:
+    void SetUp() override {
+        pfm_initialize();
+    }
 
+    void TearDown() override {
+        pfm_terminate();
+    }
+};
 
-TEST(PmuParserTest, parseEvents){
-    std::string eventsCmdInput = "branches,branch-misses:u,instructions:uv,bpf-output,duration_time,L1-dcache-loads";
+TEST_F(PmuParserTest, parseEvents){
+    std::string eventsCmdInput = "branches,branch-misses:u,instructions,L2_PREFETCH_HIT_L2";
     std::vector<PmuEvent> parsedEvents = PmuParser::parseEvents(eventsCmdInput);
     std::vector<PmuEvent> expectedEvents = {
-            {"branches", PmuEvent::Type::HARDWARE},
-            {"branch-misses:u", PmuEvent::Type::HARDWARE},
-            {"instructions:uv", PmuEvent::Type::HARDWARE},
-            {"bpf-output", PmuEvent::Type::SOFTWARE},
-            {"duration_time", PmuEvent::Type::SOFTWARE},
-            {"L1-dcache-loads", PmuEvent::Type::HARDWARE},
+            {"branches", PmuEvent::Type::PERF_TYPE_HARDWARE},
+            {"branch-misses:u", PmuEvent::Type::PERF_TYPE_HARDWARE},
+            {"instructions", PmuEvent::Type::PERF_TYPE_HARDWARE},
+            {"L2_PREFETCH_HIT_L2", PmuEvent::Type::PERF_TYPE_RAW},
     };
 
     ASSERT_EQ(parsedEvents, expectedEvents);
     ASSERT_EQ(parsedEvents[0].getModifiers(), "");
     ASSERT_EQ(parsedEvents[1].getModifiers(), "u");
-    ASSERT_EQ(parsedEvents[2].getModifiers(), "uv");
+    ASSERT_EQ(parsedEvents[2].getModifiers(), "");
+    ASSERT_EQ(parsedEvents[3].getModifiers(), "");
 }

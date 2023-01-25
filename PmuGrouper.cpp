@@ -6,10 +6,10 @@ namespace PmuGrouper {
     std::pair<EventVector, EventVector> splitHardwareSoftware(const EventVector &events) {
         EventVector hardware, software;
         for (const PmuEvent& event : events){
-            if (event.getType() == PmuEvent::HARDWARE){
-                hardware.push_back(event);
-            } else {
+            if (event.getType() == PmuEvent::Type::PERF_TYPE_SOFTWARE){
                 software.push_back(event);
+            } else {
+                hardware.push_back(event);
             }
         }
 
@@ -31,7 +31,7 @@ namespace PmuGrouper {
         while (i < events.size()) {
             std::vector<PmuEvent> currGroup;
             while (currGroup.size() < maxGroupSize && i < events.size()){
-                if (events[i].getType() == PmuEvent::SOFTWARE){
+                if (events[i].getType() == PmuEvent::Type::PERF_TYPE_SOFTWARE){
                     softwareGroup.push_back(events[i]);
                 } else {
                     currGroup.push_back(events[i]);

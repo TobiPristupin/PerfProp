@@ -8,20 +8,20 @@ protected:
     void TearDown() override {}
 
     std::vector<PmuEvent> events = {
-            {"branches", PmuEvent::Type::HARDWARE},
-            {"branch-misses:u", PmuEvent::Type::HARDWARE},
-            {"instructions:uv", PmuEvent::Type::HARDWARE},
-            {"bpf-output", PmuEvent::Type::SOFTWARE},
-            {"duration_time", PmuEvent::Type::SOFTWARE},
-            {"L1-dcache-loads", PmuEvent::Type::HARDWARE},
-            {"conntext-switches", PmuEvent::Type::SOFTWARE},
-            {"cpu-clock", PmuEvent::Type::SOFTWARE},
+            {"branches", PmuEvent::Type::PERF_TYPE_HARDWARE},
+            {"branch-misses:u", PmuEvent::Type::PERF_TYPE_HARDWARE},
+            {"instructions:uv", PmuEvent::Type::PERF_TYPE_HARDWARE},
+            {"bpf-output", PmuEvent::Type::PERF_TYPE_SOFTWARE},
+            {"duration_time", PmuEvent::Type::PERF_TYPE_SOFTWARE},
+            {"L1-dcache-loads", PmuEvent::Type::PERF_TYPE_HARDWARE},
+            {"context-switches", PmuEvent::Type::PERF_TYPE_SOFTWARE},
+            {"cpu-clock", PmuEvent::Type::PERF_TYPE_SOFTWARE},
     };
 
     static int numSoftwareEvents(const std::vector<PmuEvent>& evs){
         int count = 0;
         for (const auto& e : evs) {
-            count += e.getType() == PmuEvent::SOFTWARE;
+            count += e.getType() == PmuEvent::Type::PERF_TYPE_SOFTWARE;
         }
         return count;
     }
@@ -29,7 +29,7 @@ protected:
     static int numHardwareEvents(const std::vector<PmuEvent>& evs){
         int count = 0;
         for (const auto& e : evs) {
-            count += e.getType() == PmuEvent::HARDWARE;
+            count += e.getType() != PmuEvent::Type::PERF_TYPE_SOFTWARE;
         }
         return count;
     }
@@ -43,9 +43,9 @@ TEST_F(PmuGrouperTest, testSoftwareEventGrouping){
     for (int i = 0; i < groups1.size(); i++){
         for (const PmuEvent& e : groups1[i]){
             if (i == groups1.size() - 1){
-                ASSERT_EQ(e.getType(), PmuEvent::SOFTWARE);
+                ASSERT_EQ(e.getType(), PmuEvent::Type::PERF_TYPE_SOFTWARE);
             } else {
-                ASSERT_EQ(e.getType(), PmuEvent::HARDWARE);
+                ASSERT_NE(e.getType(), PmuEvent::Type::PERF_TYPE_SOFTWARE);
             }
         }
     }

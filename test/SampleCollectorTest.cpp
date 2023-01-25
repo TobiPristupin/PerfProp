@@ -15,14 +15,14 @@ protected:
     }
 
     std::vector<PmuEvent> events = {
-            {"branches", PmuEvent::Type::HARDWARE},
-            {"branch-misses:u", PmuEvent::Type::HARDWARE},
-            {"instructions:uv", PmuEvent::Type::HARDWARE},
-            {"bpf-output", PmuEvent::Type::SOFTWARE},
-            {"duration_time", PmuEvent::Type::SOFTWARE},
-            {"L1-dcache-loads", PmuEvent::Type::HARDWARE},
-            {"conntext-switches", PmuEvent::Type::SOFTWARE},
-            {"cpu-clock", PmuEvent::Type::SOFTWARE},
+            {"branches", PmuEvent::Type::PERF_TYPE_HARDWARE},
+            {"branch-misses:u", PmuEvent::Type::PERF_TYPE_HARDWARE},
+            {"instructions:uv", PmuEvent::Type::PERF_TYPE_HARDWARE},
+            {"bpf-output", PmuEvent::Type::PERF_TYPE_SOFTWARE},
+            {"duration_time", PmuEvent::Type::PERF_TYPE_SOFTWARE},
+            {"L1-dcache-loads", PmuEvent::Type::PERF_TYPE_HARDWARE},
+            {"conntext-switches", PmuEvent::Type::PERF_TYPE_SOFTWARE},
+            {"cpu-clock", PmuEvent::Type::PERF_TYPE_SOFTWARE},
     };
 
     SampleCollector baseCollector;

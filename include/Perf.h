@@ -26,16 +26,21 @@ namespace Perf {
         Nanosecs timeRunning;
     };
 
+    /*
+     * Might throw runtime_error if event type could not be found.
+     */
+    PmuEvent::Type getEventType(const std::string& name);
+
     pfm_pmu_info_t getDefaultPmu();
 
     size_t numProgrammableHPCs();
 
     /*
      * Obtains the perf_event_attr from an event, which can then be used to call perf_event_open for this
-     * event. Returns optional because the conversion might fail.
+     * event. Throws runtime_error if no encoding was found.
      *
      */
-    std::optional<perf_event_attr> getPerfEventAttr(const PmuEvent& event);
+    perf_event_attr getPerfEventAttr(const PmuEvent& event);
 
     /*
      * For every event group, calls perf_event_open on every event.

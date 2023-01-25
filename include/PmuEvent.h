@@ -5,6 +5,7 @@
 #include <utility>
 #include <chrono>
 #include <sstream>
+#include <linux/perf_event.h>
 #include "PerfStats.h"
 
 using Statistic = long double;
@@ -12,10 +13,7 @@ using Statistic = long double;
 class PmuEvent {
 public:
 
-    enum Type {
-        SOFTWARE,
-        HARDWARE
-    };
+    using Type = perf_type_id;
 
     struct Stats {
 
