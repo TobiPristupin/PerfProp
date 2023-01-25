@@ -16,6 +16,8 @@ This program requires `perf` and `lipbfm`. `perf` can be installed using a packa
 
 Once installed, build PerfProp like a standard `CMake` project. In PerfProp's root, create a `build` directory. From that directory, run `cmake ..` and `make`.
 
+Currently, statistical relationships need to be hardcoded in code, so it might be beneficial to open the project in an IDE that can edit and build the project using CMake.
+
 # Usage
 perfprop {command} {args}
 
@@ -26,6 +28,8 @@ Ex: `perfprop stat --events cycles,cache-misses,instructions dd if=/dev/zero of=
 
 The list command outputs all the available PMU events. Will probably be useful to pipe them into a file for future reference.  
 **Usage:** `perfprop list`
+
+To add a statistical relationship, modify `initCollector` in `main.cpp`. 
 
 # Coding Style
 
