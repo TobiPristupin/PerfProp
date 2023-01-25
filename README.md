@@ -29,7 +29,7 @@ Ex: `perfprop stat --events cycles,cache-misses,instructions dd if=/dev/zero of=
 The list command outputs all the available PMU events. Will probably be useful to pipe them into a file for future reference.  
 **Usage:** `perfprop list`
 
-To add a statistical relationship, modify `initCollector` in `main.cpp` by calling 
+To add a statistical relationship, modify `initCollector` in `main.cpp`.
 
 # Coding Style
 
