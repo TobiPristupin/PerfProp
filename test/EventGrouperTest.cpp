@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
-#include "PmuGrouper.h"
+#include "EventGrouper.h"
 
-class PmuGrouperTest : public ::testing::Test {
+class EventGrouperTest : public ::testing::Test {
 protected:
     void SetUp() override {}
 
@@ -35,7 +35,7 @@ protected:
     }
 };
 
-TEST_F(PmuGrouperTest, testSoftwareEventGrouping){
+TEST_F(EventGrouperTest, testSoftwareEventGrouping){
     size_t maxGroupSize = 3;
     std::vector<std::vector<PmuEvent>> groups1 = PmuGrouper::group(events, maxGroupSize);
 
@@ -54,7 +54,7 @@ TEST_F(PmuGrouperTest, testSoftwareEventGrouping){
     ASSERT_EQ(groups1.back().size(), numSoftwareEvents(events));
 }
 
-TEST_F(PmuGrouperTest, testGroupSize){
+TEST_F(EventGrouperTest, testGroupSize){
     int hardwareEvents = numHardwareEvents(events);
     for (size_t groupSize = 1; groupSize <= hardwareEvents; groupSize++){
         std::vector<std::vector<PmuEvent>> group = PmuGrouper::group(events, groupSize);

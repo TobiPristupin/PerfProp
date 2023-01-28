@@ -3,7 +3,7 @@ PerfProp is a Linux program to improve PMU performance monitoring. It works on t
 
 PerfProp is a project by the [Computer Security & Privacy Laboratory (CSPL)](https://cybersecurity.seas.wustl.edu/) at Washington University in St. Louis.
 
-Project planning and in depth explanations included [here](https://www.dropbox.com/scl/fi/qo7t0u4j3yzneqs01u65u/Bayes-Perf-CSPL.paper?dl=0&rlkey=nq9a95lenmi18jh8jc72dth1s):
+See [design doc](docs/design.md) for a much deeper overview, including various implementation details.
 
 # Motivation
 PMU events are used by the Linux perf tool to measure various performance metrics. Because there is often a need to measure vastly more events than the physical PMU counters can support, perf will perform "multiplexing" on events, where events are swapped in and out of the counters. Multiplexing causes major losses in accuracy. PerfProp attempts to mitigate these errors in measurements by correcting them through statistical relationships between events. This work was motivated by the [BayesPerf system](https://ssbaner2.cs.illinois.edu/publications/asplos2021/)
@@ -33,5 +33,5 @@ To add a statistical relationship, modify `initCollector` in `main.cpp`.
 
 # Coding Style
 
-See [style guidelines](Style.md)
+See [style guidelines](docs/style.md)
 

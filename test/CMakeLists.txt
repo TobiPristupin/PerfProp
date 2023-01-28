@@ -2,18 +2,18 @@ cmake_minimum_required(VERSION 3.21)
 
 set( TEST_SOURCE_FILES
         testMain.cpp
-        PmuParserTest.cpp
-        PmuGrouperTest.cpp
+        EventParserTest.cpp
+        EventGrouperTest.cpp
         PerfTest.cpp
         SampleCollectorTest.cpp)
 
 set ( MAIN_SOURCE_FILES
         ../PmuEvent.cpp
-        ../PmuParser.cpp
+        ../EventParser.cpp
         ../Utils.cpp
         ../SampleCollector.cpp
         ../Updaters.cpp
-        ../PmuGrouper.cpp
+        ../EventGrouper.cpp
         ../Perf.cpp
         ../TraceableProcess.cpp
         ../StringUtils.cpp

@@ -1,5 +1,5 @@
-#ifndef PERFPROP_PMUGROUPER_H
-#define PERFPROP_PMUGROUPER_H
+#ifndef PERFPROP_EVENTGROUPER_H
+#define PERFPROP_EVENTGROUPER_H
 
 #include <vector>
 #include "PmuEvent.h"

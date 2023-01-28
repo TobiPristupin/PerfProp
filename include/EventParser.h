@@ -1,5 +1,5 @@
-#ifndef PERFPROP_PMUPARSER_H
-#define PERFPROP_PMUPARSER_H
+#ifndef PERFPROP_EVENTPARSER_H
+#define PERFPROP_EVENTPARSER_H
 
 // Collection of functions to parse events from the command line
 

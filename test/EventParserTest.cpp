@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 #include <perfmon/pfmlib.h>
 #include "../include/PmuEvent.h"
-#include "../include/PmuParser.h"
+#include "../include/EventParser.h"
 
-class PmuParserTest : public ::testing::Test {
+class EventParserTest : public ::testing::Test {
 protected:
     void SetUp() override {
         pfm_initialize();
@@ -14,7 +14,7 @@ protected:
     }
 };
 
-TEST_F(PmuParserTest, parseEvents){
+TEST_F(EventParserTest, parseEvents){
     std::string eventsCmdInput = "branches,branch-misses:u,instructions,L2_PREFETCH_HIT_L2";
     std::vector<PmuEvent> parsedEvents = PmuParser::parseEvents(eventsCmdInput);
     std::vector<PmuEvent> expectedEvents = {

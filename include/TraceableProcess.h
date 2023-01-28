@@ -21,6 +21,12 @@
  * resource cleanup nicely (i.e. no throwing exceptions from constructors). In this way, the factory either
  * creates a valid traceable process, or fails to create it and does its own cleanup. If you have a TraceableProcess
  * instance, you can be ensured that it is valid and that it will clean up after itself.
+ *
+ * Implementation details: We want to allow the user of this class to be able to instantiate it, obtain the pid,
+ * but have the process wait until they call beginExecution(). To achieve this, we use pipes. The child process is
+ * forked but doesn't call exec immediately. Instead, it will wait for the parent process to send a special code through
+ * the pipe. Once it receives the message, exec is called and execution begins. The special code is sent by the parent
+ * when beginExecution() is called.
  */
 class TraceableProcess {
 public:

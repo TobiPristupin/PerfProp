@@ -12,11 +12,11 @@ set(CMAKE_CXX_STANDARD 17)
 set( SOURCE_FILES
         main.cpp
         PmuEvent.cpp
-        PmuParser.cpp
+        EventParser.cpp
         Utils.cpp
         SampleCollector.cpp
         Updaters.cpp
-        PmuGrouper.cpp
+        EventGrouper.cpp
         Perf.cpp
         TraceableProcess.cpp
         StringUtils.cpp

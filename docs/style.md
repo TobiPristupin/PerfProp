@@ -1,3 +1,5 @@
+# Style Guide
+
 This is the coding style that I try to adhere for this project. Hopefully knowing this will help explain why some design decisions were taken, and help makes reading code easier.
 
 * **C:** Avoid C style coding when possible.

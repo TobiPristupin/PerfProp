@@ -1,9 +1,9 @@
 /*
  * TODO:
- *  Number of programmable HPCs
- *  Grouping algorithm, and handle if a group can't be scheduled? + unit tests
- *  Refactor includes using include-what-you-use
- *  Fix problem where certain tests produce error logs when testing failures.
+ *  See issue of selecting default pmu in Perf::getDefaultPmu
+ *  Grouping algorithm, and handle if a group can't be scheduled? + unit tests. See design.md/Grouping
+ *  Run include-what-you-use to fix transitive includes of header files.
+ *  Fix problem where certain tests produce error logs when testing (expected) failures.
  */
 
 #include <vector>
@@ -13,9 +13,9 @@
 #include <memory>
 #include <sys/wait.h>
 #include "PmuEvent.h"
-#include "PmuParser.h"
+#include "EventParser.h"
 #include "SampleCollector.h"
-#include "PmuGrouper.h"
+#include "EventGrouper.h"
 #include "Perf.h"
 #include "Logger.h"
 #include "PfmLib.h"
@@ -105,7 +105,8 @@ int handleStatCommand(const std::string& unparsedEventsList, const std::vector<s
     pfmlib.initialize();
 
     std::vector<PmuEvent> events = PmuParser::parseEvents(unparsedEventsList);
-    size_t groupSize = Perf::numProgrammableHPCs();
+//    size_t groupSize = Perf::numProgrammableHPCs();//
+    size_t groupSize = 1;
     std::vector<std::vector<PmuEvent>> groups = PmuGrouper::group(events, groupSize);
 
     std::unique_ptr<TraceableProcess> tracedProcess;

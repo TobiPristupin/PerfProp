@@ -1,5 +1,5 @@
 #include <stdexcept>
-#include "PmuGrouper.h"
+#include "EventGrouper.h"
 
 namespace PmuGrouper {
 
