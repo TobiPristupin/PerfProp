@@ -124,3 +124,29 @@ TEST_F(SampleCollectorTest, propagateStatTest){
     ASSERT_EQ(e2Stats.samples, 0);
     ASSERT_EQ(e2Stats.propagations, 1);
 }
+
+TEST_F(SampleCollectorTest, varUpdates){
+    PmuEvent e = events[0];
+
+    ASSERT_EQ(baseCollector.getEventStatistics(e), std::nullopt);
+
+    Nanosecs time = msToNs(Millis(1));
+    EventCount count = 50;
+    baseCollector.pushSample(e, {count, time, time});
+    ASSERT_EQ(baseCollector.getEventStatistics(e).value().varianceCountPerMillis, 0);
+
+    time += msToNs(Millis(1));
+    count += 100;
+    baseCollector.pushSample(e, {count, time, time});
+    ASSERT_EQ(baseCollector.getEventStatistics(e).value().varianceCountPerMillis, 1250);
+
+    time += msToNs(Millis(1));
+    count += 0;
+    baseCollector.pushSample(e, {count, time, time});
+    ASSERT_EQ(baseCollector.getEventStatistics(e).value().varianceCountPerMillis, 5000);
+
+    time += msToNs(Millis(2));
+    count += 100;
+    baseCollector.pushSample(e, {count, time, time});
+    ASSERT_EQ(baseCollector.getEventStatistics(e).value().varianceCountPerMillis, 5000);
+}

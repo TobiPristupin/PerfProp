@@ -72,18 +72,20 @@ private:
     };
 
     /*
-     * Modifies the stats struct by updating its mean with the new sample.
+     * Modifies the stats struct by updating its mean and variance with the new sample.
      *
-     * WARNING: Do not update stats.sampleCount before calling this method. Do it after, as this method
-     * expected sampleCount to not include the new sample in the count.
+     * Expects the number of samples to already account for the new sample (i.e. increment num samples by 1 before
+     * calling this function)
+     *
+     * Updating mean and variance is done in the same method because they share intermediate results.
      */
-    static void updateMean(PmuEvent::Stats &stats, EventCount newCount, Nanosecs timeDiff);
+    static void updateMeanAndVariance(PmuEvent::Stats &stats, EventCount newCount, Nanosecs timeDiff);
 
     /*
      * Modifies the stats struct by updating its variance with the new sample.
      *
-     * WARNING: Do not update stats.sampleCount before calling this method. Do it after, as this method
-     * expected sampleCount to not include the new sample in the count.
+     * Expects the number of samples to already account for the new sample (i.e. increment num samples by 1 before
+     * calling this function)
      */
     static void updateVariance(PmuEvent::Stats &stats, EventCount newCount, Nanosecs timeDiff);
 

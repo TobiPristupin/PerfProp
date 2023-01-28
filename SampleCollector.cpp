@@ -40,34 +40,48 @@ void SampleCollector::pushSample(const PmuEvent &event, Perf::Sample sample) {
     Nanosecs timeDiff = sample.timeEnabled - eventStats.timeEnabled;
     EventCount newCount = sample.value - eventStats.count;
 
-    updateMean(eventStats, newCount, timeDiff);
-    updateVariance(eventStats, newCount, timeDiff);
+    eventStats.samples++;
     eventStats.count = sample.value;
     eventStats.timeEnabled = sample.timeEnabled;
-    eventStats.samples++;
-    //Note: Update samples after mean and var, because mean and var updates expect an "old" count of samples
+
+    //Note: Update mean/variance after updating number of samples
+    updateMeanAndVariance(eventStats, newCount, timeDiff);
 
     propagateUpdateToNeighbors(event, eventStats);
 }
 
-void SampleCollector::updateMean(PmuEvent::Stats &stats, EventCount newCount, Nanosecs timeDiff) {
+
+void SampleCollector::updateMeanAndVariance(PmuEvent::Stats &stats, EventCount newCount, Nanosecs timeDiff) {
     if (timeDiff.count() <= 0){
         throw std::runtime_error("Time enabled must monotonically increase");
     }
 
-    EventCount oldSampleCount = stats.samples;
-    Statistic newCountPerMillis = newCountPerMillis = (Statistic) newCount / nsToMs(timeDiff).count();
+    Statistic newCountPerMillis  = (Statistic) newCount / nsToMs(timeDiff).count();
+
+    if (stats.samples == 1){
+        stats.meanCountsPerMillis = newCountPerMillis;
+        stats.varianceCountPerMillis = 0;
+        return;
+    }
 
 
+    /*
+     * This method of updating a running mean/variance is borrowed from:
+     *          https://www.johndcook.com/blog/standard_deviation/
+     * Which itself borrows it from:
+     *          Knuth TAOCP vol 2, 3rd edition, page 232.
+     *
+     * The variance update formula has the advantage that it works well with floating point.
+     */
 
-    Statistic currSum = stats.meanCountsPerMillis * (oldSampleCount);
-    Statistic newMean = (currSum + newCountPerMillis) / (oldSampleCount + 1);
+    Statistic oldMean = stats.meanCountsPerMillis;
+    Statistic oldVar = stats.varianceCountPerMillis;
+
+    Statistic newMean = oldMean + (newCountPerMillis - oldMean) / stats.samples;
+    Statistic newVar = oldVar + (newCountPerMillis - oldMean) * (newCountPerMillis - newMean);
+
     stats.meanCountsPerMillis = newMean;
-}
-
-void SampleCollector::updateVariance(PmuEvent::Stats &stats, EventCount newCount, Nanosecs timeDiff) {
-    stats.varianceCountPerMillis = 0;
-    //TODO: update running variance
+    stats.varianceCountPerMillis = newVar;
 }
 
 std::optional<PmuEvent::Stats> SampleCollector::getEventStatistics(const PmuEvent &event) const {
@@ -92,6 +106,8 @@ void SampleCollector::propagateUpdateToNeighbors(const PmuEvent &event, const Pm
         std::cout << "[Stat Propagation] After=" << statsToUpdate << "\n";
     }
 }
+
+
 
 
 
