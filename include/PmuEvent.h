@@ -23,7 +23,7 @@ public:
             std::stringstream ss;
             ss << "meanCountPerMillis=" << meanCountsPerMillis << " " << "varPerMillis=" << varianceCountPerMillis
             << " count=" << count << " timeEnabled=" << timeEnabled.count() << " samples=" << samples
-            << " sampleSumSquared=" << sampleSumSquared  << " propagations=" << propagations;
+            << " propagations=" << propagations;
             return ss.str();
         }
 
@@ -33,7 +33,6 @@ public:
         Nanosecs timeEnabled{};
         Statistic meanCountsPerMillis{};
         Statistic varianceCountPerMillis{};
-        Statistic sampleSumSquared{}; //Useful for variance calculations
     };
 
     /*
